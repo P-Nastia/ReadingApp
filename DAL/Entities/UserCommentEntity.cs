@@ -20,5 +20,6 @@ namespace DAL.Entities
         [ForeignKey("ParagraphId")]
         public int ParagraphId { get; set; }
         public ParagraphEntity Paragraph { get; set; }
+        public DateTime Published { get; set; }
     }
 }

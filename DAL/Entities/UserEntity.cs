@@ -25,5 +25,6 @@ namespace DAL.Entities
         [StringLength(255)]
         public string Password { get; set; }
         public ICollection<BookEntity> Books { get; set; }
+        public byte[] Icon { get; set; }
     }
 }
