@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    public class UserRepository : IUser<BookEntity>
+    public class UserRepository : IUser<BookEntity,UserEntity>
     {
         private AppDBContext _dbContext;
         public UserRepository(AppDBContext dBContext) { _dbContext = dBContext; }
@@ -33,7 +33,6 @@ namespace DAL.Repositories
 
         public IQueryable<UserEntity> GetAll()
         {
-            //return _dbContext.Set<UserEntity>().AsNoTracking();
             return _dbContext.Users.Include(u => u.Books);
         }
 
