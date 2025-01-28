@@ -37,7 +37,8 @@ namespace BLL.Mapping
                 .ForMember(x => x.Paragraph, opt => opt.MapFrom(x => x.Paragraph));
 
             CreateMap<UserDTO, UserEntity>()
-                .ForMember(x => x.Books, opt => opt.MapFrom(x => x.Books));
+                .ForMember(x => x.Books, opt => opt.Ignore())
+                .ForMember(x=>x.Id,opt=>opt.Ignore());
         }
 
         private void EntitiesToDTOs()
