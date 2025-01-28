@@ -20,6 +20,6 @@ namespace DAL.Entities
         [ForeignKey("Book")]
         public int BookId { get; set; }
         public BookEntity Book { get; set; }
-        ICollection<UserCommentEntity> UserComments { get; set; }
+        public ICollection<UserCommentEntity> UserComments { get; set; }
     }
 }
