@@ -11,10 +11,10 @@ namespace DAL.Interfaces
     {
         Task RemoveBook(T2 userEntity, T1 entity);
         Task AddBook(T2 userEntity, T1 entity);
-        Task<T1> GetBook(T2 entity,int id);
+        T1 GetBook(T2 entity,int id);
         Task Add(T2 item);
         Task Remove(T2 item);
         IQueryable<T2> GetAll();
-        Task<T2> GetById(int id);
+        T2 GetById(int id);
     }
 }

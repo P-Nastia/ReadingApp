@@ -21,12 +21,14 @@ namespace BLL.Mapping
         {
             CreateMap<BookDTO, BookEntity>()
                 .ForMember(x => x.Users, opt => opt.MapFrom(x => x.Users))
-                .ForMember(x => x.Paragraphs, opt => opt.MapFrom(x => x.Paragraphs));
+                .ForMember(x => x.Paragraphs, opt => opt.MapFrom(x => x.Paragraphs))
+                .ForMember(x => x.Id, opt => opt.Ignore());
 
             CreateMap<ParagraphDTO, ParagraphEntity>()
                 .ForMember(x => x.UserComments, opt => opt.MapFrom(x => x.UserComments))
                 .ForMember(x => x.BookId, opt => opt.MapFrom(x => x.BookId))
-                .ForMember(x => x.Book, opt => opt.MapFrom(x => x.Book));
+                .ForMember(x => x.Book, opt => opt.MapFrom(x => x.Book))
+                .ForMember(x => x.Id, opt => opt.Ignore());
 
             CreateMap<UserCommentDTO, UserCommentEntity>()
                 .ForMember(x => x.UserId, opt => opt.MapFrom(x => x.UserId))

@@ -36,15 +36,15 @@ namespace DAL.Repositories
             return _dbContext.Users.Include(u => u.Books);
         }
 
-        public Task<BookEntity> GetBook(UserEntity entity, int id)
+        public BookEntity GetBook(UserEntity entity, int id)
         {
-            var book =  _dbContext.Books.FirstOrDefaultAsync(b => b.Id == id && b.Users.Contains(entity));
+            var book =  _dbContext.Books.FirstOrDefault(b => b.Id == id && b.Users.Contains(entity));
             return book;
         }
 
-        public async Task<UserEntity> GetById(int id)
+        public UserEntity GetById(int id)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            var user =  _dbContext.Users.FirstOrDefault(u => u.Id == id);
             return user;
         }
 
