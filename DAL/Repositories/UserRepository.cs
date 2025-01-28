@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    public class UserRepository : IUser<BookEntity,UserEntity>
+    public class UserRepository : IUserRepository<BookEntity,UserEntity>
     {
         private AppDBContext _dbContext;
         public UserRepository(AppDBContext dBContext) { _dbContext = dBContext; }

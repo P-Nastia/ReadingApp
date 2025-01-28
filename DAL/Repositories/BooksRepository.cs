@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    public class BooksRepository : IBook<BookEntity, ParagraphEntity,UserCommentEntity>
+    public class BooksRepository : IBookRepository<BookEntity, ParagraphEntity,UserCommentEntity>
     {
         private AppDBContext _dbContext;
         public BooksRepository(AppDBContext dBContext) { _dbContext = dBContext; }
