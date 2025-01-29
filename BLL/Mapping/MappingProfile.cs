@@ -21,8 +21,7 @@ namespace BLL.Mapping
         {
             CreateMap<BookDTO, BookEntity>()
                 .ForMember(x => x.Users, opt => opt.MapFrom(x => x.Users))
-                .ForMember(x => x.Paragraphs, opt => opt.MapFrom(x => x.Paragraphs))
-                .ForMember(x => x.Id, opt => opt.Ignore());
+                .ForMember(x => x.Paragraphs, opt => opt.MapFrom(x => x.Paragraphs));
 
             CreateMap<ParagraphDTO, ParagraphEntity>()
                 .ForMember(x => x.UserComments, opt => opt.MapFrom(x => x.UserComments))

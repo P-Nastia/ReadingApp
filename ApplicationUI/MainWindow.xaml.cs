@@ -39,7 +39,7 @@ namespace ApplicationUI
             //    Books = new List<BookDTO>()
             //};
             //AddUser(user);
-            //var u = userService.GetById(1);
+            //var u = userService.GetById(2);
 
             //string pdfPath = "D:\\nechuy-levytskyy-ivan-semenovych-kaydasheva-simia907 (1).pdf";  // Вкажіть шлях до вашого PDF файлу
             //string text = "";
@@ -70,8 +70,7 @@ namespace ApplicationUI
             //        {
             //            Author = "Іван Нечуй-Левицький",
             //            Name = "Кайдашева сім'я",
-            //            Users = new List<UserDTO>(),
-            //            PdfData = File.ReadAllBytes(pdfPath)
+            //            Users = new List<UserDTO>()
             //        };
             //        List<ParagraphDTO> p = new List<ParagraphDTO>();
             //        foreach (var par in paragraphs)
@@ -81,25 +80,45 @@ namespace ApplicationUI
             //        book.Paragraphs = p;
 
             //        //AddBook(book);
-            //        AddUserBook(u, book);
+            //        //AddUserBook(u, book);
             //    }
             //}
             //catch (Exception ex)
             //{
             //    MessageBox.Show($"Error: {ex.Message}");
             //}
-            var user = us.GetById(3);
-            var book = bs.GetBook(3);
-            AddUserBook(user, book);
-            UserCommentDTO uc = new UserCommentDTO()
-            {
-                ParagraphId = book.Paragraphs.ElementAt(2).Id,
-                Comment = "Думаю, буде цікаво читати",
-                Published = DateTime.Today,
-                UserId = user.Id
-            };
+            var user = us.GetById(2);
+            var book = bs.GetBook(1);
+            us.RemoveBook(user, book);
+            //AddUserBook(user, book);
+            //UserCommentDTO uc = new UserCommentDTO()
+            //{
+            //    ParagraphId = book.Paragraphs.ElementAt(30).Id,
+            //    Comment = "Ого",
+            //    Published = DateTime.Now.ToUniversalTime(),
+            //    UserId = user.Id
+            //};
             //AddComment(uc);
 
+            //// видалення коментаря
+            //var paragraph = book.Paragraphs.ElementAt(30);
+            //var commentToDelete = paragraph.UserComments.ElementAt(0);
+            //bs.DeleteComment(commentToDelete);
+
+
+            // зчитування іконки користувача
+            //using (var stream = new MemoryStream(user.Icon))
+            //{
+            //    // Create a BitmapImage from the MemoryStream
+            //    BitmapImage bitmap = new BitmapImage();
+            //    bitmap.BeginInit();
+            //    bitmap.StreamSource = stream;
+            //    bitmap.CacheOption = BitmapCacheOption.OnLoad; // Make sure the image is fully loaded
+            //    bitmap.EndInit();
+
+            //    // Set the BitmapImage as the source for the Image control
+            //    image.Source = bitmap; // 'MyImageControl' is the Image control in XAML
+            //}
         }
         private async Task AddBook(BookDTO book)
         {
@@ -110,11 +129,14 @@ namespace ApplicationUI
         private async Task AddUserBook(UserDTO user,BookDTO book)
         {
             //string pdfPath = "D:\\_OceanofPDF.com_Claiming_His_Princess_A_Beauty_n_the_Beast_Romance_-_Parker_Grey.pdf";  // Вкажіть шлях до вашого PDF файлу
+            user.Books.Add(book);
+            book.Users.Add(user);
             await us.AddBook(user, book);
 
         }
         private async Task AddUser(UserDTO user)
         {
+            
             //string pdfPath = "D:\\_OceanofPDF.com_Claiming_His_Princess_A_Beauty_n_the_Beast_Romance_-_Parker_Grey.pdf";  // Вкажіть шлях до вашого PDF файлу
             await us.Add(user);
 

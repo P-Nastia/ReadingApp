@@ -17,7 +17,7 @@ namespace DAL.Entities
         public int UserId { get; set; }
         public UserEntity User { get; set; }
         public string Comment { get; set; }
-        [ForeignKey("ParagraphId")]
+        [ForeignKey("Paragraph")]
         public int ParagraphId { get; set; }
         public ParagraphEntity Paragraph { get; set; }
         public DateTime Published { get; set; }

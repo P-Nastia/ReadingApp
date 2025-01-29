@@ -23,22 +23,17 @@ namespace DAL.Repositories
 
         public async Task AddComment(UserCommentEntity itemToAdd)
         {
-            var paragraph = await _dbContext.Paragraphs.Include(p => p.UserComments).FirstOrDefaultAsync(p => p.Id == itemToAdd.ParagraphId);
-            //var paragraph = await _dbContext.Paragraphs.inc
+            var paragraph = await _dbContext.Paragraphs.Include(p => p.UserComments).Include(p => p.Book).FirstOrDefaultAsync(p => p.Id == itemToAdd.ParagraphId);
+            
             if (paragraph != null)
             {
-                var book = await _dbContext.Books.Include(b=>b.Users).Include(b=>b.Paragraphs).FirstOrDefaultAsync(b => b.Id == paragraph.BookId);
+                var book = await _dbContext.Books.Include(b => b.Users).Include(b => b.Paragraphs).FirstOrDefaultAsync(b => b.Id == paragraph.BookId);
 
                 if (book != null)
                 {
                     await _dbContext.UsersComments.AddAsync(itemToAdd);
+                    paragraph.UserComments.Add(itemToAdd);
                     await _dbContext.SaveChangesAsync();
-                    var comment = await _dbContext.UsersComments.Where(uc => uc.Comment == itemToAdd.Comment && uc.UserId == itemToAdd.UserId).FirstOrDefaultAsync();
-                    if (comment != null)
-                    {
-                        paragraph.UserComments.Add(comment);
-                        await _dbContext.SaveChangesAsync();
-                    }
                 }
             }
         }
@@ -68,6 +63,7 @@ namespace DAL.Repositories
             {
                 var book = _dbContext.Books
                 .Where(b => b.Id == id)
+                .Include(b=>b.Users)
                 .Include(b => b.Paragraphs)
                 .ThenInclude(p => p.UserComments)
                         .ThenInclude(uc => uc.User)

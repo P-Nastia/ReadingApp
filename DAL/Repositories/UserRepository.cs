@@ -16,8 +16,12 @@ namespace DAL.Repositories
 
         public async Task Add(UserEntity item)
         {
-            await _dbContext.Users.AddAsync(item);
-            await _dbContext.SaveChangesAsync();
+            var user = _dbContext.Users.Include(b => b.Books).FirstOrDefaultAsync(u => u.Password == item.Password || u.Nickname == item.Nickname);
+            if (user == null)
+            {
+                await _dbContext.Users.AddAsync(item);
+                await _dbContext.SaveChangesAsync();
+            }
         }
 
         public async Task AddBook(UserEntity userEntity, BookEntity entity)
@@ -45,8 +49,11 @@ namespace DAL.Repositories
 
         public UserEntity GetById(int id)
         {
-            var user =  _dbContext.Users.FirstOrDefault(u => u.Id == id);
-            return user;
+            lock (this)
+            {
+                var user = _dbContext.Users.Include(u=>u.Books).FirstOrDefault(u => u.Id == id);
+                return user;
+            }
         }
 
         public async Task Remove(UserEntity item)
@@ -63,10 +70,13 @@ namespace DAL.Repositories
 
         public async Task RemoveBook(UserEntity userEntity, BookEntity entity)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(i => i.Id == userEntity.Id);
-            if (user != null)
+            var user = await _dbContext.Users.Include(u=>u.Books).FirstOrDefaultAsync(i => i.Id == userEntity.Id);
+            var book = await _dbContext.Books.Include(b => b.Users).Include(b => b.Paragraphs).FirstOrDefaultAsync(i => i.Id == entity.Id);
+            if (user != null && book != null)
             {
-                user.Books.Remove(entity);
+                user.Books.Remove(book);
+                book.Users.Remove(user);
+                await _dbContext.SaveChangesAsync();
             }
         }
     }
