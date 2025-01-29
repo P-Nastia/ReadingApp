@@ -13,9 +13,12 @@ namespace DAL.Entities
     {
         [Key]
         public int Id { get; set; }
-        public byte[] PdfData { get; set; }
+        //public byte[] PdfData { get; set; }
         [Required]
+        [StringLength(200)]
         public string Name { get; set; }
+        [Required]
+        [StringLength(200)]
         public string Author { get; set; }
         public ICollection<ParagraphEntity> Paragraphs { get; set; } 
         public ICollection<UserEntity> Users { get; set; }

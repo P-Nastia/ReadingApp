@@ -1,5 +1,8 @@
 ﻿using BLL.ModelsDTO;
 using BLL.Services;
+using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas.Parser;
+using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -19,21 +22,108 @@ namespace ApplicationUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private UserService us;
+        private BooksService bs;
         public MainWindow(UserService userService, BooksService bookService)
         {
             InitializeComponent();
-            UserService us = userService;
-            BooksService bs = bookService;
-            UserDTO user = new UserDTO()
+             us = userService;
+             bs = bookService;
+            //UserDTO user = new UserDTO()
+            //{
+            //    Email = "helloworld@gmail.com",
+            //    Password = "world",
+            //    Icon = File.ReadAllBytes("D:\\Викачування\\helena-lopes-S3TPJCOIRoo-unsplash-scaled.jpg"),
+            //    Nickname = "HelloWorld",
+            //    Phone = "+380967546832",
+            //    Books = new List<BookDTO>()
+            //};
+            //AddUser(user);
+            //var u = userService.GetById(1);
+
+            //string pdfPath = "D:\\nechuy-levytskyy-ivan-semenovych-kaydasheva-simia907 (1).pdf";  // Вкажіть шлях до вашого PDF файлу
+            //string text = "";
+
+            //try
+            //{
+            //    using (PdfReader reader = new PdfReader(pdfPath))
+            //    using (PdfDocument pdfDoc = new PdfDocument(reader))
+            //    {
+            //        for (int i = 1; i <= pdfDoc.GetNumberOfPages(); i++)
+            //        {
+            //            var page = pdfDoc.GetPage(i);
+            //            var strategy = new LocationTextExtractionStrategy();
+            //            var textFromPage = PdfTextExtractor.GetTextFromPage(page, strategy);
+            //            text += textFromPage;
+            //        }
+
+            //        List<string> paragraphs = text.Split(new[] { ".\n" }, StringSplitOptions.None).ToList();
+
+            //        //foreach (var p in paragraphs)
+            //        //{
+            //        //    AddRunToRichTextBox(p);
+            //        //}
+            //        //text = string.Join(".\n\n", paragraphs);
+
+            //        // Вивести зчитаний текст
+            //        BookDTO book = new BookDTO()
+            //        {
+            //            Author = "Іван Нечуй-Левицький",
+            //            Name = "Кайдашева сім'я",
+            //            Users = new List<UserDTO>(),
+            //            PdfData = File.ReadAllBytes(pdfPath)
+            //        };
+            //        List<ParagraphDTO> p = new List<ParagraphDTO>();
+            //        foreach (var par in paragraphs)
+            //        {
+            //            p.Add(new ParagraphDTO() { Text = par, Book = book, UserComments = new List<UserCommentDTO>() });
+            //        }
+            //        book.Paragraphs = p;
+
+            //        //AddBook(book);
+            //        AddUserBook(u, book);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show($"Error: {ex.Message}");
+            //}
+            var user = us.GetById(3);
+            var book = bs.GetBook(3);
+            AddUserBook(user, book);
+            UserCommentDTO uc = new UserCommentDTO()
             {
-                Email = "jhkjsdhfg@gmail.com",
-                Password = "1234",
-                Icon = File.ReadAllBytes("D:\\Викачування\\photo_2025-01-11_20-20-25.jpg"),
-                Nickname = "Bumblebee",
-                Phone = "+380678451264",
-                Books = new List<BookDTO>()
+                ParagraphId = book.Paragraphs.ElementAt(2).Id,
+                Comment = "Думаю, буде цікаво читати",
+                Published = DateTime.Today,
+                UserId = user.Id
             };
-            userService.Add(user);
+            //AddComment(uc);
+
+        }
+        private async Task AddBook(BookDTO book)
+        {
+            //string pdfPath = "D:\\_OceanofPDF.com_Claiming_His_Princess_A_Beauty_n_the_Beast_Romance_-_Parker_Grey.pdf";  // Вкажіть шлях до вашого PDF файлу
+            await bs.AddBook(book);
+            
+        }
+        private async Task AddUserBook(UserDTO user,BookDTO book)
+        {
+            //string pdfPath = "D:\\_OceanofPDF.com_Claiming_His_Princess_A_Beauty_n_the_Beast_Romance_-_Parker_Grey.pdf";  // Вкажіть шлях до вашого PDF файлу
+            await us.AddBook(user, book);
+
+        }
+        private async Task AddUser(UserDTO user)
+        {
+            //string pdfPath = "D:\\_OceanofPDF.com_Claiming_His_Princess_A_Beauty_n_the_Beast_Romance_-_Parker_Grey.pdf";  // Вкажіть шлях до вашого PDF файлу
+            await us.Add(user);
+
+        }
+        private async Task AddComment(UserCommentDTO uc)
+        {
+            //string pdfPath = "D:\\_OceanofPDF.com_Claiming_His_Princess_A_Beauty_n_the_Beast_Romance_-_Parker_Grey.pdf";  // Вкажіть шлях до вашого PDF файлу
+            await bs.AddComment(uc);
+
         }
     }
 }

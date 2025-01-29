@@ -10,7 +10,7 @@ namespace BLL.ModelsDTO
     public class BookDTO
     {
         public int Id { get; set; }
-        public byte[] PdfData { get; set; }
+        //public byte[] PdfData { get; set; }
         public string Name { get; set; }
         public string Author { get; set; }
         public ICollection<ParagraphDTO> Paragraphs { get; set; }

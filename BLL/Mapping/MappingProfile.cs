@@ -32,13 +32,12 @@ namespace BLL.Mapping
 
             CreateMap<UserCommentDTO, UserCommentEntity>()
                 .ForMember(x => x.UserId, opt => opt.MapFrom(x => x.UserId))
-                .ForMember(x => x.User, opt => opt.MapFrom(x => x.User))
+                .ForMember(x => x.User, opt => opt.Ignore())
                 .ForMember(x => x.ParagraphId, opt => opt.MapFrom(x => x.ParagraphId))
-                .ForMember(x => x.Paragraph, opt => opt.MapFrom(x => x.Paragraph));
+                .ForMember(x => x.Paragraph, opt => opt.Ignore());
 
             CreateMap<UserDTO, UserEntity>()
-                .ForMember(x => x.Books, opt => opt.Ignore())
-                .ForMember(x=>x.Id,opt=>opt.Ignore());
+                .ForMember(x => x.Books, opt => opt.Ignore());
         }
 
         private void EntitiesToDTOs()

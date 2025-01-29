@@ -16,7 +16,7 @@ namespace DAL
         public DbSet<UserCommentEntity> UsersComments { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=ep-aged-flower-a2ncptd2-pooler.eu-central-1.aws.neon.tech;Database=ReadAppDB;Username=neondb_owner;Password=npg_s4djBoW3QPgw");
+            optionsBuilder.UseNpgsql("Server=localhost;Port=5432;Database=postgres;User Id=postgres;Password=Nastia_^2008;");
         }
     }
 }

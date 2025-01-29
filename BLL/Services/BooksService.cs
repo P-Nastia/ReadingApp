@@ -19,7 +19,7 @@ namespace BLL.Services
         private IMapper _mapper;
         public BooksService(IBookRepository<BookEntity, ParagraphEntity, UserCommentEntity> repository)
         {
-            AppDBContext context = new AppDBContext();
+            //AppDBContext context = new AppDBContext();
             _bookRepository = repository;
             var configuration = new MapperConfiguration(c =>
             {
@@ -34,11 +34,11 @@ namespace BLL.Services
             await _bookRepository.AddBook(book);
         }
 
-        public async Task AddComment(ParagraphDTO itemTo, UserCommentDTO itemToAdd)
+        public async Task AddComment(UserCommentDTO itemToAdd)
         {
-            var paragraph = _mapper.Map<ParagraphDTO, ParagraphEntity>(itemTo);
+            //var paragraph = _mapper.Map<ParagraphDTO, ParagraphEntity>(itemTo);
             var comment = _mapper.Map<UserCommentDTO, UserCommentEntity>(itemToAdd);
-            await _bookRepository.AddComment(paragraph, comment);
+            await _bookRepository.AddComment(comment);
         }
 
         public async Task DeleteComment(UserCommentDTO item)

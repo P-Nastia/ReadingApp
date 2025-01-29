@@ -22,11 +22,12 @@ namespace DAL.Repositories
 
         public async Task AddBook(UserEntity userEntity, BookEntity entity)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userEntity.Id);
-            var book = await _dbContext.Books.FirstOrDefaultAsync(b => b.Name == entity.Name && b.Author == entity.Author);
+            var user = await _dbContext.Users.Include(u=>u.Books).FirstOrDefaultAsync(u => u.Id == userEntity.Id);
+            var book = await _dbContext.Books.Include(b=>b.Users).Include(p=>p.Paragraphs).ThenInclude(p=>p.UserComments).FirstOrDefaultAsync(b => b.Name == entity.Name && b.Author == entity.Author);
             if (user != null && book != null)
             {
                 user.Books.Add(book);
+                book.Users.Add(user);
                 await _dbContext.SaveChangesAsync();
             }
         }

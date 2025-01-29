@@ -19,7 +19,7 @@ namespace BLL.Services
         private IMapper _mapper;
         public UserService(IUserRepository<BookEntity, UserEntity> repository)
         {
-            AppDBContext context = new AppDBContext();
+            //AppDBContext context = new AppDBContext();
             _userRepository = repository;
             var configuration = new MapperConfiguration(c =>
             {
