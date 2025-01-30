@@ -1,4 +1,5 @@
-﻿using BLL.ModelsDTO;
+﻿using ApplicationUI.ViewModels;
+using BLL.ModelsDTO;
 using BLL.Services;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
@@ -22,13 +23,14 @@ namespace ApplicationUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private UserService us;
-        private BooksService bs;
-        public MainWindow(UserService userService, BooksService bookService)
+        //private UserService us;
+        //private BooksService bs;
+        public MainWindow(PageViewModel pageViewModel)
         {
             InitializeComponent();
-             us = userService;
-             bs = bookService;
+            this.DataContext = pageViewModel;
+             //us = userService;
+             //bs = bookService;
             //UserDTO user = new UserDTO()
             //{
             //    Email = "helloworld@gmail.com",
@@ -87,9 +89,9 @@ namespace ApplicationUI
             //{
             //    MessageBox.Show($"Error: {ex.Message}");
             //}
-            var user = us.GetById(2);
-            var book = bs.GetBook(1);
-            us.RemoveBook(user, book);
+            //var user = us.GetById(2);
+            //var book = bs.GetBook(1);
+            //us.RemoveBook(user, book);
             //AddUserBook(user, book);
             //UserCommentDTO uc = new UserCommentDTO()
             //{
