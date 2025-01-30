@@ -5,8 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApplicationUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Image x:Name="image">
-
-    </Image>
+        Title="MainWindow" Height="700" Width="1000">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.3*"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <ListBox>
+            <ListBoxItem Height="80">
+                <Button Command="{Binding MyLibraryPage}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Images/myProfile.png" Height="70" Width="70"></Image>
+                        <TextBlock>Hello</TextBlock>
+                    </StackPanel>
+                </Button>
+            </ListBoxItem>
+        </ListBox>
+    </Grid>
 </Window>

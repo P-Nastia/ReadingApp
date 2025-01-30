@@ -125,7 +125,7 @@ namespace ApplicationUI
         private async Task AddBook(BookDTO book)
         {
             //string pdfPath = "D:\\_OceanofPDF.com_Claiming_His_Princess_A_Beauty_n_the_Beast_Romance_-_Parker_Grey.pdf";  // Вкажіть шлях до вашого PDF файлу
-            await bs.AddBook(book);
+            //await bs.AddBook(book);
             
         }
         private async Task AddUserBook(UserDTO user,BookDTO book)
@@ -133,20 +133,20 @@ namespace ApplicationUI
             //string pdfPath = "D:\\_OceanofPDF.com_Claiming_His_Princess_A_Beauty_n_the_Beast_Romance_-_Parker_Grey.pdf";  // Вкажіть шлях до вашого PDF файлу
             user.Books.Add(book);
             book.Users.Add(user);
-            await us.AddBook(user, book);
+            //await us.AddBook(user, book);
 
         }
         private async Task AddUser(UserDTO user)
         {
             
             //string pdfPath = "D:\\_OceanofPDF.com_Claiming_His_Princess_A_Beauty_n_the_Beast_Romance_-_Parker_Grey.pdf";  // Вкажіть шлях до вашого PDF файлу
-            await us.Add(user);
+            //await us.Add(user);
 
         }
         private async Task AddComment(UserCommentDTO uc)
         {
             //string pdfPath = "D:\\_OceanofPDF.com_Claiming_His_Princess_A_Beauty_n_the_Beast_Romance_-_Parker_Grey.pdf";  // Вкажіть шлях до вашого PDF файлу
-            await bs.AddComment(uc);
+            //await bs.AddComment(uc);
 
         }
     }

@@ -1,4 +1,5 @@
-﻿using BLL.Configurations;
+﻿using ApplicationUI.ViewModels;
+using BLL.Configurations;
 using BLL.Interfaces;
 using BLL.ModelsDTO;
 using BLL.Services;
@@ -29,6 +30,7 @@ namespace ApplicationUI
             services.AddTransient(typeof(IBookService<BookDTO, ParagraphDTO, UserCommentDTO>),typeof(BooksService));
             services.AddTransient(typeof(UserService));
             services.AddTransient(typeof(BooksService));
+            services.AddTransient(typeof(PageViewModel));
             services.AddTransient(typeof(MainWindow));
 
             ConfigurationBLL.ConfigureServiceCollection(services);
