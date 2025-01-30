@@ -1,4 +1,5 @@
 ﻿using ApplicationUI.ViewModels;
+using BLL.Interfaces;
 using BLL.ModelsDTO;
 using BLL.Services;
 using iText.Kernel.Pdf;
@@ -25,10 +26,10 @@ namespace ApplicationUI
     {
         //private UserService us;
         //private BooksService bs;
-        public MainWindow()
+        public MainWindow(IUserService<BookDTO, UserDTO> userService,IBookService<BookDTO,ParagraphDTO,UserCommentDTO> bookService,LoginPageVM loginPageVM)
         {
             InitializeComponent();
-            PageViewModel pageViewModel = new PageViewModel(this);
+            PageViewModel pageViewModel = new PageViewModel(this,userService,bookService,loginPageVM);
             this.DataContext = pageViewModel;
              //us = userService;
              //bs = bookService;

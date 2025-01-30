@@ -1,5 +1,8 @@
 ﻿using ApplicationUI.Commands;
 using ApplicationUI.Pages;
+using ApplicationUI.Statics;
+using BLL.Interfaces;
+using BLL.ModelsDTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,21 +21,26 @@ namespace ApplicationUI.ViewModels
         private AllBooksPage _allBooksPage;
         private ReadBookPage _readBookPage;
         private LoginPage _loginPage;
-        private SignupPage _signUpPage;
+        //private SignupPage _signUpPage;
         private MyLibraryPage _myLibraryPage;
 
         private Page _currentPage;
+        public IUserService<BookDTO, UserDTO> userService;
+        public IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService;
+
+        private LoginPageVM _loginPageVM;
 
         private bool _isLoggedIn;
         public bool IsLoggedIn
         {
-            get { return _isLoggedIn; }
+            get { return StaticUser.IsLoggedIn; }
             set
             {
-                if(_isLoggedIn != value)
+                if(StaticUser.IsLoggedIn != value)
                 {
-                    _isLoggedIn = value;
-                    OnNotifyPropertyChanged(nameof(IsLoggedIn));
+                    StaticUser.IsLoggedIn = value;
+                    _currentPage = _myLibraryPage;
+                    OnNotifyPropertyChanged(nameof(StaticUser.IsLoggedIn));
                 }
             }
         }
@@ -53,9 +61,14 @@ namespace ApplicationUI.ViewModels
             }
         }
 
-        public PageViewModel(MainWindow mainWindow)
+        public PageViewModel(MainWindow mainWindow, IUserService<BookDTO, UserDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService,LoginPageVM loginPageVM)
         {
+            this.userService = userService;
+            this.bookService = bookService;
+            this._loginPageVM = loginPageVM;
+            this._loginPage = new LoginPage(loginPageVM);
             this.CurrentPage = _loginPage;
+            RunWhileLoggin();
         }
         public ICommand ShowLoginPage
         {
@@ -64,12 +77,21 @@ namespace ApplicationUI.ViewModels
                 return new BaseCommand(obj => CurrentPage = _loginPage);
             }
         }
-        public ICommand ShowSignupPage
+        private async Task RunWhileLoggin()
         {
-            get
+            await Task.Run(() =>
             {
-                return new BaseCommand(obj => CurrentPage = _signUpPage);
-            }
+                while (StaticUser.IsLoggedIn == false)
+                {
+                    if (StaticUser.IsLoggedIn == true)
+                    {
+                        this.CurrentPage = _myLibraryPage;
+                        OnNotifyPropertyChanged(nameof(StaticUser.IsLoggedIn));
+                        OnNotifyPropertyChanged("CurrentPage");
+                        break;
+                    }
+                }
+            });
         }
         public ICommand ShowAllBooksPage
         {
