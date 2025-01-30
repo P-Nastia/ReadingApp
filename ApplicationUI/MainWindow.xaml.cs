@@ -25,9 +25,10 @@ namespace ApplicationUI
     {
         //private UserService us;
         //private BooksService bs;
-        public MainWindow(PageViewModel pageViewModel)
+        public MainWindow()
         {
             InitializeComponent();
+            PageViewModel pageViewModel = new PageViewModel(this);
             this.DataContext = pageViewModel;
              //us = userService;
              //bs = bookService;
@@ -149,5 +150,6 @@ namespace ApplicationUI
             //await bs.AddComment(uc);
 
         }
+
     }
 }

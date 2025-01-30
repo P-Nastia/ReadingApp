@@ -5,21 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApplicationUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1000">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.3*"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <ListBox>
-            <ListBoxItem Height="80">
-                <Button Command="{Binding MyLibraryPage}">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="Images/myProfile.png" Height="70" Width="70"></Image>
-                        <TextBlock>Hello</TextBlock>
-                    </StackPanel>
+        Title="MainWindow" Height="700" Width="1200">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#FF443434"/>
+        </Style>
+        <Style TargetType="Border">
+            <Setter Property="CornerRadius" Value="20"></Setter>
+            <Setter Property="BorderThickness" Value="5"></Setter>
+            <Setter Property="BorderBrush" Value="WhiteSmoke"></Setter>
+            <Setter Property="Background" Value="White"></Setter>
+            <Setter Property="Margin" Value="5"></Setter>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="Margin" Value="10,5"></Setter>
+            <Setter Property="FontFamily" Value="Arial"></Setter>
+        </Style>
+    </Window.Resources>
+    <Border>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Background="#FF443434">
+                <Button Command="{Binding ShowMyLibraryPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
+                    <Border >
+                        <StackPanel Orientation="Horizontal" Width="230">
+                            <Image Source="D:\VisualStudioProjects\Network_programming\ReadingApp\ApplicationUI\Images\myProfile.png" Height="70" Width="70"></Image>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"> My books</TextBlock>
+                        </StackPanel>
+                    </Border>
                 </Button>
-            </ListBoxItem>
-        </ListBox>
-    </Grid>
+                <Button Command="{Binding ShowAllBooksPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
+                    <Border >
+                        <StackPanel Orientation="Horizontal" Width="230">
+                            <Image Source="D:\VisualStudioProjects\Network_programming\ReadingApp\ApplicationUI\Images\libraryPageImage.png" Height="70" Width="70"></Image>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Library</TextBlock>
+                        </StackPanel>
+                    </Border>
+                </Button>
+            </StackPanel>
+            <Frame Grid.Column="1" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden"></Frame>
+        </Grid>
+    </Border>
 </Window>

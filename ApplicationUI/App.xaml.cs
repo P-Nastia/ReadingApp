@@ -30,7 +30,9 @@ namespace ApplicationUI
             services.AddTransient(typeof(IBookService<BookDTO, ParagraphDTO, UserCommentDTO>),typeof(BooksService));
             services.AddTransient(typeof(UserService));
             services.AddTransient(typeof(BooksService));
+            services.AddTransient(typeof(LoginPageVM));
             services.AddTransient(typeof(PageViewModel));
+            
             services.AddTransient(typeof(MainWindow));
 
             ConfigurationBLL.ConfigureServiceCollection(services);

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace ApplicationUI.Pages
 {
     /// <summary>
-    /// Interaction logic for CommentsPage.xaml
+    /// Interaction logic for ReadBookPage.xaml
     /// </summary>
-    public partial class CommentsPage : Page
+    public partial class ReadBookPage : Page
     {
-        public CommentsPage()
+        public ReadBookPage()
         {
             InitializeComponent();
         }
