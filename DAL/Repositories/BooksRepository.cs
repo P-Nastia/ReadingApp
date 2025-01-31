@@ -15,10 +15,11 @@ namespace DAL.Repositories
         private AppDBContext _dbContext;
         public BooksRepository(AppDBContext dBContext) { _dbContext = dBContext; }
 
-        public async Task AddBook(BookEntity item)
+        public void AddBook(BookEntity item)
         {
-            await _dbContext.Books.AddAsync(item);
-            await _dbContext.SaveChangesAsync();
+            AppDBContext tempDB = new AppDBContext();
+            tempDB.Books.Add(item);
+            tempDB.SaveChanges();
         }
 
         public async Task AddComment(UserCommentEntity itemToAdd)

@@ -28,10 +28,10 @@ namespace BLL.Services
             _mapper = configuration.CreateMapper();
         }
 
-        public async Task AddBook(BookDTO item)
+        public void AddBook(BookDTO item)
         {
             var book = _mapper.Map<BookDTO, BookEntity>(item);
-            await _bookRepository.AddBook(book);
+            _bookRepository.AddBook(book);
         }
 
         public async Task AddComment(UserCommentDTO itemToAdd)
