@@ -21,10 +21,21 @@ namespace ApplicationUI.Pages
     /// </summary>
     public partial class LoginPage : Page
     {
+        private LoginPageVM _loginPageVM;
         public LoginPage(LoginPageVM loginPageVM)
         {
             InitializeComponent();
-            this.DataContext = loginPageVM;
+            _loginPageVM = loginPageVM;
+            this.DataContext = _loginPageVM;
+        }
+
+        private void logInClick(object sender, MouseButtonEventArgs e)
+        {
+            _loginPageVM.Login();
+        }
+        private void signUpClick(object sender, MouseButtonEventArgs e)
+        {
+            _loginPageVM.SignUp();
         }
     }
 }

@@ -32,7 +32,7 @@
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
         </Style>
     </Page.Resources>
-    <Grid Background="#FF3C2F2F" Margin="20">
+    <Grid Background="#FF3C2F2F" Margin="80,20">
         <Grid.RowDefinitions>
             <RowDefinition Height="2.*"></RowDefinition>
             <RowDefinition></RowDefinition>
@@ -48,7 +48,7 @@
         <TextBox Text="{Binding Path=Nickname}" Grid.Row="1" Grid.Column="1"></TextBox>
         <TextBlock Grid.Row="2" Grid.Column="0">Password:</TextBlock>
         <TextBox Text="{Binding Password}" Grid.Row="2" Grid.Column="1"></TextBox>
-        <Button Grid.Row="3" Grid.Column="0" Command="{Binding CommandLogin}" Height="50"></Button>
-        <Image Grid.Row="3" Grid.Column="0" Width="250" Height="200" VerticalAlignment="Center" Source="D:\VisualStudioProjects\Network_programming\ReadingApp\ApplicationUI\Images\login.png"></Image>
+        <Image Grid.Row="3" Grid.Column="0" Width="250" Height="200" VerticalAlignment="Center" Cursor="Hand" Source="D:\VisualStudioProjects\Network_programming\ReadingApp\ApplicationUI\Images\login.png" MouseLeftButtonUp="logInClick"></Image>
+        <Image Grid.Row="3" Grid.Column="1" Width="500" Height="200" VerticalAlignment="Center" Cursor="Hand" Source="D:\VisualStudioProjects\Network_programming\ReadingApp\ApplicationUI\Images\signUp.png" MouseLeftButtonUp="signUpClick"></Image>
     </Grid>
 </Page>

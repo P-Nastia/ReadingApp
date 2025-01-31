@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApplicationUI.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,10 @@ namespace ApplicationUI.Pages
     /// </summary>
     public partial class SignupPage : Page
     {
-        public SignupPage()
+        public SignupPage(SignupPageVM signupPageVM)
         {
             InitializeComponent();
+            this.DataContext = signupPageVM;
         }
     }
 }

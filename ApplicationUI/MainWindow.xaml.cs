@@ -1,4 +1,5 @@
-﻿using ApplicationUI.ViewModels;
+﻿using ApplicationUI.Pages;
+using ApplicationUI.ViewModels;
 using BLL.Interfaces;
 using BLL.ModelsDTO;
 using BLL.Services;
@@ -26,10 +27,10 @@ namespace ApplicationUI
     {
         //private UserService us;
         //private BooksService bs;
-        public MainWindow(IUserService<BookDTO, UserDTO> userService,IBookService<BookDTO,ParagraphDTO,UserCommentDTO> bookService,LoginPageVM loginPageVM)
+        public MainWindow(IUserService<BookDTO, UserDTO> userService,IBookService<BookDTO,ParagraphDTO,UserCommentDTO> bookService,LoginPageVM loginPageVM,SignupPageVM signupPageVM)
         {
             InitializeComponent();
-            PageViewModel pageViewModel = new PageViewModel(this,userService,bookService,loginPageVM);
+            PageViewModel pageViewModel = new PageViewModel(this,userService,bookService,loginPageVM,signupPageVM);
             this.DataContext = pageViewModel;
              //us = userService;
              //bs = bookService;

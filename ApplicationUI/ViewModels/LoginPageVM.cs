@@ -22,7 +22,7 @@ namespace ApplicationUI.ViewModels
         private IUserService<BookDTO, UserDTO> _userService;
         public string Nickname { get; set; }
         public string Password { get; set; }
-        public BaseCommand CommandLogin => new BaseCommand(execute => Login(), canExecute => Nickname != null && Password != null);
+        //public BaseCommand CommandLogin => new BaseCommand(execute => Login(), canExecute => Nickname != null && Password != null);
         public void OnNotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
             if (PropertyChanged != null)
@@ -34,19 +34,25 @@ namespace ApplicationUI.ViewModels
         {
             _userService = userService;
         }
-        private void Login()
+        public void Login()
         {
-            var users = _userService.GetAll();
-            foreach(var user in users)
+            if (Nickname != null && Password != null)
             {
-                if(user.Password == Password && user.Nickname == Nickname)
+                var users = _userService.GetAll();
+                foreach (var user in users)
                 {
-                    StaticUser.User = user;
-                    StaticUser.IsLoggedIn = true;
-                    MessageBox.Show("Logged in");
-                    break;
+                    if (user.Password == Password && user.Nickname == Nickname)
+                    {
+                        StaticUser.User = user;
+                        StaticUser.IsLoggedIn = true;
+                        MessageBox.Show("Logged in");
+                        break;
+                    }
                 }
             }
+        }
+        public void SignUp() {
+            StaticUser.UserNeedsToSignUp = true;
         }
     }
 }

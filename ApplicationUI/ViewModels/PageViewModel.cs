@@ -21,7 +21,7 @@ namespace ApplicationUI.ViewModels
         private AllBooksPage _allBooksPage;
         private ReadBookPage _readBookPage;
         private LoginPage _loginPage;
-        //private SignupPage _signUpPage;
+        private SignupPage _signUpPage;
         private MyLibraryPage _myLibraryPage;
 
         private Page _currentPage;
@@ -61,12 +61,13 @@ namespace ApplicationUI.ViewModels
             }
         }
 
-        public PageViewModel(MainWindow mainWindow, IUserService<BookDTO, UserDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService,LoginPageVM loginPageVM)
+        public PageViewModel(MainWindow mainWindow, IUserService<BookDTO, UserDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService,LoginPageVM loginPageVM,SignupPageVM signupPageVM)
         {
             this.userService = userService;
             this.bookService = bookService;
             this._loginPageVM = loginPageVM;
             this._loginPage = new LoginPage(loginPageVM);
+            this._signUpPage = new SignupPage(signupPageVM);
             this.CurrentPage = _loginPage;
             RunWhileLoggin();
         }
@@ -89,6 +90,11 @@ namespace ApplicationUI.ViewModels
                         OnNotifyPropertyChanged(nameof(StaticUser.IsLoggedIn));
                         OnNotifyPropertyChanged("CurrentPage");
                         break;
+                    }
+                    else if(StaticUser.UserNeedsToSignUp == true)
+                    {
+                        this.CurrentPage = _signUpPage;
+                        OnNotifyPropertyChanged("CurrentPage");
                     }
                 }
             });
