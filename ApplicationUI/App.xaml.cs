@@ -32,6 +32,8 @@ namespace ApplicationUI
             services.AddTransient(typeof(BooksService));
             services.AddTransient(typeof(SignupPageVM));
             services.AddTransient(typeof(LoginPageVM));
+            services.AddTransient(typeof(MyLibraryPageVM));
+            services.AddTransient(typeof(AllBooksPageVM));
             services.AddTransient(typeof(PageViewModel));
             
             services.AddTransient(typeof(MainWindow));

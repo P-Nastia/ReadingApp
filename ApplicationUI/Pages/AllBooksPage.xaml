@@ -5,10 +5,27 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ApplicationUI.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="800" d:DesignWidth="800"
       Title="AllBooksPage">
 
-    <Grid>
-        
+    <Grid Margin="20" Background="#FF3C2F2F">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="0.1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBox Grid.Column="0" Grid.Row="0" Margin="20" FontSize="30" VerticalAlignment="Center" Text="{Binding SearchString}"></TextBox>
+        <Button Grid.Column="1" Grid.Row="0" Background="Transparent" IsEnabled="True" Command="{Binding SearchCommand}">
+            <Image Cursor="Hand" Source="D:\VisualStudioProjects\Network_programming\ReadingApp\ApplicationUI\Images\searchButton.png"></Image>
+        </Button>
+
+        <TextBox Grid.Column="0" Grid.Row="1" Background="WhiteSmoke" VerticalAlignment="Center" FontSize="30" Margin="20" Text="{Binding Response}"></TextBox>
+        <Button Grid.Column="1" Grid.Row="1" Background="Transparent" IsEnabled="{Binding CanDownload}" Command="{Binding DownloadCommand}">
+            <Image Source="D:\VisualStudioProjects\Network_programming\ReadingApp\ApplicationUI\Images\downloadImage.png"></Image>
+        </Button>
     </Grid>
 </Page>

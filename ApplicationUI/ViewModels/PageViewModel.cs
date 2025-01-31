@@ -28,8 +28,6 @@ namespace ApplicationUI.ViewModels
         public IUserService<BookDTO, UserDTO> userService;
         public IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService;
 
-        private LoginPageVM _loginPageVM;
-
         private readonly bool _isLoggedIn;
         public bool IsLoggedIn
         {
@@ -61,13 +59,14 @@ namespace ApplicationUI.ViewModels
             }
         }
 
-        public PageViewModel(MainWindow mainWindow, IUserService<BookDTO, UserDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService,LoginPageVM loginPageVM,SignupPageVM signupPageVM)
+        public PageViewModel(MainWindow mainWindow, IUserService<BookDTO, UserDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService,LoginPageVM loginPageVM,SignupPageVM signupPageVM,MyLibraryPageVM myLibraryPageVM,AllBooksPageVM allBooksPageVM)
         {
             this.userService = userService;
             this.bookService = bookService;
-            this._loginPageVM = loginPageVM;
             this._loginPage = new LoginPage(loginPageVM);
             this._signUpPage = new SignupPage(signupPageVM);
+            this._myLibraryPage = new MyLibraryPage(myLibraryPageVM);
+            this._allBooksPage = new AllBooksPage(allBooksPageVM);
             this.CurrentPage = _loginPage;
             RunWhileLoggin();
         }
@@ -86,9 +85,6 @@ namespace ApplicationUI.ViewModels
                 {
                     if (StaticUser.IsLoggedIn == true)
                     {
-                        this.CurrentPage = _myLibraryPage;
-                        OnNotifyPropertyChanged(nameof(StaticUser.IsLoggedIn));
-                        OnNotifyPropertyChanged("CurrentPage");
                         break;
                     }
                     else if(StaticUser.UserNeedsToSignUp == true)
@@ -96,6 +92,12 @@ namespace ApplicationUI.ViewModels
                         this.CurrentPage = _signUpPage;
                         OnNotifyPropertyChanged("CurrentPage");
                     }
+                }
+                if (StaticUser.IsLoggedIn == true)
+                {
+                    this.CurrentPage = _myLibraryPage;
+                    OnNotifyPropertyChanged(nameof(StaticUser.IsLoggedIn));
+                    OnNotifyPropertyChanged("CurrentPage");
                 }
             });
         }

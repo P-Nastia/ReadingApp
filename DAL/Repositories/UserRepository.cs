@@ -52,7 +52,7 @@ namespace DAL.Repositories
         {
             lock (this)
             {
-                var user = _dbContext.Users.Include(u=>u.Books).FirstOrDefault(u => u.Id == id);
+                var user = _dbContext.Users.Include(u=>u.Books).ThenInclude(b=>b.Paragraphs).ThenInclude(b=>b.UserComments).ThenInclude(uc=>uc.User).FirstOrDefault(u => u.Id == id);
                 return user;
             }
         }

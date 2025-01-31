@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApplicationUI.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,12 @@ namespace ApplicationUI.Pages
     /// </summary>
     public partial class AllBooksPage : Page
     {
-        public AllBooksPage()
+        private AllBooksPageVM _allBooksPageVM;
+        public AllBooksPage(AllBooksPageVM allBooksPageVM)
         {
             InitializeComponent();
+            _allBooksPageVM = allBooksPageVM;
+            this.DataContext = _allBooksPageVM;
         }
     }
 }

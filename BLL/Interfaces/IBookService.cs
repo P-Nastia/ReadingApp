@@ -12,6 +12,8 @@ namespace BLL.Interfaces
         Task AddComment(T3 itemToAdd);
         Task DeleteComment(T3 item);
         T1 GetBook(int id);
+        IEnumerable<T1> GetAll();
+        T1 GetByNameAndAuthor(string name, string author);
     }
 
 }

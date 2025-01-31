@@ -5,6 +5,7 @@ using BLL.ModelsDTO;
 using DAL;
 using DAL.Entities;
 using DAL.Interfaces;
+using DAL.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,10 +46,26 @@ namespace BLL.Services
             await _bookRepository.DeleteComment(comment);
         }
 
+        public IEnumerable<BookDTO> GetAll()
+        {
+            var list = new List<BookDTO>();
+            foreach (var en in _bookRepository.GetAll())
+            {
+                list.Add(_mapper.Map<BookEntity, BookDTO>(en));
+            }
+            return list;
+        }
+
         public BookDTO GetBook(int id)
         {
             var book = _mapper.Map<BookEntity, BookDTO>(_bookRepository.GetBook(id));
             return book; 
+        }
+
+        public BookDTO GetByNameAndAuthor(string name, string author)
+        {
+            var book = _mapper.Map<BookEntity, BookDTO>(_bookRepository.GetByNameAndAuthor(name,author));
+            return book;
         }
     }
 }

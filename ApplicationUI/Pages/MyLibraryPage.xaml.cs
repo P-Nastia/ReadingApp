@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApplicationUI.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,12 @@ namespace ApplicationUI.Pages
     /// </summary>
     public partial class MyLibraryPage : Page
     {
-        public MyLibraryPage()
+        private MyLibraryPageVM _myLibraryPageVM;
+        public MyLibraryPage(MyLibraryPageVM myLibraryPageVM)
         {
             InitializeComponent();
+            _myLibraryPageVM = myLibraryPageVM;
+            this.DataContext = _myLibraryPageVM;
         }
     }
 }

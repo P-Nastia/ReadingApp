@@ -27,13 +27,13 @@ namespace ApplicationUI
     {
         //private UserService us;
         //private BooksService bs;
-        public MainWindow(IUserService<BookDTO, UserDTO> userService,IBookService<BookDTO,ParagraphDTO,UserCommentDTO> bookService,LoginPageVM loginPageVM,SignupPageVM signupPageVM)
+        public MainWindow(IUserService<BookDTO, UserDTO> userService,IBookService<BookDTO,ParagraphDTO,UserCommentDTO> bookService,LoginPageVM loginPageVM,SignupPageVM signupPageVM, MyLibraryPageVM myLibraryPageVM,AllBooksPageVM allBooksPageVM)
         {
             InitializeComponent();
-            PageViewModel pageViewModel = new PageViewModel(this,userService,bookService,loginPageVM,signupPageVM);
+            PageViewModel pageViewModel = new PageViewModel(this,userService,bookService,loginPageVM,signupPageVM, myLibraryPageVM,allBooksPageVM);
             this.DataContext = pageViewModel;
-             //us = userService;
-             //bs = bookService;
+            //us = userService;
+            //bs = bookService;
             //UserDTO user = new UserDTO()
             //{
             //    Email = "helloworld@gmail.com",
