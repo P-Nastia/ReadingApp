@@ -56,37 +56,43 @@ namespace ApplicationUI.ViewModels
             if(IsInputCorrect() == true)
             {
                 var users = _userService.GetAll();
+                bool isUnique = true;
                 foreach (var user in users)
                 {
                     if (user.Password == Password && user.Nickname == Nickname)
                     {
                         MessageBox.Show("This user exists", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                        isUnique = false;
                         break;
                     }
                 }
-                UserDTO userDTO = new UserDTO()
+                if (isUnique == true)
                 {
-                    Password = this.Password,
-                    Nickname = this.Nickname,
-                    Phone = this.Phone,
-                    Email = this.Email,
-                    Icon = File.ReadAllBytes(this.Icon),
-                    Books = new List<BookDTO>()
-                };
-                _userService.Add(userDTO);
-                users = _userService.GetAll();
-                foreach (var user in users)
-                {
-                    if (user.Password == Password && user.Nickname == Nickname)
+                    UserDTO userDTO = new UserDTO()
                     {
-                        StaticUser.User = user;
-                        StaticUser.IsLoggedIn = true;
-                        break;
+                        Password = this.Password,
+                        Nickname = this.Nickname,
+                        Phone = this.Phone,
+                        Email = this.Email,
+                        Icon = File.ReadAllBytes(this.Icon),
+                        Books = new List<BookDTO>()
+                    };
+                    _userService.Add(userDTO);
+                    users = _userService.GetAll();
+                    foreach (var user in users)
+                    {
+                        if (user.Password == Password && user.Nickname == Nickname)
+                        {
+                            StaticUser.User = user;
+                            StaticUser.IsLoggedIn = true;
+                            StaticUser.UserNeedsToSignUp = false;
+                            break;
+                        }
                     }
-                }
-                if (StaticUser.IsLoggedIn == false)
-                {
-                    MessageBox.Show("User wasn`t registered", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    if (StaticUser.IsLoggedIn == false)
+                    {
+                        MessageBox.Show("User wasn`t registered", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
             else

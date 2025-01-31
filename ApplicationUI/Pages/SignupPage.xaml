@@ -17,24 +17,25 @@
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
         </Style>
         <Style TargetType="TextBox">
-            <Setter Property="FontSize" Value="40"></Setter>
+            <Setter Property="FontSize" Value="35"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="FontFamily" Value="Cooper Black"></Setter>
             <Setter Property="TextAlignment" Value="Center"></Setter>
             <Setter Property="Margin" Value="20"></Setter>
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Height" Value="50"></Setter>
         </Style>
     </Page.Resources>
     <Grid Background="#FF3C2F2F" Margin="80,20">
         <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.6*"></ColumnDefinition>

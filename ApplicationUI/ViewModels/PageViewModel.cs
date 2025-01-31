@@ -82,7 +82,7 @@ namespace ApplicationUI.ViewModels
         {
             await Task.Run(() =>
             {
-                while (StaticUser.IsLoggedIn == false)
+                while (StaticUser.IsLoggedIn == false || StaticUser.UserNeedsToSignUp == true)
                 {
                     if (StaticUser.IsLoggedIn == true)
                     {
