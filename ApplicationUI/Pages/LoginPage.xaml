@@ -24,13 +24,6 @@
             <Setter Property="Margin" Value="20"></Setter>
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
         </Style>
-        <Style TargetType="Button">
-            <Setter Property="FontSize" Value="40"></Setter>
-            <Setter Property="Foreground" Value="Black"></Setter>
-            <Setter Property="FontFamily" Value="Cooper Black"></Setter>
-            <Setter Property="Margin" Value="20"></Setter>
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-        </Style>
     </Page.Resources>
     <Grid Background="#FF3C2F2F" Margin="80,20">
         <Grid.RowDefinitions>

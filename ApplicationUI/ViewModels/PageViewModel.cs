@@ -30,7 +30,7 @@ namespace ApplicationUI.ViewModels
 
         private LoginPageVM _loginPageVM;
 
-        private bool _isLoggedIn;
+        private readonly bool _isLoggedIn;
         public bool IsLoggedIn
         {
             get { return StaticUser.IsLoggedIn; }

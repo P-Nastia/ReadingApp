@@ -21,10 +21,16 @@ namespace ApplicationUI.Pages
     /// </summary>
     public partial class SignupPage : Page
     {
+        SignupPageVM _signupPageVM;
         public SignupPage(SignupPageVM signupPageVM)
         {
             InitializeComponent();
-            this.DataContext = signupPageVM;
+            _signupPageVM = signupPageVM;
+            this.DataContext = _signupPageVM;
+        }
+        private void signUpClick(object sender, MouseButtonEventArgs e)
+        {
+            _signupPageVM.SignUp();
         }
     }
 }

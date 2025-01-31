@@ -22,7 +22,6 @@ namespace ApplicationUI.ViewModels
         private IUserService<BookDTO, UserDTO> _userService;
         public string Nickname { get; set; }
         public string Password { get; set; }
-        //public BaseCommand CommandLogin => new BaseCommand(execute => Login(), canExecute => Nickname != null && Password != null);
         public void OnNotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
             if (PropertyChanged != null)
@@ -45,9 +44,16 @@ namespace ApplicationUI.ViewModels
                     {
                         StaticUser.User = user;
                         StaticUser.IsLoggedIn = true;
-                        MessageBox.Show("Logged in");
                         break;
                     }
+                }
+                if(StaticUser.IsLoggedIn == false)
+                {
+                    MessageBox.Show("User doesn`t exist", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Nickname = string.Empty;
+                    Password = string.Empty;
+                    OnNotifyPropertyChanged("Nickname");
+                    OnNotifyPropertyChanged("Password");
                 }
             }
         }

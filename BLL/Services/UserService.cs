@@ -41,12 +41,13 @@ namespace BLL.Services
 
         public IEnumerable<UserDTO> GetAll()
         {
-            var list = new List<UserDTO>();
-            foreach(var en in _userRepository.GetAll())
-            {
-                list.Add(_mapper.Map<UserEntity, UserDTO>(en));
-            }
-            return list;
+            lock (this) {
+                var list = new List<UserDTO>();
+                foreach (var en in _userRepository.GetAll())
+                {
+                    list.Add(_mapper.Map<UserEntity, UserDTO>(en));
+                }
+                return list; }
         }
 
         public BookDTO GetBook(UserDTO entity, int id)

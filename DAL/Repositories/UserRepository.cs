@@ -16,12 +16,9 @@ namespace DAL.Repositories
 
         public async Task Add(UserEntity item)
         {
-            var user = _dbContext.Users.Include(b => b.Books).FirstOrDefaultAsync(u => u.Password == item.Password || u.Nickname == item.Nickname);
-            if (user == null)
-            {
-                await _dbContext.Users.AddAsync(item);
-                await _dbContext.SaveChangesAsync();
-            }
+            await _dbContext.Users.AddAsync(item);
+            await _dbContext.SaveChangesAsync();
+
         }
 
         public async Task AddBook(UserEntity userEntity, BookEntity entity)
@@ -38,7 +35,11 @@ namespace DAL.Repositories
 
         public IQueryable<UserEntity> GetAll()
         {
-            return _dbContext.Users.Include(u => u.Books);
+            lock (this)
+            {
+                AppDBContext tempDB = new AppDBContext();
+                return tempDB.Users.Include(u => u.Books);
+            }
         }
 
         public BookEntity GetBook(UserEntity entity, int id)
