@@ -50,7 +50,8 @@ namespace BLL.Mapping
             CreateMap<ParagraphEntity, ParagraphDTO>()
                 .ForMember(x => x.UserComments, opt => opt.MapFrom(x => x.UserComments))
                 .ForMember(x => x.BookId, opt => opt.MapFrom(x => x.BookId))
-                .ForMember(x => x.Book, opt => opt.MapFrom(x => x.Book));
+                .ForMember(x => x.Book, opt => opt.MapFrom(x => x.Book))
+                .ForMember(x => x.DisplayText, opt => opt.Ignore());
 
             CreateMap<UserCommentEntity, UserCommentDTO>()
                 .ForMember(x => x.UserId, opt => opt.MapFrom(x => x.UserId))

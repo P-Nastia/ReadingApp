@@ -15,8 +15,8 @@ namespace ApplicationUI.ViewModels
     public class MyLibraryPageVM : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        private IUserService<BookDTO, UserDTO> _userService;
-        private IBookService<BookDTO, ParagraphDTO, UserCommentDTO> _bookService;
+        public IUserService<BookDTO, UserDTO> _userService;
+        public IBookService<BookDTO, ParagraphDTO, UserCommentDTO> _bookService;
         private UserDTO _user;
         public BaseCommand ShowBooksCommand => new BaseCommand(execute => Show(), canExecute => true);
         public BaseCommand ReadBookCommand => new BaseCommand(execute => ShowReadBookPage(), canExecute => true);

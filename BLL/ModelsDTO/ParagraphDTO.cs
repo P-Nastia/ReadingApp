@@ -10,5 +10,6 @@ namespace BLL.ModelsDTO
         public int BookId { get; set; }
         public BookDTO Book { get; set; }
         public ICollection<UserCommentDTO> UserComments { get; set; }
+        public string DisplayText => Text;
     }
 }

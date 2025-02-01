@@ -1,4 +1,5 @@
 ﻿using ApplicationUI.ViewModels;
+using ApplicationUI.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,12 @@ namespace ApplicationUI.Pages
             InitializeComponent();
             _myLibraryPageVM = myLibraryPageVM;
             this.DataContext = _myLibraryPageVM;
+        }
+
+        private void btSwith_Click(object sender, RoutedEventArgs e)
+        {
+            ReadBookWindow readBookWindow = new ReadBookWindow(_myLibraryPageVM.SelectedBook,_myLibraryPageVM._bookService,_myLibraryPageVM._userService);
+            readBookWindow.ShowDialog();
         }
     }
 }

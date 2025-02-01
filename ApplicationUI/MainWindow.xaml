@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApplicationUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1300">
+        Title="MainWindow" Height="800" Width="1300" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Background" Value="#FF443434"/>
@@ -49,7 +49,7 @@
                     </Border>
                 </Button>
             </StackPanel>
-            <Frame Grid.Column="1" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden"></Frame>
+            <Frame x:Name="MainFrame" Grid.Column="1" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden"></Frame>
         </Grid>
     </Border>
 </Window>

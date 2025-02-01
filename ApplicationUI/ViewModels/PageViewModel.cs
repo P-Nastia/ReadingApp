@@ -19,10 +19,14 @@ namespace ApplicationUI.ViewModels
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         private AllBooksPage _allBooksPage;
-        private ReadBookPage _readBookPage;
         private LoginPage _loginPage;
         private SignupPage _signUpPage;
         private MyLibraryPage _myLibraryPage;
+
+        private AllBooksPageVM _allBooksPageVM;
+        private LoginPageVM _loginPageVM;
+        private SignupPageVM _signUpPageVM;
+        private MyLibraryPageVM _myLibraryPageVM;
 
         private Page _currentPage;
         public IUserService<BookDTO, UserDTO> userService;
@@ -63,6 +67,12 @@ namespace ApplicationUI.ViewModels
         {
             this.userService = userService;
             this.bookService = bookService;
+
+            this._loginPageVM = loginPageVM;
+            this._signUpPageVM = signupPageVM;
+            this._myLibraryPageVM = myLibraryPageVM;
+            this._allBooksPageVM = allBooksPageVM;
+
             this._loginPage = new LoginPage(loginPageVM);
             this._signUpPage = new SignupPage(signupPageVM);
             this._myLibraryPage = new MyLibraryPage(myLibraryPageVM);
@@ -113,13 +123,6 @@ namespace ApplicationUI.ViewModels
             get
             {
                 return new BaseCommand(obj => CurrentPage = _myLibraryPage);
-            }
-        }
-        public ICommand ShowReadBookPage
-        {
-            get
-            {
-                return new BaseCommand(obj => CurrentPage = _readBookPage);
             }
         }
     }
