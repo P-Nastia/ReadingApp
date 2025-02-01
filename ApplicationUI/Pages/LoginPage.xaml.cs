@@ -31,11 +31,17 @@ namespace ApplicationUI.Pages
 
         private void logInClick(object sender, MouseButtonEventArgs e)
         {
+            _loginPageVM.Password = this.passwordPB.Password;
             _loginPageVM.Login();
         }
         private void signUpClick(object sender, MouseButtonEventArgs e)
         {
             _loginPageVM.SignUp();
+        }
+
+        private void PasswordBox_TextInput(object sender, TextCompositionEventArgs e)
+        {
+           
         }
     }
 }

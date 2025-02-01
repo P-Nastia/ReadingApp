@@ -30,7 +30,13 @@ namespace ApplicationUI.Pages
         }
         private void signUpClick(object sender, MouseButtonEventArgs e)
         {
+            _signupPageVM.Password = this.passwordPB.Password;
             _signupPageVM.SignUp();
+        }
+
+        private void TextBox_TextInput(object sender, TextCompositionEventArgs e)
+        {
+
         }
     }
 }

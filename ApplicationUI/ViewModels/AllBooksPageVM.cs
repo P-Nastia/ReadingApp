@@ -49,10 +49,12 @@ namespace ApplicationUI.ViewModels
         {
             if (!String.IsNullOrWhiteSpace(SearchString) && !String.IsNullOrWhiteSpace(SearchString))
             {
+                var driverService = ChromeDriverService.CreateDefaultService();
+                driverService.HideCommandPromptWindow = true;
                 ChromeOptions options = new ChromeOptions();
                 options.AddArgument("--headless");
 
-                using (IWebDriver driver = new ChromeDriver(options))
+                using (IWebDriver driver = new ChromeDriver(driverService,options))
                 {
                     driver.Navigate().GoToUrl("https://www.ukrlib.com.ua/search.php?");
 
@@ -86,6 +88,8 @@ namespace ApplicationUI.ViewModels
         }
         private void Download()
         {
+            Response = String.Empty;
+            OnNotifyPropertyChanged("Response");
             ChromeOptions options = new ChromeOptions();
             downloadDirectory = Directory.GetCurrentDirectory() + $"\\Files";
             Directory.CreateDirectory(downloadDirectory);
@@ -94,7 +98,10 @@ namespace ApplicationUI.ViewModels
             options.AddUserProfilePreference("download.default_directory", downloadDirectory);
             options.AddUserProfilePreference("plugins.always_open_pdf_externally", true);
             options.AddUserProfilePreference("download.prompt_for_download", false);
-            using (IWebDriver driver = new ChromeDriver(options))
+
+            var driverService = ChromeDriverService.CreateDefaultService();
+            driverService.HideCommandPromptWindow = true;
+            using (IWebDriver driver = new ChromeDriver(driverService,options))
             {
                 
                 driver.Navigate().GoToUrl(href);
@@ -105,7 +112,7 @@ namespace ApplicationUI.ViewModels
                 {
                     var info = driver.FindElement(By.XPath("//*[@id=\"mm-0\"]/div[2]/div/div[4]/h2")).GetAttribute("innerText").Split(',');
                     var book = _bookService.GetByNameAndAuthor(info[1], info[0]);
-                    
+
                     if (book == null)
                     {
                         pdfSources.First().Click();
@@ -143,6 +150,9 @@ namespace ApplicationUI.ViewModels
                                 _bookService.AddBook(tempBook);
                                 var bookFromDB = _bookService.GetByNameAndAuthor(tempBook.Name, tempBook.Author);
                                 _userService.AddBook(StaticUser.User, bookFromDB);
+
+                                SearchString = String.Empty;
+                                OnNotifyPropertyChanged("SearchString");
                             }
                         }
                         catch (Exception ex)

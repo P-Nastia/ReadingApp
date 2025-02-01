@@ -24,6 +24,14 @@
             <Setter Property="Margin" Value="20"></Setter>
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
         </Style>
+        <Style TargetType="PasswordBox">
+            <Setter Property="FontSize" Value="40"></Setter>
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="FontFamily" Value="Cooper Black"></Setter>
+            <Setter Property="Margin" Value="20"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Padding" Value="10,2"></Setter>
+        </Style>
     </Page.Resources>
     <Grid Background="#FF3C2F2F" Margin="80,20">
         <Grid.RowDefinitions>
@@ -40,7 +48,7 @@
         <TextBlock Grid.Row="1" Grid.Column="0">Nickname:</TextBlock>
         <TextBox Text="{Binding Path=Nickname}" Grid.Row="1" Grid.Column="1"></TextBox>
         <TextBlock Grid.Row="2" Grid.Column="0">Password:</TextBlock>
-        <TextBox Text="{Binding Password}" Grid.Row="2" Grid.Column="1"></TextBox>
+        <PasswordBox x:Name="passwordPB" TextInput="PasswordBox_TextInput"  Grid.Row="2" Grid.Column="1"></PasswordBox>
         <Image Grid.Row="3" Grid.Column="0" Width="250" Height="200" VerticalAlignment="Center" Cursor="Hand" Source="D:\VisualStudioProjects\Network_programming\ReadingApp\ApplicationUI\Images\login.png" MouseLeftButtonUp="logInClick"></Image>
         <Image Grid.Row="3" Grid.Column="1" Width="500" Height="200" VerticalAlignment="Center" Cursor="Hand" Source="D:\VisualStudioProjects\Network_programming\ReadingApp\ApplicationUI\Images\signUp.png" MouseLeftButtonUp="signUpClick"></Image>
     </Grid>
