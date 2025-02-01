@@ -1,0 +1,26 @@
+﻿<Window x:Class="ApplicationUI.Windows.CommentsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ApplicationUI.Windows"
+        mc:Ignorable="d"
+        Title="CommentsWindow" Height="450" Width="450">
+
+    <ListBox ItemsSource="{Binding UserCommentCollection}">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <StackPanel Margin="5" Orientation="Horizontal">
+                    
+                    <Image x:Name="Icon" Width="50" Height="50" Loaded="SetImageSource" />
+
+                    <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding User.Nickname}" FontWeight="Bold" />
+
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Comment}" />
+
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Published, StringFormat=' {0:MM/dd/yyyy HH:mm}'}" />
+                </StackPanel>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+</Window>

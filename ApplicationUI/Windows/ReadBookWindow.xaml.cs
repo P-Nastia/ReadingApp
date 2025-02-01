@@ -45,5 +45,14 @@ namespace ApplicationUI.Windows
             this._userService = userService;
             OnNotifyPropertyChanged("Book");
         }
+
+
+        private void textRB_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var listBox = (ListBox)sender;
+            var clickedItem = (ParagraphDTO)listBox.SelectedItem;
+            CommentsWindow commentsWindow = new CommentsWindow(clickedItem, _bookService, _userService);
+            commentsWindow.ShowDialog();
+        }
     }
 }

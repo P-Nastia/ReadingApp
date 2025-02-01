@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ApplicationUI.Windows"
         mc:Ignorable="d"
         Title="ReadBookWindow" Height="800" Width="1300" WindowStartupLocation="CenterScreen">
-    <ListBox x:Name="textRB" FontSize="14" ScrollViewer.VerticalScrollBarVisibility="Visible" 
+    <ListBox x:Name="textRB" FontSize="14" ScrollViewer.VerticalScrollBarVisibility="Visible" MouseDoubleClick="textRB_MouseDoubleClick"
              ItemsSource="{Binding Book.Paragraphs}" 
              DisplayMemberPath="DisplayText">
     </ListBox>
