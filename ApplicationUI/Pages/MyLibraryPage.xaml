@@ -7,10 +7,21 @@
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="800"
       Title="MyLibraryPage">
-
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="FontFamily" Value="Cooper Black"></Setter>
+            <Setter Property="Margin" Value="280,20"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Height" Value="50"></Setter>
+            <Setter Property="Background" Value="Transparent"></Setter>
+        </Style>
+    </Page.Resources>
     <StackPanel Background="#FF3C2F2F" Margin="20">
-        <Button Command="{Binding ShowUser}" Background="Transparent" FontSize="20" Margin="300,20">Show my books</Button>
-        <ListBox ScrollViewer.VerticalScrollBarVisibility="Visible" Height="300" Margin="20" FontSize="20" ItemsSource="{Binding UserBooks}" DisplayMemberPath="DisplayBook">
+        <Button Command="{Binding ShowBooksCommand}" >Show my books</Button>
+        <ListBox ScrollViewer.VerticalScrollBarVisibility="Visible" Height="300" Margin="20" FontSize="20" ItemsSource="{Binding UserBooks}" DisplayMemberPath="DisplayBook" SelectedItem="{Binding SelectedBook}">
         </ListBox>
+        <Button Command="{Binding ReadSelectedCommand}">Read selected book</Button>
     </StackPanel>
 </Page>

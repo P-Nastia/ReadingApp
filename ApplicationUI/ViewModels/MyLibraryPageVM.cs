@@ -17,8 +17,25 @@ namespace ApplicationUI.ViewModels
         public event PropertyChangedEventHandler? PropertyChanged;
         private IUserService<BookDTO, UserDTO> _userService;
         private IBookService<BookDTO, ParagraphDTO, UserCommentDTO> _bookService;
-        public BaseCommand ShowBooks => new BaseCommand(execute => Show(), canExecute => true);
+        private UserDTO _user;
+        public BaseCommand ShowBooksCommand => new BaseCommand(execute => Show(), canExecute => true);
+        public BaseCommand ReadBookCommand => new BaseCommand(execute => ShowReadBookPage(), canExecute => true);
         public ICollection<BookDTO> UserBooks { get; set; }
+        private BookDTO _selectedBook;
+        public BookDTO SelectedBook
+        {
+            get
+            {
+                return _selectedBook;
+            }
+            set
+            {
+                if(value != null)
+                {
+                    _selectedBook = _userService.GetBook(_user, value.Id);
+                }
+            }
+        }
         public void OnNotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
             if (PropertyChanged != null)
@@ -31,14 +48,17 @@ namespace ApplicationUI.ViewModels
             _userService = userService;
             _bookService = bookService;
             UserBooks = new List<BookDTO>();
-            //var user = _userService.GetById(StaticUser.User.Id);
-            //var book = _userService.GetBook(user, 1);
-            //UserBooks = user.Books;
         }
         private void Show()
         {
-            var user = _userService.GetById(StaticUser.User.Id);
-            UserBooks = user.Books;
+            _user = _userService.GetById(StaticUser.User.Id);
+            UserBooks = _user.Books;
+            OnNotifyPropertyChanged("UserBooks");
+        }
+        private void ShowReadBookPage()
+        {
+            _user = _userService.GetById(StaticUser.User.Id);
+            UserBooks = _user.Books;
             OnNotifyPropertyChanged("UserBooks");
         }
     }

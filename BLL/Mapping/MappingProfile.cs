@@ -4,6 +4,7 @@ using DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -43,7 +44,8 @@ namespace BLL.Mapping
         {
             CreateMap<BookEntity, BookDTO>()
                 .ForMember(x => x.Users, opt => opt.MapFrom(x => x.Users))
-                .ForMember(x => x.Paragraphs, opt => opt.MapFrom(x => x.Paragraphs));
+                .ForMember(x => x.Paragraphs, opt => opt.MapFrom(x => x.Paragraphs))
+                .ForMember(x => x.DisplayBook, opt => opt.Ignore());
 
             CreateMap<ParagraphEntity, ParagraphDTO>()
                 .ForMember(x => x.UserComments, opt => opt.MapFrom(x => x.UserComments))
