@@ -17,7 +17,8 @@ namespace ApplicationUI.ViewModels
         public event PropertyChangedEventHandler? PropertyChanged;
         private IUserService<BookDTO, UserDTO> _userService;
         private IBookService<BookDTO, ParagraphDTO, UserCommentDTO> _bookService;
-        public BaseCommand ShowUser => new BaseCommand(execute => Show(), canExecute => true);
+        public BaseCommand ShowBooks => new BaseCommand(execute => Show(), canExecute => true);
+        public ICollection<BookDTO> UserBooks { get; set; }
         public void OnNotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
             if (PropertyChanged != null)
@@ -29,12 +30,16 @@ namespace ApplicationUI.ViewModels
         {
             _userService = userService;
             _bookService = bookService;
-            
+            UserBooks = new List<BookDTO>();
+            //var user = _userService.GetById(StaticUser.User.Id);
+            //var book = _userService.GetBook(user, 1);
+            //UserBooks = user.Books;
         }
         private void Show()
         {
             var user = _userService.GetById(StaticUser.User.Id);
-            var book = _userService.GetBook(user, 1);
+            UserBooks = user.Books;
+            OnNotifyPropertyChanged("UserBooks");
         }
     }
 }

@@ -8,7 +8,9 @@
       d:DesignHeight="800" d:DesignWidth="800"
       Title="MyLibraryPage">
 
-    <Grid Background="WhiteSmoke">
-        <Button Command="{Binding ShowUser}"></Button>
-    </Grid>
+    <StackPanel Background="#FF3C2F2F" Margin="20">
+        <Button Command="{Binding ShowUser}" Background="Transparent" FontSize="20" Margin="300,20">Show my books</Button>
+        <ListBox ScrollViewer.VerticalScrollBarVisibility="Visible" Height="300" Margin="20" FontSize="20" ItemsSource="{Binding UserBooks}" DisplayMemberPath="DisplayBook">
+        </ListBox>
+    </StackPanel>
 </Page>
