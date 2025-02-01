@@ -72,8 +72,7 @@ namespace ApplicationUI.Windows
             
             if (!String.IsNullOrEmpty(this.commentTB.Text) && !String.IsNullOrWhiteSpace(this.commentTB.Text))
             {
-                UserCommentCollection = Paragraph.UserComments;
-                OnNotifyPropertyChanged("UserCommentCollection");
+                
                 UserCommentDTO uc = new UserCommentDTO()
                 {
                     ParagraphId = Paragraph.Id,
@@ -84,9 +83,31 @@ namespace ApplicationUI.Windows
                 this._bookService.AddComment(uc);
                 this.commentTB.Clear();
                 Paragraph = this._bookService.GetBook(Paragraph.BookId).Paragraphs.Where(p => p.Id == Paragraph.Id).FirstOrDefault();
+                UserCommentCollection = Paragraph.UserComments;
+                OnNotifyPropertyChanged("UserCommentCollection");
+                //Thread.Sleep(3000);
+            }
+        }
 
-                
-
+        private void DeleteComment(object sender, MouseButtonEventArgs e)
+        {
+            var listBox = (ListBox)sender;
+            var clickedItem = (UserCommentDTO)listBox.SelectedItem;
+            if (clickedItem.UserId == StaticUser.User.Id && clickedItem != null)
+            {
+                MessageBoxResult result = MessageBox.Show("Do you want to delete comment?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
+                {
+                    _bookService.DeleteComment(clickedItem);
+                    Paragraph = this._bookService.GetBook(Paragraph.BookId).Paragraphs.Where(p => p.Id == Paragraph.Id).FirstOrDefault();
+                    UserCommentCollection = Paragraph.UserComments;
+                    OnNotifyPropertyChanged("UserCommentCollection");
+                    //Thread.Sleep(3000);
+                }
+            }
+            else
+            {
+                MessageBox.Show("You can delete only your comments", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

@@ -16,7 +16,8 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition Width="0.15*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <ListBox Grid.ColumnSpan="2" Grid.Row="0" ItemsSource="{Binding UserCommentCollection}" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+        <ListBox Grid.ColumnSpan="2" Grid.Row="0" ItemsSource="{Binding UserCommentCollection}" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                 ScrollViewer.HorizontalScrollBarVisibility="Auto" MouseDoubleClick="DeleteComment">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="5" Orientation="Horizontal">
