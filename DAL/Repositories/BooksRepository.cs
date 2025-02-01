@@ -60,7 +60,8 @@ namespace DAL.Repositories
         public IQueryable<BookEntity> GetAll()
         {
             AppDBContext tempDB = new AppDBContext();
-            return tempDB.Books.Include(b => b.Users).Include(b => b.Paragraphs).ThenInclude(p => p.UserComments).ThenInclude(uc => uc.User);
+            return tempDB.Books.Include(b => b.Users).ThenInclude(u => u.Books).Include(b => b.Paragraphs).ThenInclude(p => p.UserComments).ThenInclude(uc => uc.User)
+                .Include(b => b.Users).ThenInclude(u => u.Books).Include(b => b.Paragraphs).ThenInclude(p => p.UserComments).ThenInclude(uc => uc.Paragraph);
         }
 
         public BookEntity GetBook(int id)

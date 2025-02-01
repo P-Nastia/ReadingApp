@@ -31,7 +31,7 @@ namespace ApplicationUI.ViewModels
         public bool CanDownload { get; set; } = false;
         public string SearchString { get; set; }
         public string Response { get; set; }
-        public BaseCommand SearchCommand => new BaseCommand(execute => Search(), canExecute => !String.IsNullOrWhiteSpace(SearchString) && !String.IsNullOrWhiteSpace(SearchString));
+        public BaseCommand SearchCommand => new BaseCommand(execute => Search(), canExecute => true);
         public BaseCommand DownloadCommand => new BaseCommand(execute => Download(), canExecute => true);
         public void OnNotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -47,38 +47,41 @@ namespace ApplicationUI.ViewModels
         }
         private void Search()
         {
-            ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--headless"); 
-            
-            using (IWebDriver driver = new ChromeDriver(options))
+            if (!String.IsNullOrWhiteSpace(SearchString) && !String.IsNullOrWhiteSpace(SearchString))
             {
-                driver.Navigate().GoToUrl("https://www.ukrlib.com.ua/search.php?");
+                ChromeOptions options = new ChromeOptions();
+                options.AddArgument("--headless");
 
-                IWebElement inputField = driver.FindElement(By.XPath("//*[@id=\"cse-search-box\"]/input[1]"));
-
-                inputField.Clear();
-                Response = SearchString;
-                SearchString += " скачати повністю";
-                inputField.SendKeys(SearchString);
-
-                IWebElement submitButton = driver.FindElement(By.XPath("//*[@id=\"cse-search-box\"]/input[2]"));
-
-                submitButton.Click();
-                IReadOnlyCollection<IWebElement> links = driver.FindElements(By.XPath("//*[@id=\"___gcse_1\"]/div/div/div/div[5]/div[2]/div[1]/div/div[1]/div[1]/div/div[1]/div/a"));
-                if (links.Any())
+                using (IWebDriver driver = new ChromeDriver(options))
                 {
-                    CanDownload = true;
-                    OnNotifyPropertyChanged("CanDownload");
-                    Response += " found";
-                    OnNotifyPropertyChanged("Response");
-                    href = links.First().GetAttribute("href");
+                    driver.Navigate().GoToUrl("https://www.ukrlib.com.ua/search.php?");
+
+                    IWebElement inputField = driver.FindElement(By.XPath("//*[@id=\"cse-search-box\"]/input[1]"));
+
+                    inputField.Clear();
+                    Response = SearchString;
+                    SearchString += " скачати повністю";
+                    inputField.SendKeys(SearchString);
+
+                    IWebElement submitButton = driver.FindElement(By.XPath("//*[@id=\"cse-search-box\"]/input[2]"));
+
+                    submitButton.Click();
+                    IReadOnlyCollection<IWebElement> links = driver.FindElements(By.XPath("//*[@id=\"___gcse_1\"]/div/div/div/div[5]/div[2]/div[1]/div/div[1]/div[1]/div/div[1]/div/a"));
+                    if (links.Any())
+                    {
+                        CanDownload = true;
+                        OnNotifyPropertyChanged("CanDownload");
+                        Response += " found";
+                        OnNotifyPropertyChanged("Response");
+                        href = links.First().GetAttribute("href");
+                    }
+                    else
+                    {
+                        Response += " not found";
+                        OnNotifyPropertyChanged("Response");
+                    }
+                    driver.Quit();
                 }
-                else
-                {
-                    Response += " not found";
-                    OnNotifyPropertyChanged("Response");
-                }
-                driver.Quit();
             }
         }
         private void Download()
@@ -151,8 +154,8 @@ namespace ApplicationUI.ViewModels
                     {
                         _userService.AddBook(StaticUser.User, book);
                     }
-                    StaticUser.User = _userService.GetById(StaticUser.User.Id);
                     MessageBox.Show("Book added to your library", "Download completed", MessageBoxButton.OK, MessageBoxImage.Information);
+                    
                 }
                 driver.Quit();
             }

@@ -8,6 +8,7 @@
       d:DesignHeight="800" d:DesignWidth="800"
       Title="MyLibraryPage">
 
-    <Grid>
+    <Grid Background="WhiteSmoke">
+        <Button Command="{Binding ShowUser}"></Button>
     </Grid>
 </Page>

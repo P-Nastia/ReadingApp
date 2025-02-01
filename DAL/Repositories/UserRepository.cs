@@ -44,7 +44,7 @@ namespace DAL.Repositories
 
         public BookEntity GetBook(UserEntity entity, int id)
         {
-            var book =  _dbContext.Books.FirstOrDefault(b => b.Id == id && b.Users.Contains(entity));
+            var book =  _dbContext.Books.Include(b=>b.Paragraphs).ThenInclude(p=>p.UserComments).ThenInclude(uc=>uc.User).Include(b=>b.Users).FirstOrDefault(b => b.Id == id && b.Users.Contains(entity));
             return book;
         }
 
@@ -53,7 +53,7 @@ namespace DAL.Repositories
             lock (this)
             {
                 AppDBContext tempDB = new AppDBContext();
-                var user = tempDB.Users.Include(u=>u.Books).ThenInclude(b=>b.Paragraphs).ThenInclude(b=>b.UserComments).ThenInclude(uc=>uc.User).FirstOrDefault(u => u.Id == id);
+                var user = tempDB.Users.Include(u=>u.Books).ThenInclude(b=>b.Paragraphs).ThenInclude(b=>b.UserComments).ThenInclude(uc=>uc.User).Include(u => u.Books).ThenInclude(b => b.Users).FirstOrDefault(u => u.Id == id);
                 return user;
             }
         }
