@@ -154,10 +154,9 @@ namespace ApplicationUI.ViewModels
                     {
                         _userService.AddBook(StaticUser.User, book);
                     }
-                    MessageBox.Show("Book added to your library", "Download completed", MessageBoxButton.OK, MessageBoxImage.Information);
-                    
                 }
                 driver.Quit();
+                MessageBox.Show("Book added to your library", "Download completed", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             var files = Directory.GetFiles(downloadDirectory);
             foreach(var file in files)

@@ -68,14 +68,14 @@ namespace DAL.Repositories
         {
             lock (this)
             {
-                var book = _dbContext.Books
+                AppDBContext tempDB = new AppDBContext();
+                var book = tempDB.Books
                 .Where(b => b.Id == id)
                 .Include(b=>b.Users)
                 .Include(b => b.Paragraphs)
                 .ThenInclude(p => p.UserComments)
                         .ThenInclude(uc => uc.User)
                 .FirstOrDefault();
-
 
                 return book;
             }
