@@ -17,6 +17,7 @@ using System.Windows;
 using ApplicationUI.Statics;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using iText.Kernel.Pdf.Canvas.Parser;
+using System.Collections.ObjectModel;
 
 namespace ApplicationUI.ViewModels
 {
@@ -101,6 +102,8 @@ namespace ApplicationUI.ViewModels
 
             var driverService = ChromeDriverService.CreateDefaultService();
             driverService.HideCommandPromptWindow = true;
+
+            bool isDownloaded = false;
             using (IWebDriver driver = new ChromeDriver(driverService,options))
             {
                 
@@ -117,7 +120,11 @@ namespace ApplicationUI.ViewModels
                     {
                         pdfSources.First().Click();
                         Thread.Sleep(4000);
-                        string pdfPath = $"{Directory.GetFiles(downloadDirectory)[0]}";
+                        Actions actions = new Actions(driver);
+                        actions.MoveByOffset(500, 500).Click().Perform();
+                        var filesFromDirectory = Directory.GetFiles(downloadDirectory);
+
+                        string pdfPath = filesFromDirectory.Where(f=>f.Contains(".pdf")).FirstOrDefault();
                         string text = "";
 
                         try
@@ -141,10 +148,10 @@ namespace ApplicationUI.ViewModels
                                     Name = info[1],
                                     Users = new List<UserDTO>()
                                 };
-                                List<ParagraphDTO> p = new List<ParagraphDTO>();
+                                ObservableCollection<ParagraphDTO> p = new ObservableCollection<ParagraphDTO>();
                                 foreach (var par in paragraphs)
                                 {
-                                    p.Add(new ParagraphDTO() { Text = par, Book = tempBook, UserComments = new List<UserCommentDTO>() });
+                                    p.Add(new ParagraphDTO() { Text = par, Book = tempBook, UserComments = new ObservableCollection<UserCommentDTO>() });
                                 }
                                 tempBook.Paragraphs = p;
                                 _bookService.AddBook(tempBook);
@@ -153,6 +160,8 @@ namespace ApplicationUI.ViewModels
 
                                 SearchString = String.Empty;
                                 OnNotifyPropertyChanged("SearchString");
+                                MessageBox.Show("Book added to your library", "Download completed", MessageBoxButton.OK, MessageBoxImage.Information);
+                                isDownloaded = true;
                             }
                         }
                         catch (Exception ex)
@@ -163,10 +172,12 @@ namespace ApplicationUI.ViewModels
                     else
                     {
                         _userService.AddBook(StaticUser.User, book);
+                        isDownloaded = true;
+                        MessageBox.Show("Book added to your library", "Download completed", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                 }
                 driver.Quit();
-                MessageBox.Show("Book added to your library", "Download completed", MessageBoxButton.OK, MessageBoxImage.Information);
+                
             }
             var files = Directory.GetFiles(downloadDirectory);
             foreach(var file in files)
@@ -174,6 +185,10 @@ namespace ApplicationUI.ViewModels
                 File.Delete(file);
             }
             Directory.Delete(downloadDirectory);
+            if(isDownloaded == false)
+            {
+                MessageBox.Show("Impossible to download book to your library", "Download error", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 }

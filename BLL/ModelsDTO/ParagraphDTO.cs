@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.ObjectModel;
 
 namespace BLL.ModelsDTO
 {
@@ -9,7 +10,7 @@ namespace BLL.ModelsDTO
         public string Text { get; set; }
         public int BookId { get; set; }
         public BookDTO Book { get; set; }
-        public ICollection<UserCommentDTO> UserComments { get; set; }
+        public ObservableCollection<UserCommentDTO> UserComments { get; set; }
         public string DisplayText => Text;
     }
 }

@@ -3,6 +3,7 @@ using BLL.Interfaces;
 using BLL.ModelsDTO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -34,8 +35,35 @@ namespace ApplicationUI.Windows
                 
             }
         }
-        public ParagraphDTO Paragraph { get; set; }
-        public ICollection<UserCommentDTO> UserCommentCollection { get; set; }
+        public ParagraphDTO Paragraph
+        {
+            get { return _paragraphDTO; }
+            set
+            {
+                if (value != null)
+                {
+                    _paragraphDTO = value;
+                    UserCommentCollection = _paragraphDTO.UserComments;
+                }
+                
+            }
+        }
+        private ParagraphDTO _paragraphDTO;
+        private ObservableCollection<UserCommentDTO> _userCommentCollection;
+        public ObservableCollection<UserCommentDTO> UserCommentCollection
+        {
+            get => _userCommentCollection;
+            set
+            {
+                if(_userCommentCollection != value)
+                {
+                    _userCommentCollection = value;
+                    OnNotifyPropertyChanged(nameof(UserCommentCollection));
+                }
+            }
+        }
+
+
         private IBookService<BookDTO, ParagraphDTO, UserCommentDTO> _bookService;
         private IUserService<BookDTO, UserDTO> _userService;
         public CommentsWindow(ParagraphDTO paragraph, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService, IUserService<BookDTO, UserDTO> userService)
@@ -46,7 +74,6 @@ namespace ApplicationUI.Windows
             this.DataContext = this;
             Paragraph = paragraph;
             UserCommentCollection = paragraph.UserComments;
-            OnNotifyPropertyChanged("UserCommentCollection");
         }
         private void SetImageSource(object sender, RoutedEventArgs e)
         {
@@ -67,7 +94,7 @@ namespace ApplicationUI.Windows
             }
         }
 
-        private void SendComment(object sender, MouseButtonEventArgs e)
+        private async void SendComment(object sender, MouseButtonEventArgs e)
         {
             
             if (!String.IsNullOrEmpty(this.commentTB.Text) && !String.IsNullOrWhiteSpace(this.commentTB.Text))
@@ -80,16 +107,14 @@ namespace ApplicationUI.Windows
                     Published = DateTime.Now.ToUniversalTime(),
                     UserId = StaticUser.User.Id
                 };
-                this._bookService.AddComment(uc);
+                await this._bookService.AddComment(uc);
                 this.commentTB.Clear();
                 Paragraph = this._bookService.GetBook(Paragraph.BookId).Paragraphs.Where(p => p.Id == Paragraph.Id).FirstOrDefault();
                 UserCommentCollection = Paragraph.UserComments;
-                OnNotifyPropertyChanged("UserCommentCollection");
-                //Thread.Sleep(3000);
             }
         }
 
-        private void DeleteComment(object sender, MouseButtonEventArgs e)
+        private async void DeleteComment(object sender, MouseButtonEventArgs e)
         {
             var listBox = (ListBox)sender;
             var clickedItem = (UserCommentDTO)listBox.SelectedItem;
@@ -98,11 +123,9 @@ namespace ApplicationUI.Windows
                 MessageBoxResult result = MessageBox.Show("Do you want to delete comment?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes)
                 {
-                    _bookService.DeleteComment(clickedItem);
+                    await _bookService.DeleteComment(clickedItem);
                     Paragraph = this._bookService.GetBook(Paragraph.BookId).Paragraphs.Where(p => p.Id == Paragraph.Id).FirstOrDefault();
                     UserCommentCollection = Paragraph.UserComments;
-                    OnNotifyPropertyChanged("UserCommentCollection");
-                    //Thread.Sleep(3000);
                 }
             }
             else

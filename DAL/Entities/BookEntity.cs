@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace DAL.Entities
         [Required]
         [StringLength(200)]
         public string Author { get; set; }
-        public ICollection<ParagraphEntity> Paragraphs { get; set; } 
+        public ObservableCollection<ParagraphEntity> Paragraphs { get; set; } 
         public ICollection<UserEntity> Users { get; set; }
     }
 }

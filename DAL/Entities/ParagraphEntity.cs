@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace DAL.Entities
 {
@@ -20,6 +21,6 @@ namespace DAL.Entities
         [ForeignKey("Book")]
         public int BookId { get; set; }
         public BookEntity Book { get; set; }
-        public ICollection<UserCommentEntity> UserComments { get; set; }
+        public ObservableCollection<UserCommentEntity> UserComments { get; set; }
     }
 }
