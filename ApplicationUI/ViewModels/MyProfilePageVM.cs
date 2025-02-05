@@ -66,7 +66,7 @@ namespace ApplicationUI.ViewModels
             {
                 if (StaticUser.User != null && StaticUser.User.Password != value)
                 {
-                    StaticUser.User.Password = value;
+                    StaticUser.User.Password = BCrypt.Net.BCrypt.HashPassword(value);
                     OnNotifyPropertyChanged(nameof(Password));
                 }
             }
