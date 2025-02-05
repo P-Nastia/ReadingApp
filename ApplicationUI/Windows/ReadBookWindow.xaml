@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApplicationUI.Windows"
         mc:Ignorable="d"
-        Title="ReadBookWindow"  MinHeight="800" MinWidth="1300"  MaxHeight="800" MaxWidth="1300" WindowStartupLocation="CenterScreen">
+        Title="Read Book"  MinHeight="800" MinWidth="1300"  MaxHeight="800" MaxWidth="1300" WindowStartupLocation="CenterScreen">
     <ListBox Padding="5" x:Name="textRB" FontSize="14" ScrollViewer.VerticalScrollBarVisibility="Visible" MouseDoubleClick="textRB_MouseDoubleClick"
              ItemsSource="{Binding Book.Paragraphs}" 
              DisplayMemberPath="DisplayText">
