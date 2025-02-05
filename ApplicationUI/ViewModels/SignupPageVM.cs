@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using File = System.IO.File;
+using BCrypt.Net;
 
 namespace ApplicationUI.ViewModels
 {
@@ -56,10 +57,11 @@ namespace ApplicationUI.ViewModels
             if(IsInputCorrect() == true)
             {
                 var users = _userService.GetAll();
+
                 bool isUnique = true;
                 foreach (var user in users)
                 {
-                    if (user.Password == Password && user.Nickname == Nickname)
+                    if (BCrypt.Net.BCrypt.Verify(Password, user.Password) && user.Nickname == Nickname)
                     {
                         MessageBox.Show("This user exists", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                         isUnique = false;
@@ -70,7 +72,7 @@ namespace ApplicationUI.ViewModels
                 {
                     UserDTO userDTO = new UserDTO()
                     {
-                        Password = this.Password,
+                        Password = BCrypt.Net.BCrypt.HashPassword(this.Password),
                         Nickname = this.Nickname,
                         Phone = this.Phone,
                         Email = this.Email,
@@ -81,7 +83,7 @@ namespace ApplicationUI.ViewModels
                     users = _userService.GetAll();
                     foreach (var user in users)
                     {
-                        if (user.Password == Password && user.Nickname == Nickname)
+                        if (BCrypt.Net.BCrypt.Verify(Password, user.Password) && user.Nickname == Nickname)
                         {
                             StaticUser.User = user;
                             StaticUser.IsLoggedIn = true;

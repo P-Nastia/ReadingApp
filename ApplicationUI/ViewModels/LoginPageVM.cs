@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using BCrypt.Net;
 
 namespace ApplicationUI.ViewModels
 {
@@ -40,7 +41,7 @@ namespace ApplicationUI.ViewModels
                 var users = _userService.GetAll();
                 foreach (var user in users)
                 {
-                    if (user.Password == Password && user.Nickname == Nickname)
+                    if (BCrypt.Net.BCrypt.Verify(Password, user.Password) && user.Nickname == Nickname)
                     {
                         StaticUser.User = user;
                         StaticUser.IsLoggedIn = true;
