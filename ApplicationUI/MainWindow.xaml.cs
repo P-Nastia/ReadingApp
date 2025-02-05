@@ -33,8 +33,9 @@ namespace ApplicationUI
 
             #region ImageConfig 
             // Setting images/Icons
-            string CD = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\Images\\"; // Maybe there is  a better way to get the project directory...
-            MyBooksImage.Source = new BitmapImage(new Uri($"{CD}myProfile.png", UriKind.Absolute));
+            string CD = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\Images\\"; // Maybe there is a better way to get the project directory...
+            MyProfileImage.Source = new BitmapImage(new Uri($"{CD}myProfile.png", UriKind.Absolute));
+            MyBooksImage.Source = new BitmapImage(new Uri($"{CD}myLibrary.png", UriKind.Absolute));
             LibraryImage.Source = new BitmapImage(new Uri($"{CD}libraryPageImage.png", UriKind.Absolute));
             #endregion
 

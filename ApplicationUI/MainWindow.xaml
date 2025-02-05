@@ -32,6 +32,14 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Background="#FF443434">
+                <Button Command="{Binding ShowMyProfilePage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
+                    <Border >
+                        <StackPanel Orientation="Horizontal" Width="230">
+                            <Image x:Name="MyProfileImage" Height="70" Width="70"></Image>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">My profile</TextBlock>
+                        </StackPanel>
+                    </Border>
+                </Button>
                 <Button Command="{Binding ShowMyLibraryPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
                     <Border >
                         <StackPanel Orientation="Horizontal" Width="230">
