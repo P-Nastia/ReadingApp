@@ -33,28 +33,31 @@ namespace ApplicationUI.ViewModels
         {
             _userService = userService;
         }
-        public void Login()
+        public async void Login()
         {
             if (Nickname != null && Password != null)
             {
-                var users = _userService.GetAll();
-                foreach (var user in users)
+                await Task.Run(() =>
                 {
-                    if (user.Password == Password && user.Nickname == Nickname)
+                    var users = _userService.GetAll();
+                    foreach (var user in users)
                     {
-                        StaticUser.User = user;
-                        StaticUser.IsLoggedIn = true;
-                        break;
+                        if (user.Password == Password && user.Nickname == Nickname)
+                        {
+                            StaticUser.User = user;
+                            StaticUser.IsLoggedIn = true;
+                            break;
+                        }
                     }
-                }
-                if(StaticUser.IsLoggedIn == false)
-                {
-                    MessageBox.Show("User doesn`t exist", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-                    Nickname = string.Empty;
-                    Password = string.Empty;
-                    OnNotifyPropertyChanged("Nickname");
-                    OnNotifyPropertyChanged("Password");
-                }
+                    if (StaticUser.IsLoggedIn == false)
+                    {
+                        MessageBox.Show("User doesn`t exist", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Nickname = string.Empty;
+                        Password = string.Empty;
+                        OnNotifyPropertyChanged("Nickname");
+                        OnNotifyPropertyChanged("Password");
+                    }
+                });
             }
         }
         public void SignUp() {

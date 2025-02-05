@@ -23,13 +23,14 @@ namespace DAL.Repositories
 
         public async Task AddBook(UserEntity userEntity, BookEntity entity)
         {
-            var user = await _dbContext.Users.Include(u=>u.Books).FirstOrDefaultAsync(u => u.Id == userEntity.Id);
-            var book = await _dbContext.Books.Include(b=>b.Users).Include(p=>p.Paragraphs).ThenInclude(p=>p.UserComments).FirstOrDefaultAsync(b => b.Name == entity.Name && b.Author == entity.Author);
+            AppDBContext tempDB = new AppDBContext();
+            var user = await tempDB.Users.Include(u=>u.Books).FirstOrDefaultAsync(u => u.Id == userEntity.Id);
+            var book = await tempDB.Books.Include(b=>b.Users).Include(p=>p.Paragraphs).ThenInclude(p=>p.UserComments).FirstOrDefaultAsync(b => b.Name == entity.Name && b.Author == entity.Author);
             if (user != null && book != null)
             {
                 user.Books.Add(book);
                 book.Users.Add(user);
-                await _dbContext.SaveChangesAsync();
+                await tempDB.SaveChangesAsync();
             }
         }
 
@@ -44,7 +45,8 @@ namespace DAL.Repositories
 
         public BookEntity GetBook(UserEntity entity, int id)
         {
-            var book =  _dbContext.Books.Include(b=>b.Paragraphs).ThenInclude(p=>p.UserComments).ThenInclude(uc=>uc.User).Include(b=>b.Users).FirstOrDefault(b => b.Id == id && b.Users.Contains(entity));
+            AppDBContext tempDB = new AppDBContext();
+            var book = tempDB.Books.Include(b=>b.Paragraphs).ThenInclude(p=>p.UserComments).ThenInclude(uc=>uc.User).Include(b=>b.Users).FirstOrDefault(b => b.Id == id && b.Users.Contains(entity));
             return book;
         }
 
@@ -60,25 +62,27 @@ namespace DAL.Repositories
 
         public async Task Remove(UserEntity item)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(i => i.Id == item.Id);
+            AppDBContext tempDB = new AppDBContext();
+            var user = await tempDB.Users.FirstOrDefaultAsync(i => i.Id == item.Id);
             if (user != null)
             {
                 foreach (var book in user.Books)
                     user.Books.Remove(book);
-                _dbContext.Users.Remove(user);
-                await _dbContext.SaveChangesAsync();
+                tempDB.Users.Remove(user);
+                await tempDB.SaveChangesAsync();
             }
         }
 
         public async Task RemoveBook(UserEntity userEntity, BookEntity entity)
         {
-            var user = await _dbContext.Users.Include(u=>u.Books).FirstOrDefaultAsync(i => i.Id == userEntity.Id);
-            var book = await _dbContext.Books.Include(b => b.Users).Include(b => b.Paragraphs).FirstOrDefaultAsync(i => i.Id == entity.Id);
+            AppDBContext tempDB = new AppDBContext();
+            var user = await tempDB.Users.Include(u=>u.Books).FirstOrDefaultAsync(i => i.Id == userEntity.Id);
+            var book = await tempDB.Books.Include(b => b.Users).Include(b => b.Paragraphs).FirstOrDefaultAsync(i => i.Id == entity.Id);
             if (user != null && book != null)
             {
                 user.Books.Remove(book);
                 book.Users.Remove(user);
-                await _dbContext.SaveChangesAsync();
+                await tempDB.SaveChangesAsync();
             }
         }
     }
