@@ -85,5 +85,20 @@ namespace DAL.Repositories
                 await tempDB.SaveChangesAsync();
             }
         }
+
+        public async Task UpdateUser(UserEntity user)
+        {
+            AppDBContext tempDB = new AppDBContext();
+            var userFromDB = await tempDB.Users.Include(u => u.Books).ThenInclude(b => b.Paragraphs).ThenInclude(p => p.UserComments).FirstOrDefaultAsync(i => i.Id == user.Id);
+            if (userFromDB != null)
+            {
+                userFromDB.Password = user.Password;
+                userFromDB.Phone = user.Phone;
+                userFromDB.Email = user.Email;
+                userFromDB.Nickname = user.Nickname;
+                userFromDB.Icon = user.Icon;
+                await tempDB.SaveChangesAsync();
+            }
+        }
     }
 }

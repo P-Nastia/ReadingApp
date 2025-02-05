@@ -16,5 +16,6 @@ namespace DAL.Interfaces
         Task Remove(T2 item);
         IQueryable<T2> GetAll();
         T2 GetById(int id);
+        Task UpdateUser(T2 user);
     }
 }

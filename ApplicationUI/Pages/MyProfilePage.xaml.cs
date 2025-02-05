@@ -1,6 +1,9 @@
-﻿using ApplicationUI.ViewModels;
+﻿using ApplicationUI.Statics;
+using ApplicationUI.ViewModels;
+using BLL.ModelsDTO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +30,32 @@ namespace ApplicationUI.Pages
             InitializeComponent();
             _myProfilePageVM = myProfilePageVM;
             this.DataContext = myProfilePageVM;
+            
+        }
+        public void SetImageSource(object sender, RoutedEventArgs e)
+        {
+            var imageControl = (Image)sender;
+
+            if (StaticUser.User.Icon != null)
+            {
+                using (MemoryStream ms = new MemoryStream(StaticUser.User.Icon))
+                {
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.StreamSource = ms;
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+                    imageControl.Source = bitmap;
+                }
+            }
+            _myProfilePageVM.Nickname = StaticUser.User.Nickname;
+            _myProfilePageVM.Password = StaticUser.User.Password;
+            _myProfilePageVM.Email = StaticUser.User.Email;
+            _myProfilePageVM.Phone = StaticUser.User.Phone;
+            _myProfilePageVM.OnNotifyPropertyChanged("Nickname");
+            _myProfilePageVM.OnNotifyPropertyChanged("Password");
+            _myProfilePageVM.OnNotifyPropertyChanged("Email");
+            _myProfilePageVM.OnNotifyPropertyChanged("Phone");
         }
     }
 }

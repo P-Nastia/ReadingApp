@@ -76,5 +76,11 @@ namespace BLL.Services
             var book = _mapper.Map<BookDTO, BookEntity>(entity);
             await _userRepository.RemoveBook(user, book);
         }
+
+        public async Task UpdateUser(UserDTO item)
+        {
+            var user = _mapper.Map<UserDTO, UserEntity>(item);
+            await _userRepository.UpdateUser(user);
+        }
     }
 }

@@ -5,10 +5,78 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ApplicationUI.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="800" d:DesignWidth="800"
       Title="MyProfilePage">
+    <Page.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="40"></Setter>
+            <Setter Property="Padding" Value="20"></Setter>
+            <Setter Property="Foreground" Value="WhiteSmoke"></Setter>
+            <Setter Property="FontFamily" Value="Cooper Black"></Setter>
+            <Setter Property="TextAlignment" Value="Right"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="25"></Setter>
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="FontFamily" Value="Cooper Black"></Setter>
+            <Setter Property="TextAlignment" Value="Center"></Setter>
+            <Setter Property="Margin" Value="20"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Height" Value="50"></Setter>
+            <Setter Property="Background" Value="Transparent"></Setter>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="25"></Setter>
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="FontFamily" Value="Cooper Black"></Setter>
+            <Setter Property="Margin" Value="20"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Height" Value="50"></Setter>
+            <Setter Property="Background" Value="Transparent"></Setter>
+        </Style>
+        <Style TargetType="PasswordBox">
+            <Setter Property="FontSize" Value="25"></Setter>
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="FontFamily" Value="Cooper Black"></Setter>
+            <Setter Property="Margin" Value="20"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Padding" Value="10,2"></Setter>
+        </Style>
+        <Style x:Key="RoundedImageStyle" TargetType="Image">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="150"/>
 
-    <Grid>
-        
+            <Setter Property="Stretch" Value="UniformToFill"></Setter>
+            <Setter Property="Clip">
+                <Setter.Value>
+                    <EllipseGeometry Center="75,75" RadiusX="75" RadiusY="75"></EllipseGeometry>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    <Grid Background="#FF3C2F2F">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="0.6*"></RowDefinition>
+            <RowDefinition Height="0.6*"></RowDefinition>
+            <RowDefinition Height="0.6*"></RowDefinition>
+            <RowDefinition Height="0.6*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.4*"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="0.3*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="1"  Grid.Column="0" Content="Nickname:"></Label>
+        <Label Grid.Row="2"  Grid.Column="0" Content="Password:"></Label>
+        <Label Grid.Row="3"  Grid.Column="0" Content="Phone:"></Label>
+        <Label Grid.Row="4"  Grid.Column="0" Content="Email:"></Label>
+        <Image Grid.Row="0" Grid.Column="1" Name="Icon" Loaded="SetImageSource" Style="{StaticResource RoundedImageStyle}"></Image>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Nickname, Mode=TwoWay}" IsEnabled="{Binding CanChangeNickname}"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Password, Mode=TwoWay}" IsEnabled="{Binding CanChangePassword}"></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Phone, Mode=TwoWay}" IsEnabled="{Binding CanChangePhone}"></TextBox>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Email, Mode=TwoWay}" IsEnabled="{Binding CanChangeEmail}"></TextBox>
     </Grid>
 </Page>
