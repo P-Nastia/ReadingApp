@@ -22,11 +22,13 @@ namespace ApplicationUI.ViewModels
         private LoginPage _loginPage;
         private SignupPage _signUpPage;
         private MyLibraryPage _myLibraryPage;
+        private MyProfilePage _myProfilePage;
 
         private AllBooksPageVM _allBooksPageVM;
         private LoginPageVM _loginPageVM;
         private SignupPageVM _signUpPageVM;
         private MyLibraryPageVM _myLibraryPageVM;
+        private MyProfilePageVM _myProfilePageVM;
 
         private Page _currentPage;
         public IUserService<BookDTO, UserDTO> userService;
@@ -63,7 +65,7 @@ namespace ApplicationUI.ViewModels
             }
         }
 
-        public PageViewModel(MainWindow mainWindow, IUserService<BookDTO, UserDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService,LoginPageVM loginPageVM,SignupPageVM signupPageVM,MyLibraryPageVM myLibraryPageVM,AllBooksPageVM allBooksPageVM)
+        public PageViewModel(MainWindow mainWindow, IUserService<BookDTO, UserDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService,LoginPageVM loginPageVM,SignupPageVM signupPageVM,MyLibraryPageVM myLibraryPageVM,AllBooksPageVM allBooksPageVM,MyProfilePageVM myProfilePageVM)
         {
             this.userService = userService;
             this.bookService = bookService;
@@ -72,11 +74,13 @@ namespace ApplicationUI.ViewModels
             this._signUpPageVM = signupPageVM;
             this._myLibraryPageVM = myLibraryPageVM;
             this._allBooksPageVM = allBooksPageVM;
+            this._myProfilePageVM = myProfilePageVM;
 
             this._loginPage = new LoginPage(loginPageVM);
             this._signUpPage = new SignupPage(signupPageVM);
             this._myLibraryPage = new MyLibraryPage(myLibraryPageVM);
             this._allBooksPage = new AllBooksPage(allBooksPageVM);
+            this._myProfilePage = new MyProfilePage(myProfilePageVM);
             this.CurrentPage = _loginPage;
             RunWhileLoggin();
         }
@@ -123,6 +127,13 @@ namespace ApplicationUI.ViewModels
             get
             {
                 return new BaseCommand(obj => CurrentPage = _myLibraryPage);
+            }
+        }
+        public ICommand ShowMyProfilePage
+        {
+            get
+            {
+                return new BaseCommand(obj => CurrentPage = _myProfilePage);
             }
         }
     }
