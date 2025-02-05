@@ -32,10 +32,18 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Background="#FF443434">
-                <Button Command="{Binding ShowMyLibraryPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
+                <Button Command="{Binding ShowAllBooksPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
                     <Border >
                         <StackPanel Orientation="Horizontal" Width="230">
                             <Image Source="D:\VisualStudioProjects\Network_programming\ReadingApp\ApplicationUI\Images\myProfile.png" Height="70" Width="70"></Image>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">My profile</TextBlock>
+                        </StackPanel>
+                    </Border>
+                </Button>
+                <Button Command="{Binding ShowMyLibraryPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
+                    <Border >
+                        <StackPanel Orientation="Horizontal" Width="230">
+                            <Image Source="D:\VisualStudioProjects\Network_programming\ReadingApp\ApplicationUI\Images\myLibrary.jpg" Height="70" Width="70"></Image>
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"> My books</TextBlock>
                         </StackPanel>
                     </Border>
