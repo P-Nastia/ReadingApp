@@ -20,7 +20,7 @@
                  ScrollViewer.HorizontalScrollBarVisibility="Auto" MouseDoubleClick="DeleteComment">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="5" Width="350" Height="65">
+                    <Grid Margin="5" MinWidth="350" MinHeight="65">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.3*"></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
@@ -28,7 +28,7 @@
 
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
-                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
 
