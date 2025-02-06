@@ -40,7 +40,7 @@ namespace ApplicationUI.Windows
             get { return _paragraphDTO; }
             set
             {
-                if (value != null)
+                if (value != null) 
                 {
                     _paragraphDTO = value;
                     UserCommentCollection = _paragraphDTO.UserComments;

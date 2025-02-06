@@ -20,16 +20,26 @@
                  ScrollViewer.HorizontalScrollBarVisibility="Auto" MouseDoubleClick="DeleteComment">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Margin="5" Orientation="Horizontal">
+                    <Grid Margin="5" Width="350" Height="65">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.3*"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
 
-                        <Image x:Name="Icon" Width="50" Height="50" Loaded="SetImageSource" />
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
 
-                        <TextBlock TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding User.Nickname}" FontWeight="Bold" />
+                        <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" x:Name="Icon" Width="50" Height="50" Loaded="SetImageSource" />
 
-                        <TextBlock VerticalAlignment="Center" Text="{Binding Comment}" />
+                        <TextBlock Grid.Column="1"  Grid.Row="0" VerticalAlignment="Center" Text="{Binding User.Nickname}" FontWeight="Bold" FontSize="17" Foreground="#FF292929"/>
 
-                        <TextBlock VerticalAlignment="Center" Text="{Binding Published, StringFormat=' {0:MM/dd/yyyy HH:mm}'}" />
-                    </StackPanel>
+                        <TextBlock Grid.Column="1" Grid.Row="1" FontWeight="SemiBold" FontStyle="Oblique" VerticalAlignment="Center" Text="{Binding Comment}" Margin="25,0,0,0" FontSize="16"/>
+
+                        <TextBlock Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Text="{Binding Published, StringFormat=' {0:MM/dd/yyyy HH:mm}'}" Foreground="DarkGray" />
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
