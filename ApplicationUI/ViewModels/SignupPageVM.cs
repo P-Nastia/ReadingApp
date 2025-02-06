@@ -55,48 +55,46 @@ namespace ApplicationUI.ViewModels
         {
             if(IsInputCorrect() == true)
             {
-                await Task.Run(() =>
+                var users = _userService.GetAll();
+
+                bool isUnique = true;
+                foreach (var user in users)
                 {
-                    var users = _userService.GetAll();
-                    bool isUnique = true;
+                    if (Password == user.Password && user.Nickname == Nickname)
+                    {
+                        MessageBox.Show("This user exists", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                        isUnique = false;
+                        break;
+                    }
+                }
+                if (isUnique == true)
+                {
+                    UserDTO userDTO = new UserDTO()
+                    {
+                        Password = this.Password,
+                        Nickname = this.Nickname,
+                        Phone = this.Phone,
+                        Email = this.Email,
+                        Icon = File.ReadAllBytes(this.Icon),
+                        Books = new List<BookDTO>()
+                    };
+                    _userService.Add(userDTO);
+                    users = _userService.GetAll();
                     foreach (var user in users)
                     {
-                        if (user.Password == Password && user.Nickname == Nickname)
+                        if (Password == user.Password && user.Nickname == Nickname)
                         {
-                            MessageBox.Show("This user exists", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-                            isUnique = false;
+                            StaticUser.User = user;
+                            StaticUser.IsLoggedIn = true;
+                            StaticUser.UserNeedsToSignUp = false;
                             break;
                         }
                     }
-                    if (isUnique == true)
+                    if (StaticUser.IsLoggedIn == false)
                     {
-                        UserDTO userDTO = new UserDTO()
-                        {
-                            Password = this.Password,
-                            Nickname = this.Nickname,
-                            Phone = this.Phone,
-                            Email = this.Email,
-                            Icon = File.ReadAllBytes(this.Icon),
-                            Books = new List<BookDTO>()
-                        };
-                        _userService.Add(userDTO);
-                        users = _userService.GetAll();
-                        foreach (var user in users)
-                        {
-                            if (user.Password == Password && user.Nickname == Nickname)
-                            {
-                                StaticUser.User = user;
-                                StaticUser.IsLoggedIn = true;
-                                StaticUser.UserNeedsToSignUp = false;
-                                break;
-                            }
-                        }
-                        if (StaticUser.IsLoggedIn == false)
-                        {
-                            MessageBox.Show("User wasn`t registered", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
+                        MessageBox.Show("User wasn`t registered", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
-                });
+                }
             }
             else
             {

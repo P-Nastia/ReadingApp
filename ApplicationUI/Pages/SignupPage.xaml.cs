@@ -1,6 +1,7 @@
 ﻿using ApplicationUI.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,13 @@ namespace ApplicationUI.Pages
         public SignupPage(SignupPageVM signupPageVM)
         {
             InitializeComponent();
+
+            #region ImageConfig 
+            // Setting images/Icons
+            string CD = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\Images\\"; // Maybe there is  a better way to get the project directory...
+            SignUpImage.Source = new BitmapImage(new Uri($"{CD}signUp.png", UriKind.Absolute));
+            #endregion
+
             _signupPageVM = signupPageVM;
             this.DataContext = _signupPageVM;
         }
