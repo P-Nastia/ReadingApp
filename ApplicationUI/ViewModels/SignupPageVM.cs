@@ -51,7 +51,7 @@ namespace ApplicationUI.ViewModels
                 Icon = dialog.FileName;
             }
         }
-        public void SignUp()
+        public async void SignUp()
         {
             if(IsInputCorrect() == true)
             {

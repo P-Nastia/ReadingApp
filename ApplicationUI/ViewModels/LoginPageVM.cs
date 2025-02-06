@@ -33,7 +33,7 @@ namespace ApplicationUI.ViewModels
         {
             _userService = userService;
         }
-        public void Login()
+        public async void Login()
         {
             if (Nickname != null && Password != null)
             {

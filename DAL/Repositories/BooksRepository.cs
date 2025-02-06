@@ -24,24 +24,26 @@ namespace DAL.Repositories
 
         public async Task AddComment(UserCommentEntity itemToAdd)
         {
-            var paragraph = await _dbContext.Paragraphs.Include(p => p.UserComments).Include(p => p.Book).FirstOrDefaultAsync(p => p.Id == itemToAdd.ParagraphId);
+            AppDBContext tempDB = new AppDBContext();
+            var paragraph = await tempDB.Paragraphs.Include(p => p.UserComments).Include(p => p.Book).FirstOrDefaultAsync(p => p.Id == itemToAdd.ParagraphId);
             
             if (paragraph != null)
             {
-                var book = await _dbContext.Books.Include(b => b.Users).Include(b => b.Paragraphs).FirstOrDefaultAsync(b => b.Id == paragraph.BookId);
+                var book = await tempDB.Books.Include(b => b.Users).Include(b => b.Paragraphs).FirstOrDefaultAsync(b => b.Id == paragraph.BookId);
 
                 if (book != null)
                 {
-                    await _dbContext.UsersComments.AddAsync(itemToAdd);
+                    await tempDB.UsersComments.AddAsync(itemToAdd);
                     paragraph.UserComments.Add(itemToAdd);
-                    await _dbContext.SaveChangesAsync();
+                    await tempDB.SaveChangesAsync();
                 }
             }
         }
 
         public async Task DeleteComment(UserCommentEntity item)
         {
-            var paragraph = await _dbContext.Paragraphs.Include(p => p.UserComments).FirstOrDefaultAsync(p => p.UserComments.Any(uc => uc.Id == item.Id));
+            AppDBContext tempDB = new AppDBContext();
+            var paragraph = await tempDB.Paragraphs.Include(p => p.UserComments).FirstOrDefaultAsync(p => p.UserComments.Any(uc => uc.Id == item.Id));
             if (paragraph != null)
             {
                 var commentToRemove = paragraph.UserComments.FirstOrDefault(uc => uc.Id == item.Id);
@@ -50,9 +52,9 @@ namespace DAL.Repositories
                 {
                     paragraph.UserComments.Remove(commentToRemove);
 
-                    _dbContext.UsersComments.Remove(commentToRemove);
+                    tempDB.UsersComments.Remove(commentToRemove);
 
-                    await _dbContext.SaveChangesAsync();
+                    await tempDB.SaveChangesAsync();
                 }
             }
         }

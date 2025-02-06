@@ -25,8 +25,6 @@ namespace ApplicationUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        //private UserService us;
-        //private BooksService bs;
         public MainWindow(IUserService<BookDTO, UserDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService, LoginPageVM loginPageVM, SignupPageVM signupPageVM, MyLibraryPageVM myLibraryPageVM, AllBooksPageVM allBooksPageVM)
         {
             InitializeComponent();

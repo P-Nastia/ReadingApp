@@ -49,17 +49,23 @@ namespace ApplicationUI.ViewModels
             _bookService = bookService;
             UserBooks = new List<BookDTO>();
         }
-        private void Show()
+        private async void Show()
         {
-            _user = _userService.GetById(StaticUser.User.Id);
-            UserBooks = _user.Books;
-            OnNotifyPropertyChanged("UserBooks");
+            await Task.Run(() =>
+            {
+                _user = _userService.GetById(StaticUser.User.Id);
+                UserBooks = _user.Books;
+                OnNotifyPropertyChanged("UserBooks");
+            });
         }
-        private void ShowReadBookPage()
+        private async void ShowReadBookPage()
         {
-            _user = _userService.GetById(StaticUser.User.Id);
-            UserBooks = _user.Books;
-            OnNotifyPropertyChanged("UserBooks");
+            await Task.Run(() =>
+            {
+                _user = _userService.GetById(StaticUser.User.Id);
+                UserBooks = _user.Books;
+                OnNotifyPropertyChanged("UserBooks");
+            });
         }
     }
 }
