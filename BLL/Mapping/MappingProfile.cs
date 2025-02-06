@@ -43,14 +43,18 @@ namespace BLL.Mapping
         private void EntitiesToDTOs()
         {
             CreateMap<BookEntity, BookDTO>()
-                .ForMember(x => x.Users, opt => opt.MapFrom(x => x.Users))
-                .ForMember(x => x.Paragraphs, opt => opt.MapFrom(x => x.Paragraphs))
+                .ForMember(x => x.Users, opt => opt.Ignore())
+                //.ForMember(x => x.Users, opt => opt.MapFrom(x => x.Users))
+                //.ForMember(x => x.Paragraphs, opt => opt.MapFrom(x => x.Paragraphs))
+                .ForMember(x => x.Paragraphs, opt => opt.Ignore())
                 .ForMember(x => x.DisplayBook, opt => opt.Ignore());
 
             CreateMap<ParagraphEntity, ParagraphDTO>()
-                .ForMember(x => x.UserComments, opt => opt.MapFrom(x => x.UserComments))
+                //.ForMember(x => x.UserComments, opt => opt.MapFrom(x => x.UserComments))
+                .ForMember(x => x.UserComments, opt => opt.Ignore())
                 .ForMember(x => x.BookId, opt => opt.MapFrom(x => x.BookId))
-                .ForMember(x => x.Book, opt => opt.MapFrom(x => x.Book))
+                //.ForMember(x => x.Book, opt => opt.MapFrom(x => x.Book))
+                .ForMember(x => x.Book, opt => opt.Ignore())
                 .ForMember(x => x.DisplayText, opt => opt.Ignore());
 
             CreateMap<UserCommentEntity, UserCommentDTO>()
@@ -60,7 +64,8 @@ namespace BLL.Mapping
                 .ForMember(x => x.Paragraph, opt => opt.MapFrom(x => x.Paragraph));
 
             CreateMap<UserEntity, UserDTO>()
-                .ForMember(x => x.Books, opt => opt.MapFrom(x => x.Books));
+                .ForMember(x => x.Books, opt => opt.Ignore());
+            //.ForMember(x => x.Books, opt => opt.MapFrom(x => x.Books));
         }
     }
 }
