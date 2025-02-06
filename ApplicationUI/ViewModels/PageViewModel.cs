@@ -70,6 +70,12 @@ namespace ApplicationUI.ViewModels
             this.userService = userService;
             this.bookService = bookService;
 
+            var users = userService.GetAll();
+            foreach (var user in users)
+            {
+
+            }
+
             this._loginPageVM = loginPageVM;
             this._signUpPageVM = signupPageVM;
             this._myLibraryPageVM = myLibraryPageVM;

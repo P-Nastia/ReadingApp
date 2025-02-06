@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApplicationUI.Windows"
         mc:Ignorable="d"
-        Title="CommentsWindow" MinHeight="450" MinWidth="450"  MaxHeight="450" MaxWidth="450" WindowStartupLocation="CenterScreen">
+        Title="Comments" MinHeight="450" MinWidth="450"  MaxHeight="450" MaxWidth="450" WindowStartupLocation="CenterScreen">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -34,7 +34,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <TextBox Grid.Row="1" Grid.Column="0" x:Name="commentTB" Margin="20,10,0,10" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto"></TextBox>
-        <Image Grid.Row="1" Grid.Column="1" Margin="10" Source="D:\VisualStudioProjects\Network_programming\ReadingApp\ApplicationUI\Images\addComment.png" Cursor="Hand" MouseLeftButtonUp="SendComment"></Image>
+        <Image x:Name="AddCommentImage" Grid.Row="1" Grid.Column="1" Margin="10" Cursor="Hand" MouseLeftButtonUp="SendComment"></Image>
     </Grid>
     
 </Window>
