@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:ApplicationUI.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="800"
-      Title="MyProfilePage">
+      Title="MyProfilePage" Loaded="Page_Loaded">
     <Page.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="40"></Setter>
@@ -54,6 +54,14 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="25"></Setter>
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="FontFamily" Value="Cooper Black"></Setter>
+            <Setter Property="Margin" Value="10"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            
+        </Style>
     </Page.Resources>
     <Grid Background="#FF3C2F2F">
         <Grid.RowDefinitions>
@@ -73,10 +81,15 @@
         <Label Grid.Row="2"  Grid.Column="0" Content="Password:"></Label>
         <Label Grid.Row="3"  Grid.Column="0" Content="Phone:"></Label>
         <Label Grid.Row="4"  Grid.Column="0" Content="Email:"></Label>
-        <Image Grid.Row="0" Grid.Column="1" Name="Icon" Loaded="SetImageSource" Style="{StaticResource RoundedImageStyle}"></Image>
+        <Image Grid.Row="0" Grid.Column="1" Name="Icon" Source="{Binding Icon}" Style="{StaticResource RoundedImageStyle}"></Image>
+        <Button Grid.Column="2" Grid.Row="0" Command="{Binding ChangeIconCommand}">Change</Button>
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Nickname, Mode=TwoWay}" IsEnabled="{Binding CanChangeNickname}"></TextBox>
+        <Button Grid.Column="2" Grid.Row="1" Command="{Binding ChangeNicknameCommand}">Change</Button>
         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Password, Mode=TwoWay}" IsEnabled="{Binding CanChangePassword}"></TextBox>
+        <Button Grid.Column="2" Grid.Row="2" Command="{Binding ChangePasswordCommand}">Change</Button>
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Phone, Mode=TwoWay}" IsEnabled="{Binding CanChangePhone}"></TextBox>
+        <Button Grid.Column="2" Grid.Row="3" Command="{Binding ChangePhoneCommand}">Change</Button>
         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Email, Mode=TwoWay}" IsEnabled="{Binding CanChangeEmail}"></TextBox>
+        <Button Grid.Column="2" Grid.Row="4" Command="{Binding ChangeEmailCommand}">Change</Button>
     </Grid>
 </Page>

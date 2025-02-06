@@ -1,9 +1,12 @@
-﻿using ApplicationUI.Statics;
+﻿using ApplicationUI.Commands;
+using ApplicationUI.Statics;
 using BLL.Interfaces;
 using BLL.ModelsDTO;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -19,6 +22,11 @@ namespace ApplicationUI.ViewModels
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         private IUserService<BookDTO, UserDTO> _userService;
+        public BaseCommand ChangePasswordCommand => new BaseCommand(obj => ChangePassword(), canExecute => true);
+        public BaseCommand ChangeNicknameCommand => new BaseCommand(obj => ChangeNickname(), canExecute => true);
+        public BaseCommand ChangePhoneCommand => new BaseCommand(obj => ChangePhone(), canExecute => true);
+        public BaseCommand ChangeEmailCommand => new BaseCommand(obj => ChangeEmail(), canExecute => true);
+        public BaseCommand ChangeIconCommand => new BaseCommand(obj => ChangeIcon(), canExecute => true);
 
         private bool _canChangeNickname;
         public bool CanChangeNickname
@@ -113,7 +121,7 @@ namespace ApplicationUI.ViewModels
         }
         public string Phone
         {
-            get => StaticUser.User?.Phone;
+            get => StaticUser.User.Phone;
             set
             {
                 if (StaticUser.User != null && StaticUser.User.Phone != value)
@@ -121,6 +129,103 @@ namespace ApplicationUI.ViewModels
                     StaticUser.User.Phone = value;
                     OnNotifyPropertyChanged(nameof(Phone));
                 }
+            }
+        }
+        public byte[] Icon
+        {
+            get {
+                if (StaticUser.User.Icon != null && StaticUser.User != null)
+                    return StaticUser.User.Icon;
+                else
+                {
+                    var path = Directory.GetCurrentDirectory().Split('\\');
+                    string newPath="";
+                    for(int i=0;i<path.Count() - 3; i++)
+                    {
+                        newPath += path[i]+"\\";
+                    }
+                    return File.ReadAllBytes($"{newPath}Images\\myProfile.png");
+                }
+                
+            }
+            set
+            {
+                if(value != StaticUser.User.Icon && StaticUser.User != null)
+                {
+                    StaticUser.User.Icon = value;
+                    OnNotifyPropertyChanged(nameof(Icon));
+                }
+            }
+        }
+        private async void ChangePassword()
+        {
+            if (CanChangePassword == false)
+            {
+                CanChangePassword = true;
+                OnNotifyPropertyChanged(nameof(CanChangePassword));
+            }
+            else
+            {
+                CanChangePassword = false;
+                OnNotifyPropertyChanged(nameof(CanChangePassword));
+                StaticUser.User.Password = Password;
+                await _userService.UpdateUser(StaticUser.User);
+            }
+        }
+        private async void ChangeNickname()
+        {
+            if (CanChangeNickname == false)
+            {
+                CanChangeNickname = true;
+                OnNotifyPropertyChanged(nameof(CanChangeNickname));
+            }
+            else
+            {
+                CanChangeNickname = false;
+                OnNotifyPropertyChanged(nameof(CanChangeNickname));
+                StaticUser.User.Nickname = Nickname;
+                await _userService.UpdateUser(StaticUser.User);
+            }
+        }
+        private async void ChangePhone()
+        {
+            if (CanChangePhone == false)
+            {
+                CanChangePhone = true;
+                OnNotifyPropertyChanged(nameof(CanChangePhone));
+            }
+            else
+            {
+                CanChangePhone = false;
+                OnNotifyPropertyChanged(nameof(CanChangePhone));
+                StaticUser.User.Phone = Phone;
+                await _userService.UpdateUser(StaticUser.User);
+            }
+        }
+        private async void ChangeEmail()
+        {
+            if (CanChangeEmail == false)
+            {
+                CanChangeEmail = true;
+                OnNotifyPropertyChanged(nameof(CanChangeEmail));
+            }
+            else
+            {
+                CanChangeEmail = false;
+                OnNotifyPropertyChanged(nameof(CanChangeEmail));
+                StaticUser.User.Email = Email;
+                await _userService.UpdateUser(StaticUser.User);
+            }
+        }
+        private async void ChangeIcon()
+        {
+            OpenFileDialog dialog = new OpenFileDialog() { Filter = "Image Files (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png" };
+            dialog.ShowDialog();
+            if (!String.IsNullOrEmpty(dialog.FileName) && !String.IsNullOrWhiteSpace(dialog.FileName))
+            {
+                StaticUser.User.Icon = await File.ReadAllBytesAsync(dialog.FileName);
+                await _userService.UpdateUser(StaticUser.User);
+                OnNotifyPropertyChanged(nameof(Icon));
             }
         }
         public void OnNotifyPropertyChanged([CallerMemberName] string propertyName = null)

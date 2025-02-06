@@ -30,32 +30,20 @@ namespace ApplicationUI.Pages
             InitializeComponent();
             _myProfilePageVM = myProfilePageVM;
             this.DataContext = myProfilePageVM;
-            
         }
-        public void SetImageSource(object sender, RoutedEventArgs e)
-        {
-            var imageControl = (Image)sender;
 
-            if (StaticUser.User.Icon != null)
-            {
-                using (MemoryStream ms = new MemoryStream(StaticUser.User.Icon))
-                {
-                    BitmapImage bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.StreamSource = ms;
-                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmap.EndInit();
-                    imageControl.Source = bitmap;
-                }
-            }
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
             _myProfilePageVM.Nickname = StaticUser.User.Nickname;
             _myProfilePageVM.Password = StaticUser.User.Password;
             _myProfilePageVM.Email = StaticUser.User.Email;
             _myProfilePageVM.Phone = StaticUser.User.Phone;
+            _myProfilePageVM.Icon = StaticUser.User.Icon;
             _myProfilePageVM.OnNotifyPropertyChanged("Nickname");
             _myProfilePageVM.OnNotifyPropertyChanged("Password");
             _myProfilePageVM.OnNotifyPropertyChanged("Email");
             _myProfilePageVM.OnNotifyPropertyChanged("Phone");
+            _myProfilePageVM.OnNotifyPropertyChanged("Icon");
         }
     }
 }

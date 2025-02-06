@@ -1,4 +1,5 @@
 ﻿using ApplicationUI.Pages;
+using ApplicationUI.Statics;
 using ApplicationUI.ViewModels;
 using BLL.Interfaces;
 using BLL.ModelsDTO;
@@ -28,6 +29,7 @@ namespace ApplicationUI
         public MainWindow(IUserService<BookDTO, UserDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService, LoginPageVM loginPageVM, SignupPageVM signupPageVM, MyLibraryPageVM myLibraryPageVM, AllBooksPageVM allBooksPageVM,MyProfilePageVM myProfilePageVM)
         {
             InitializeComponent();
+            StaticUser.User = new UserDTO();
             PageViewModel pageViewModel = new PageViewModel(this, userService, bookService, loginPageVM, signupPageVM, myLibraryPageVM, allBooksPageVM,myProfilePageVM);
             this.DataContext = pageViewModel;
         }
