@@ -121,9 +121,9 @@ namespace ApplicationUI.Windows
             }
         }
 
-        private async void DeleteComment(object sender, MouseButtonEventArgs e)
+        private async void DeleteComment(object sender, RoutedEventArgs e)
         {
-            var listBox = (ListBox)sender;
+            var listBox = CommentList;
             var clickedItem = (UserCommentDTO)listBox.SelectedItem;
             if (clickedItem.UserId == StaticUser.User.Id && clickedItem != null)
             {
@@ -138,6 +138,16 @@ namespace ApplicationUI.Windows
             else
             {
                 MessageBox.Show("You can delete only your comments", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ReplyComment(object sender, RoutedEventArgs e)
+        {
+            var listBox = CommentList;
+            var clickedItem = (UserCommentDTO)listBox.SelectedItem;
+            if (clickedItem != null) {
+                string ReplyDescription = $"{clickedItem.User.Nickname}: {clickedItem.Comment}↵";
+                this.commentTB.Text.Insert(0, ReplyDescription);
             }
         }
     }
