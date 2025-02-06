@@ -45,7 +45,7 @@
                       To="0" Duration="0:0:0.3"/>
                     </Storyboard>
                 </StackPanel.Resources>
-                <Button Command="{Binding ShowAllBooksPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
+                <Button Command="{Binding ShowMyProfilePage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
                     <Border>
                         <StackPanel Orientation="Horizontal" Width="230">
                             <Image x:Name="MyProfileImage" Height="70" Width="70"></Image>
