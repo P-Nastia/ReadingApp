@@ -40,7 +40,7 @@ namespace ApplicationUI.ViewModels
                 var users = _userService.GetAll();
                 foreach (var user in users)
                 {
-                    if (Password == user.Password && user.Nickname == Nickname)
+                    if (BCrypt.Net.BCrypt.Verify(Password,user.Password) && user.Nickname == Nickname)
                     {
                         StaticUser.User = user;
                         StaticUser.IsLoggedIn = true;
