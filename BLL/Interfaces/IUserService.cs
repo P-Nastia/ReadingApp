@@ -15,5 +15,6 @@ namespace BLL.Interfaces
         Task Remove(T2 item);
         IEnumerable<T2> GetAll();
         T2 GetById(int id);
+        Task UpdateUser(T2 item);
     }
 }
