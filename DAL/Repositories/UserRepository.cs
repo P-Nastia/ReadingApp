@@ -12,7 +12,7 @@ namespace DAL.Repositories
     public class UserRepository : IUserRepository<BookEntity,UserEntity>
     {
         private AppDBContext _dbContext;
-        public UserRepository(AppDBContext dBContext) { _dbContext = dBContext; }
+        public UserRepository(AppDBContext dBContext) { _dbContext = dBContext;}
 
         public async Task Add(UserEntity item)
         {

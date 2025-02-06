@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApplicationUI"
         mc:Ignorable="d"
-        Title="Main Menu" MinHeight="800" Icon="C:\IT\NetworkProgramming\CommandProject\ReadingApp\ApplicationUI\Images\Logotype.jpg" MinWidth="1300" MaxHeight="800" MaxWidth="1300"  WindowStartupLocation="CenterScreen"  MouseMove="Window_MouseMove">
+        Title="MainWindow" MinHeight="800" MinWidth="1300" MaxHeight="800" MaxWidth="1300" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Background" Value="#FF443434"/>
@@ -48,7 +48,7 @@
                 <Button Command="{Binding ShowAllBooksPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
                     <Border>
                         <StackPanel Orientation="Horizontal" Width="230">
-                            <Image Source="C:\IT\NetworkProgramming\CommandProject\ReadingApp\ApplicationUI\Images\myProfile.png" Height="70" Width="70"></Image>
+                            <Image x:Name="MyProfileImage" Height="70" Width="70"></Image>
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">My profile</TextBlock>
                         </StackPanel>
                     </Border>
@@ -56,7 +56,7 @@
                 <Button Command="{Binding ShowMyLibraryPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
                     <Border >
                         <StackPanel Orientation="Horizontal" Width="230">
-                            <Image Source="C:\IT\NetworkProgramming\CommandProject\ReadingApp\ApplicationUI\Images\myLibrary.jpg" Height="70" Width="70"></Image>
+                            <Image x:Name="MyBooksImage" Height="70" Width="70"></Image>
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"> My books</TextBlock>
                         </StackPanel>
                     </Border>
@@ -64,7 +64,7 @@
                 <Button Command="{Binding ShowAllBooksPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
                     <Border >
                         <StackPanel Orientation="Horizontal" Width="230">
-                            <Image Source="C:\IT\NetworkProgramming\CommandProject\ReadingApp\ApplicationUI\Images\myLibrary.jpg" Height="70" Width="70"></Image>
+                            <Image x:Name="LibraryImage" Height="70" Width="70"></Image>
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Library</TextBlock>
                         </StackPanel>
                     </Border>

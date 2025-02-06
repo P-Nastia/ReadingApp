@@ -59,6 +59,6 @@
         <TextBox Text="{Binding Email}" Grid.Row="4" Grid.Column="1"></TextBox>
         <TextBlock Grid.Row="5" Grid.Column="0">User icon:</TextBlock>
         <Button Grid.Row="5" Grid.Column="1" Command="{Binding PickIconCommand}" Margin="20,15,300,10" FontSize="30" Cursor="Hand" Background="WhiteSmoke" VerticalAlignment="Center">...</Button>
-        <Image Grid.Row="6" Grid.ColumnSpan="2" Width="500" Height="200" VerticalAlignment="Center" Cursor="Hand" Source="D:\VisualStudioProjects\Network_programming\ReadingApp\ApplicationUI\Images\signUp.png" MouseLeftButtonUp="signUpClick"></Image>
+        <Image x:Name="SignUpImage" Grid.Row="6" Grid.ColumnSpan="2" Width="500" Height="200" VerticalAlignment="Center" Cursor="Hand" Source="D:\VisualStudioProjects\Network_programming\ReadingApp\ApplicationUI\Images\signUp.png" MouseLeftButtonUp="signUpClick"></Image>
     </Grid>
 </Page>
