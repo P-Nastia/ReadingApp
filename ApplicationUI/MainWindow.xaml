@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApplicationUI"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="800" MinWidth="1300" MaxHeight="800" MaxWidth="1300" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" MinHeight="800" MinWidth="1300" MaxHeight="800" MouseMove="Window_MouseMove" MaxWidth="1300" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Background" Value="#FF443434"/>
@@ -31,9 +31,22 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Background="#FF443434">
-                <Button Command="{Binding ShowMyProfilePage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
-                    <Border >
+
+            <StackPanel Background="#FF443434"  x:Name="Sidebar" Width="0" HorizontalAlignment="Left">
+                <StackPanel.Resources>
+                    <!--//Анімація розширення-->
+                    <Storyboard x:Key="ExpandSidebar" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" >
+                        <DoubleAnimation Storyboard.TargetName="Sidebar" Storyboard.TargetProperty="Width" 
+                      To="250" Duration="0:0:0.5"/>
+                    </Storyboard>
+                    <!--Анімація згортання-->
+                    <Storyboard x:Key="CollapseSidebar">
+                        <DoubleAnimation Storyboard.TargetName="Sidebar" Storyboard.TargetProperty="Width" 
+                      To="0" Duration="0:0:0.3"/>
+                    </Storyboard>
+                </StackPanel.Resources>
+                <Button Command="{Binding ShowAllBooksPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
+                    <Border>
                         <StackPanel Orientation="Horizontal" Width="230">
                             <Image x:Name="MyProfileImage" Height="70" Width="70"></Image>
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">My profile</TextBlock>
@@ -57,6 +70,9 @@
                     </Border>
                 </Button>
             </StackPanel>
+
+
+            
             <Frame x:Name="MainFrame" Grid.Column="1" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden"></Frame>
         </Grid>
     </Border>
