@@ -146,8 +146,19 @@ namespace ApplicationUI.Windows
             var listBox = CommentList;
             var clickedItem = (UserCommentDTO)listBox.SelectedItem;
             if (clickedItem != null) {
-                string ReplyDescription = $"{clickedItem.User.Nickname}: {clickedItem.Comment}↵";
-                this.commentTB.Text.Insert(0, ReplyDescription);
+                string CommentDescription = clickedItem.Comment;
+                
+                if (CommentDescription.Contains("↵"))// If reply is to a reply
+                {
+                    CommentDescription = CommentDescription.Substring(CommentDescription.IndexOf("↵") + 2);
+                }
+                if(CommentDescription.Length > 25)// Shortening a long message
+                {
+                    CommentDescription = CommentDescription.Substring(0, 30) + "...";
+                }
+
+                string ReplyDescription = $"{clickedItem.User.Nickname}: {CommentDescription}↵\n";
+                this.commentTB.Text = this.commentTB.Text.Insert(0, ReplyDescription);
             }
         }
     }

@@ -42,7 +42,7 @@
 
                         <TextBlock Grid.Column="1"  Grid.Row="0" VerticalAlignment="Center" Text="{Binding User.Nickname}" FontWeight="Bold" FontSize="17" Foreground="#FF292929"/>
 
-                        <TextBlock Grid.Column="1" Grid.Row="1" FontWeight="SemiBold" FontStyle="Oblique" VerticalAlignment="Center" Text="{Binding Comment}" Margin="25,0,0,0" FontSize="16"/>
+                        <TextBlock Grid.Column="1" Grid.Row="1" FontWeight="SemiBold" FontStyle="Oblique" VerticalAlignment="Center" Text="{Binding Comment}" Margin="25,0,0,0" FontSize="16" Width="300" TextWrapping="Wrap"/>
 
                         <TextBlock Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" Text="{Binding Published, StringFormat=' {0:MM/dd/yyyy HH:mm}'}" Foreground="DarkGray" />
                     </Grid>
