@@ -1,21 +1,12 @@
 ﻿using ApplicationUI.Commands;
-using ApplicationUI.Pages;
 using ApplicationUI.Statics;
 using BLL.Interfaces;
 using BLL.ModelsDTO;
-using BLL.Services;
+using EmailSender.Services;
 using Microsoft.Win32;
-using OpenQA.Selenium.DevTools.V132.FileSystem;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using File = System.IO.File;
 
 namespace ApplicationUI.ViewModels
@@ -101,7 +92,7 @@ namespace ApplicationUI.ViewModels
                 MessageBox.Show("Wrong input", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private bool IsInputCorrect()
+        public bool IsInputCorrect()
         {
             if (String.IsNullOrEmpty(Password) || String.IsNullOrWhiteSpace(Password))
                 return false;
@@ -112,6 +103,8 @@ namespace ApplicationUI.ViewModels
             if (String.IsNullOrEmpty(Icon) || String.IsNullOrWhiteSpace(Icon))
                 return false;
             if (String.IsNullOrEmpty(Nickname) || String.IsNullOrWhiteSpace(Nickname))
+                return false;
+            if (!EmailService.IsValidEmail(Email))
                 return false;
             return true;
         }

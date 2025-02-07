@@ -1,4 +1,5 @@
 ﻿using ApplicationUI.ViewModels;
+using ApplicationUI.Windows;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,7 +40,15 @@ namespace ApplicationUI.Pages
         private void signUpClick(object sender, MouseButtonEventArgs e)
         {
             _signupPageVM.Password = this.passwordPB.Password;
-            _signupPageVM.SignUp();
+            if (_signupPageVM.IsInputCorrect())
+            {
+                VerificationWindow verificationWindow = new VerificationWindow(_signupPageVM.Email);
+                verificationWindow.ShowDialog();
+                if (verificationWindow.isVerificated)
+                {
+                    _signupPageVM.SignUp();
+                }
+            }
         }
 
         private void TextBox_TextInput(object sender, TextCompositionEventArgs e)
