@@ -43,8 +43,10 @@ namespace BLL.Mapping
         private void EntitiesToDTOs()
         {
             CreateMap<BookEntity, BookDTO>()
-                .ForMember(x => x.Users, opt => opt.MapFrom(x => x.Users))
-                .ForMember(x => x.Paragraphs, opt => opt.MapFrom(x => x.Paragraphs))
+                //.ForMember(x => x.Users, opt => opt.MapFrom(x => x.Users))
+                .ForMember(x => x.Users, opt => opt.Ignore())
+                //.ForMember(x => x.Paragraphs, opt => opt.MapFrom(x => x.Paragraphs))
+                .ForMember(x => x.Paragraphs, opt => opt.Ignore())
                 .ForMember(x => x.DisplayBook, opt => opt.Ignore());
 
             CreateMap<ParagraphEntity, ParagraphDTO>()

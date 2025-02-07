@@ -13,7 +13,7 @@ namespace BLL.ModelsDTO
         public int Id { get; set; }
         public string Name { get; set; }
         public string Author { get; set; }
-        public ObservableCollection<ParagraphDTO> Paragraphs { get; set; }
+        public List<ParagraphDTO> Paragraphs { get; set; }
         public ICollection<UserDTO> Users { get; set; }
         public string DisplayBook => $"{Author}, {Name}";
     }

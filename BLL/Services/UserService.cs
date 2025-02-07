@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BLL.Mapping;
+using AutoMapper.QueryableExtensions;
 
 namespace BLL.Services
 {
@@ -41,27 +42,44 @@ namespace BLL.Services
 
         public IEnumerable<UserDTO> GetAll()
         {
-            lock (this)
+            AppDBContext context = new AppDBContext();
+            return context.Users.AsQueryable().ProjectTo<UserDTO>(_mapper.ConfigurationProvider);
+        }
+        public BookDTO LoadParagraphs(BookDTO book)
+        {
+            AppDBContext context = new AppDBContext();
+            if(book.Paragraphs == null)
             {
-                var list = new List<UserDTO>();
-                foreach (var en in _userRepository.GetAll())
-                {
-                    list.Add(_mapper.Map<UserEntity, UserDTO>(en));
-                }
-                return list;
+                book.Paragraphs = context.Paragraphs.AsQueryable()
+               .Where(x => x.BookId == book.Id)
+               .Skip(0)
+               .Take(15)
+               .ProjectTo<ParagraphDTO>(_mapper.ConfigurationProvider)
+               .ToList();
+                return book;
+            }
+            else
+            {
+                book.Paragraphs.AddRange(context.Paragraphs.AsQueryable()
+                .Where(x => x.BookId == book.Id)
+                .Skip(book.Paragraphs.Count)
+                .Take(10)
+                .ProjectTo<ParagraphDTO>(_mapper.ConfigurationProvider)
+                .ToList());
+                return book;
             }
         }
 
         public BookDTO GetBook(UserDTO entity, int id)
         {
-            var user = _mapper.Map<UserDTO, UserEntity>(entity);
-            var book = _userRepository.GetBook(user, id);
-            return _mapper.Map<BookEntity, BookDTO>(book);
+            AppDBContext context = new AppDBContext();
+            return context.Books.AsQueryable().Where(x => x.Id == id).ProjectTo<BookDTO>(_mapper.ConfigurationProvider).FirstOrDefault();
         }
 
         public UserDTO GetById(int id)
         {
-            return _mapper.Map<UserEntity, UserDTO>(_userRepository.GetById(id));
+            AppDBContext context = new AppDBContext();
+            return context.Users.AsQueryable().Where(x => x.Id == id).ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefault();
         }
 
         public async Task Remove(UserDTO item)

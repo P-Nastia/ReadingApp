@@ -49,8 +49,8 @@ namespace ApplicationUI.Windows
             }
         }
         private ParagraphDTO _paragraphDTO;
-        private ObservableCollection<UserCommentDTO> _userCommentCollection;
-        public ObservableCollection<UserCommentDTO> UserCommentCollection
+        private List<UserCommentDTO> _userCommentCollection;
+        public List<UserCommentDTO> UserCommentCollection
         {
             get => _userCommentCollection;
             set
@@ -79,8 +79,8 @@ namespace ApplicationUI.Windows
             _bookService = bookService;
             _userService = userService;
             this.DataContext = this;
-            Paragraph = paragraph;
-            UserCommentCollection = paragraph.UserComments;
+            Paragraph = this._bookService.GetParagraph(paragraph.Id);
+            UserCommentCollection = Paragraph.UserComments;
         }
         private void SetImageSource(object sender, RoutedEventArgs e)
         {
@@ -116,7 +116,7 @@ namespace ApplicationUI.Windows
                 };
                 await this._bookService.AddComment(uc);
                 this.commentTB.Clear();
-                Paragraph = this._bookService.GetBook(Paragraph.BookId).Paragraphs.Where(p => p.Id == Paragraph.Id).FirstOrDefault();
+                Paragraph = this._bookService.GetParagraph(Paragraph.Id);
                 UserCommentCollection = Paragraph.UserComments;
             }
         }
@@ -131,7 +131,7 @@ namespace ApplicationUI.Windows
                 if (result == MessageBoxResult.Yes)
                 {
                     await _bookService.DeleteComment(clickedItem);
-                    Paragraph = this._bookService.GetBook(Paragraph.BookId).Paragraphs.Where(p => p.Id == Paragraph.Id).FirstOrDefault();
+                    Paragraph = this._bookService.GetParagraph(Paragraph.Id);
                     UserCommentCollection = Paragraph.UserComments;
                 }
             }

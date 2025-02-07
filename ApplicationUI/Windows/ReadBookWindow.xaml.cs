@@ -39,23 +39,67 @@ namespace ApplicationUI.Windows
         public ReadBookWindow(BookDTO book, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService, IUserService<BookDTO, UserDTO> userService)
         {
             InitializeComponent();
-            this.DataContext = this;
-            this.Book = book;
             this._bookService = bookService;
             this._userService = userService;
+            this.DataContext = this;
+            this.Book = book;
+            this.Book = _userService.LoadParagraphs(book);
             OnNotifyPropertyChanged("Book");
         }
 
 
         private void textRB_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            
             var listBox = (ListBox)sender;
             var clickedItem = (ParagraphDTO)listBox.SelectedItem;
             CommentsWindow commentsWindow = new CommentsWindow(clickedItem, _bookService, _userService);
             commentsWindow.ShowDialog();
-            Book = _bookService.GetBook(Book.Id);
-            OnNotifyPropertyChanged("Book");
         }
+
+        // Загрузка нових абзаців, якщо scroll досяг низу
+        private async void Window_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            var scrollViewer = FindVisualChild<ScrollViewer>(paragraphsLB);
+
+            if (scrollViewer != null)
+            {
+                bool isAtBottom = scrollViewer.VerticalOffset == scrollViewer.ScrollableHeight;
+
+                if (isAtBottom && e.Delta < 0) 
+                {
+                    double verticalOffset = scrollViewer.VerticalOffset;
+
+                    Book = _userService.LoadParagraphs(Book);
+
+                    paragraphsLB.ItemsSource = null;
+                    paragraphsLB.ItemsSource = Book.Paragraphs;
+                    OnNotifyPropertyChanged("Book");
+
+                    scrollViewer.ScrollToVerticalOffset(scrollViewer.ScrollableHeight);
+                }
+            }
+        }
+
+        // залишає scroll на місці, де закінчилився абзац
+        private static T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
+        {
+            
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
+                if (child is T)
+                {
+                    return (T)child;
+                }
+
+                T result = FindVisualChild<T>(child);
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+            return null;
+        }
+
     }
 }

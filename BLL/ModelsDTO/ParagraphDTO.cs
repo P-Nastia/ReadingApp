@@ -10,7 +10,7 @@ namespace BLL.ModelsDTO
         public string Text { get; set; }
         public int BookId { get; set; }
         public BookDTO Book { get; set; }
-        public ObservableCollection<UserCommentDTO> UserComments { get; set; }
+        public List<UserCommentDTO> UserComments { get; set; }
         public string DisplayText => Text;
     }
 }
