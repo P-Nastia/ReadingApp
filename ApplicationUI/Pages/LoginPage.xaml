@@ -46,10 +46,10 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="1" Grid.Column="0">Nickname:</TextBlock>
-        <TextBox Text="{Binding Path=Nickname}" Grid.Row="1" Grid.Column="1"></TextBox>
+        <TextBox Text="{Binding Path=Nickname}" x:Name="NickName_TextInput" Grid.Row="1" Grid.Column="1"></TextBox>
         <TextBlock Grid.Row="2" Grid.Column="0">Password:</TextBlock>
         <PasswordBox x:Name="passwordPB" TextInput="PasswordBox_TextInput"  Grid.Row="2" Grid.Column="1"></PasswordBox>
-        <Image x:Name="LoginImage" Grid.Row="3" Grid.Column="0" Width="250" Height="200" VerticalAlignment="Center" Cursor="Hand" Source="C:\Users\artyr\source\repos\ReadingApp\ApplicationUI\Images\login.png" MouseLeftButtonUp="logInClick"></Image>
+        <Image x:Name="LoginImage" Grid.Row="3" Grid.Column="0" Width="250" Height="200" VerticalAlignment="Center" Cursor="Hand" Source="\Images\login.png" MouseLeftButtonUp="logInClick"></Image>
         <Image x:Name ="SignUpImage" Grid.Row="3" Grid.Column="1" Width="500" Height="200" VerticalAlignment="Center" Cursor="Hand" Source="\Images\signUp.png" MouseLeftButtonUp="signUpClick"></Image>
     </Grid>
 </Page>

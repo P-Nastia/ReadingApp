@@ -27,7 +27,7 @@ namespace ApplicationUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const double SidebarTriggerX = 100;
+        private const double SidebarTriggerX = 250;
         public MainWindow(IUserService<BookDTO, UserDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService, LoginPageVM loginPageVM, SignupPageVM signupPageVM, MyLibraryPageVM myLibraryPageVM, AllBooksPageVM allBooksPageVM,MyProfilePageVM myProfilePageVM)
         {
             InitializeComponent();
@@ -38,6 +38,7 @@ namespace ApplicationUI
             MyProfileImage.Source = new BitmapImage(new Uri($"{CD}myProfile.png", UriKind.Absolute));
             MyBooksImage.Source = new BitmapImage(new Uri($"{CD}myLibrary.jpg", UriKind.Absolute));
             LibraryImage.Source = new BitmapImage(new Uri($"{CD}libraryPageImage.png", UriKind.Absolute));
+            LogOutImage.Source = new BitmapImage(new Uri($"{CD}LogOut.jpg", UriKind.Absolute));
             #endregion
             StaticUser.User = new UserDTO();
             PageViewModel pageViewModel = new PageViewModel(this, userService, bookService, loginPageVM, signupPageVM, myLibraryPageVM, allBooksPageVM, myProfilePageVM);
@@ -55,7 +56,7 @@ namespace ApplicationUI
                 Storyboard expandStoryboard = (Storyboard)Sidebar.Resources["ExpandSidebar"];
                 expandStoryboard.Begin();
             }
-            else if (mousePosition.X > SidebarTriggerX + 50 && Sidebar.Width == 250)
+            else if (mousePosition.X > SidebarTriggerX && Sidebar.Width == 270)
             {
                 // Запускаємо анімацію закриття
                 Storyboard collapseStoryboard = (Storyboard)Sidebar.Resources["CollapseSidebar"];

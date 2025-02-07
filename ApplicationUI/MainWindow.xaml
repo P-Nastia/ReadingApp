@@ -32,12 +32,12 @@
             </Grid.ColumnDefinitions>
 
 
-            <StackPanel Background="#FF443434"  x:Name="Sidebar" Width="0" HorizontalAlignment="Left">
+            <StackPanel Background="#FF443434"  x:Name="Sidebar" Width="270" HorizontalAlignment="Left">
                 <StackPanel.Resources>
                     <!--//Анімація розширення-->
                     <Storyboard x:Key="ExpandSidebar" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" >
                         <DoubleAnimation Storyboard.TargetName="Sidebar" Storyboard.TargetProperty="Width" 
-                      To="250" Duration="0:0:0.5"/>
+                      To="270" Duration="0:0:0.5"/>
                     </Storyboard>
                     <!--Анімація згортання-->
                     <Storyboard x:Key="CollapseSidebar">
@@ -69,6 +69,13 @@
                         </StackPanel>
                     </Border>
                 </Button>
+                <Button Command="{Binding ShowLogOutPage}" BorderThickness="0" Margin="100,380,0,0" IsEnabled="{Binding IsLoggedIn}">
+                    <Border>
+                        <Image x:Name="LogOutImage" Height="50" Width="70"></Image>
+                    </Border>
+                </Button>
+
+
             </StackPanel>
 
 

@@ -136,5 +136,24 @@ namespace ApplicationUI.ViewModels
                 return new BaseCommand(obj => CurrentPage = _myProfilePage);
             }
         }
+
+
+
+        public ICommand ShowLogOutPage
+        {
+            get
+            {
+                return new BaseCommand(obj =>
+                {
+                    StaticUser.IsLoggedIn = false;
+                    CurrentPage = _loginPage;
+                    OnNotifyPropertyChanged(nameof(IsLoggedIn));
+                    RunWhileLoggin();
+
+                });
+           
+            }
+        }
+
     }
 }

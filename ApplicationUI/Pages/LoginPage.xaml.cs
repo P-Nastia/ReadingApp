@@ -42,6 +42,7 @@ namespace ApplicationUI.Pages
         {
             _loginPageVM.Password = this.passwordPB.Password;
             _loginPageVM.Login();
+            NickName_TextInput.Clear();
         }
         private void signUpClick(object sender, MouseButtonEventArgs e)
         {
