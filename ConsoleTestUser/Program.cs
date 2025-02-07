@@ -44,6 +44,7 @@ namespace ConsoleTestUser
                 .ProjectTo<BookDTO>(_mapper.ConfigurationProvider)
                 .ToList();
 
+
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
 
@@ -53,6 +54,13 @@ namespace ConsoleTestUser
                 .Take(10)
                 .ProjectTo<ParagraphDTO>(_mapper.ConfigurationProvider)
                 .ToList();
+
+            user.Books[0].Paragraphs.AddRange(appDBContext.Paragraphs.AsQueryable()
+                .Where(x => x.BookId == 1)
+                .Skip(user.Books[0].Paragraphs.Count)
+                .Take(10)
+                .ProjectTo<ParagraphDTO>(_mapper.ConfigurationProvider)
+                .ToList());
 
             //-----Paragraphs-------
             //var query = appDBContext.Paragraphs.AsQueryable();

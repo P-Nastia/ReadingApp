@@ -156,7 +156,7 @@ namespace ApplicationUI.ViewModels
                                             Name = info[1],
                                             Users = new List<UserDTO>()
                                         };
-                                        ObservableCollection<ParagraphDTO> p = new ObservableCollection<ParagraphDTO>();
+                                        List<ParagraphDTO> p = new List<ParagraphDTO>();
                                         foreach (var par in paragraphs)
                                         {
                                             p.Add(new ParagraphDTO() { Text = par, Book = tempBook, UserComments = new ObservableCollection<UserCommentDTO>() });
