@@ -11,52 +11,25 @@ namespace DAL.Repositories
 {
     public class UserRepository : IUserRepository<BookEntity,UserEntity>
     {
-        private AppDBContext _dbContext;
+        public AppDBContext _dbContext;
         public UserRepository(AppDBContext dBContext) { _dbContext = dBContext;}
 
         public async Task Add(UserEntity item)
         {
             await _dbContext.Users.AddAsync(item);
             await _dbContext.SaveChangesAsync();
-
         }
 
         public async Task AddBook(UserEntity userEntity, BookEntity entity)
         {
             AppDBContext tempDB = new AppDBContext();
             var user = await tempDB.Users.Include(u=>u.Books).FirstOrDefaultAsync(u => u.Id == userEntity.Id);
-            var book = await tempDB.Books.Include(b=>b.Users).Include(p=>p.Paragraphs).ThenInclude(p=>p.UserComments).FirstOrDefaultAsync(b => b.Name == entity.Name && b.Author == entity.Author);
+            var book = await tempDB.Books.Include(b=>b.Users).FirstOrDefaultAsync(b => b.Id == entity.Id);
             if (user != null && book != null)
             {
                 user.Books.Add(book);
                 book.Users.Add(user);
                 await tempDB.SaveChangesAsync();
-            }
-        }
-
-        public IQueryable<UserEntity> GetAll()
-        {
-            lock (this)
-            {
-                AppDBContext tempDB = new AppDBContext();
-                return tempDB.Users.Include(u => u.Books);
-            }
-        }
-
-        public BookEntity GetBook(UserEntity entity, int id)
-        {
-            AppDBContext tempDB = new AppDBContext();
-            var book = tempDB.Books.Include(b=>b.Paragraphs).ThenInclude(p=>p.UserComments).ThenInclude(uc=>uc.User).Include(b=>b.Users).FirstOrDefault(b => b.Id == id && b.Users.Contains(entity));
-            return book;
-        }
-
-        public UserEntity GetById(int id)
-        {
-            lock (this)
-            {
-                AppDBContext tempDB = new AppDBContext();
-                var user = tempDB.Users.Include(u=>u.Books).ThenInclude(b=>b.Paragraphs).ThenInclude(b=>b.UserComments).ThenInclude(uc=>uc.User).Include(u => u.Books).ThenInclude(b => b.Users).FirstOrDefault(u => u.Id == id);
-                return user;
             }
         }
 

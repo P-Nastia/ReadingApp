@@ -17,7 +17,6 @@ namespace DAL
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql("Host=3.68.89.123;Port=5022;Database=krotPostgres;User Id=krotPostgres;Password=p%rSDj4Imds07djc**dmUntdOidd3dZ_#WTi4B9Zo;Pooling=true;CommandTimeout=30;");
-            //optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=postgres;User Id=postgres;Password=Nastia_^2008;");
         }
     }
 }

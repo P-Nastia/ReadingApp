@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BLL.ModelsDTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace BLL.Interfaces
         T1 GetBook(int id);
         IEnumerable<T1> GetAll();
         T1 GetByNameAndAuthor(string name, string author);
+        ParagraphDTO GetParagraph(int id);
     }
 
 }

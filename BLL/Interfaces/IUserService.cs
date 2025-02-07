@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BLL.ModelsDTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,5 +17,6 @@ namespace BLL.Interfaces
         IEnumerable<T2> GetAll();
         T2 GetById(int id);
         Task UpdateUser(T2 item);
+        BookDTO LoadParagraphs(BookDTO book);
     }
 }
