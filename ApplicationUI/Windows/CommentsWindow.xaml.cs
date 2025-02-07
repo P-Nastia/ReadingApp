@@ -40,7 +40,7 @@ namespace ApplicationUI.Windows
             get { return _paragraphDTO; }
             set
             {
-                if (value != null)
+                if (value != null) 
                 {
                     _paragraphDTO = value;
                     UserCommentCollection = _paragraphDTO.UserComments;
@@ -121,9 +121,9 @@ namespace ApplicationUI.Windows
             }
         }
 
-        private async void DeleteComment(object sender, MouseButtonEventArgs e)
+        private async void DeleteComment(object sender, RoutedEventArgs e)
         {
-            var listBox = (ListBox)sender;
+            var listBox = CommentList;
             var clickedItem = (UserCommentDTO)listBox.SelectedItem;
             if (clickedItem.UserId == StaticUser.User.Id && clickedItem != null)
             {
@@ -138,6 +138,27 @@ namespace ApplicationUI.Windows
             else
             {
                 MessageBox.Show("You can delete only your comments", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ReplyComment(object sender, RoutedEventArgs e)
+        {
+            var listBox = CommentList;
+            var clickedItem = (UserCommentDTO)listBox.SelectedItem;
+            if (clickedItem != null) {
+                string CommentDescription = clickedItem.Comment;
+                
+                if (CommentDescription.Contains("↵"))// If reply is to a reply
+                {
+                    CommentDescription = CommentDescription.Substring(CommentDescription.IndexOf("↵") + 2);
+                }
+                if(CommentDescription.Length > 25)// Shortening a long message
+                {
+                    CommentDescription = CommentDescription.Substring(0, 30) + "...";
+                }
+
+                string ReplyDescription = $"{clickedItem.User.Nickname}: {CommentDescription}↵\n";
+                this.commentTB.Text = this.commentTB.Text.Insert(0, ReplyDescription);
             }
         }
     }
