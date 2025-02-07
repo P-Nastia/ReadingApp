@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApplicationUI.Windows"
         mc:Ignorable="d"
-        Title="CommentsWindow" MinHeight="450" MinWidth="450"  MaxHeight="450" MaxWidth="450" WindowStartupLocation="CenterScreen">
+        Title="Comments" MinHeight="450" MinWidth="450"  MaxHeight="450" MaxWidth="450" WindowStartupLocation="CenterScreen">
 
     <Grid>
         <Grid.RowDefinitions>

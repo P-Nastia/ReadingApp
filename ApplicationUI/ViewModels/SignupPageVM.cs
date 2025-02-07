@@ -51,7 +51,7 @@ namespace ApplicationUI.ViewModels
                 Icon = dialog.FileName;
             }
         }
-        public void SignUp()
+        public async void SignUp()
         {
             if(IsInputCorrect() == true)
             {
@@ -60,7 +60,7 @@ namespace ApplicationUI.ViewModels
                 bool isUnique = true;
                 foreach (var user in users)
                 {
-                    if (Password == user.Password && user.Nickname == Nickname)
+                    if (BCrypt.Net.BCrypt.Verify(Password,user.Password) && user.Nickname == Nickname)
                     {
                         MessageBox.Show("This user exists", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                         isUnique = false;
@@ -71,7 +71,7 @@ namespace ApplicationUI.ViewModels
                 {
                     UserDTO userDTO = new UserDTO()
                     {
-                        Password = this.Password,
+                        Password = BCrypt.Net.BCrypt.HashPassword(this.Password),
                         Nickname = this.Nickname,
                         Phone = this.Phone,
                         Email = this.Email,
@@ -82,7 +82,7 @@ namespace ApplicationUI.ViewModels
                     users = _userService.GetAll();
                     foreach (var user in users)
                     {
-                        if (Password == user.Password && user.Nickname == Nickname)
+                        if (BCrypt.Net.BCrypt.Verify(Password, user.Password) && user.Nickname == Nickname)
                         {
                             StaticUser.User = user;
                             StaticUser.IsLoggedIn = true;

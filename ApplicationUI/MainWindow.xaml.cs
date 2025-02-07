@@ -1,4 +1,5 @@
 ﻿using ApplicationUI.Pages;
+using ApplicationUI.Statics;
 using ApplicationUI.ViewModels;
 using BLL.Interfaces;
 using BLL.ModelsDTO;
@@ -14,6 +15,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -25,9 +27,8 @@ namespace ApplicationUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        //private UserService us;
-        //private BooksService bs;
-        public MainWindow(IUserService<BookDTO, UserDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService, LoginPageVM loginPageVM, SignupPageVM signupPageVM, MyLibraryPageVM myLibraryPageVM, AllBooksPageVM allBooksPageVM)
+        private const double SidebarTriggerX = 100;
+        public MainWindow(IUserService<BookDTO, UserDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService, LoginPageVM loginPageVM, SignupPageVM signupPageVM, MyLibraryPageVM myLibraryPageVM, AllBooksPageVM allBooksPageVM,MyProfilePageVM myProfilePageVM)
         {
             InitializeComponent();
 
@@ -38,9 +39,30 @@ namespace ApplicationUI
             MyBooksImage.Source = new BitmapImage(new Uri($"{CD}myLibrary.jpg", UriKind.Absolute));
             LibraryImage.Source = new BitmapImage(new Uri($"{CD}libraryPageImage.png", UriKind.Absolute));
             #endregion
-
-            PageViewModel pageViewModel = new PageViewModel(this, userService, bookService, loginPageVM, signupPageVM, myLibraryPageVM, allBooksPageVM);
+            StaticUser.User = new UserDTO();
+            PageViewModel pageViewModel = new PageViewModel(this, userService, bookService, loginPageVM, signupPageVM, myLibraryPageVM, allBooksPageVM, myProfilePageVM);
             this.DataContext = pageViewModel;
         }
+
+
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point mousePosition = e.GetPosition(this); // Отримуємо координати миші
+
+            if (mousePosition.X <= SidebarTriggerX && Sidebar.Width == 0)
+            {
+                // Запускаємо анімацію відкриття
+                Storyboard expandStoryboard = (Storyboard)Sidebar.Resources["ExpandSidebar"];
+                expandStoryboard.Begin();
+            }
+            else if (mousePosition.X > SidebarTriggerX + 50 && Sidebar.Width == 250)
+            {
+                // Запускаємо анімацію закриття
+                Storyboard collapseStoryboard = (Storyboard)Sidebar.Resources["CollapseSidebar"];
+                collapseStoryboard.Begin();
+            }
+        }
+
+
     }
 }
