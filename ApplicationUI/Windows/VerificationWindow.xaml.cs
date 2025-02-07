@@ -1,5 +1,4 @@
-﻿using ApplicationUI.Statics;
-using EmailSender.Services;
+﻿using EmailSender.Services;
 using System.Windows;
 
 namespace ApplicationUI.Windows
