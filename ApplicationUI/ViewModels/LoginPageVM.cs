@@ -44,7 +44,9 @@ namespace ApplicationUI.ViewModels
                     {
                         StaticUser.User = user;
                         StaticUser.IsLoggedIn = true;
-                        break;
+                        Nickname = string.Empty;
+                        Password = string.Empty;
+                        break;             
                     }
                 }
                 if(StaticUser.IsLoggedIn == false)
