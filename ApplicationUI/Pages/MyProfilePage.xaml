@@ -85,7 +85,7 @@
         <Button Grid.Column="2" Grid.Row="0" Command="{Binding ChangeIconCommand}">Change</Button>
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Nickname, Mode=TwoWay}" IsEnabled="{Binding CanChangeNickname}"></TextBox>
         <Button Grid.Column="2" Grid.Row="1" Command="{Binding ChangeNicknameCommand}">Change</Button>
-        <TextBox x:Name="ChangePasswordBox" Grid.Row="2" Grid.Column="1" Text="..." IsEnabled="{Binding CanChangePassword}"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Password, Mode=TwoWay}" IsEnabled="{Binding CanChangePassword}"></TextBox>
         <Button Grid.Column="2" Grid.Row="2" Command="{Binding ChangePasswordCommand}">Change</Button>
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Phone, Mode=TwoWay}" IsEnabled="{Binding CanChangePhone}"></TextBox>
         <Button Grid.Column="2" Grid.Row="3" Command="{Binding ChangePhoneCommand}">Change</Button>

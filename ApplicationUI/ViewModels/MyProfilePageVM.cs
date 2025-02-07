@@ -67,6 +67,8 @@ namespace ApplicationUI.ViewModels
                 }
             }
         }
+
+        public bool NewPasswordMode = false;
         public string Password
         {
             get => StaticUser.User?.Password;
@@ -162,14 +164,34 @@ namespace ApplicationUI.ViewModels
             if (CanChangePassword == false)
             {
                 CanChangePassword = true;
+                Password = "Enter Old Password";
                 OnNotifyPropertyChanged(nameof(CanChangePassword));
             }
             else
             {
-                CanChangePassword = false;
-                OnNotifyPropertyChanged(nameof(CanChangePassword));
-                StaticUser.User.Password = Password;
-                await _userService.UpdateUser(StaticUser.User);
+                if (!NewPasswordMode)
+                {
+                    var user = _userService.GetAll().Where(X=>X.Nickname==Nickname).FirstOrDefault();
+                    if (user != null && BCrypt.Net.BCrypt.Verify(Password, user.Password))
+                    {
+                        Password = "Enter New Password";
+                        NewPasswordMode = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Old Password not verified!");
+                        Password = "";
+                    }
+                }
+                else
+                {
+                    NewPasswordMode = false;
+                    CanChangePassword = false;
+                    OnNotifyPropertyChanged(nameof(CanChangePassword));
+                    StaticUser.User.Password = BCrypt.Net.BCrypt.HashPassword(Password);
+                    await _userService.UpdateUser(StaticUser.User);
+                    Password = "...";
+                }
             }
         }
         private async void ChangeNickname()

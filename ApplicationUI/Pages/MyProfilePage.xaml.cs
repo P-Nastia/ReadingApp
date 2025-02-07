@@ -35,7 +35,7 @@ namespace ApplicationUI.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             _myProfilePageVM.Nickname = StaticUser.User.Nickname;
-            _myProfilePageVM.Password = StaticUser.User.Password;
+            _myProfilePageVM.Password = "..."; // Nothing to see here
             _myProfilePageVM.Email = StaticUser.User.Email;
             _myProfilePageVM.Phone = StaticUser.User.Phone;
             _myProfilePageVM.Icon = StaticUser.User.Icon;
