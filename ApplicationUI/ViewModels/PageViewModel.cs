@@ -33,7 +33,7 @@ namespace ApplicationUI.ViewModels
         private NotificationPageVM _notificationPageVM;
 
         private Page _currentPage;
-        public IUserService<BookDTO, UserDTO> userService;
+        public IUserService<BookDTO, UserDTO, NotificationDTO> userService;
         public IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService;
 
         private readonly bool _isLoggedIn;
@@ -67,7 +67,7 @@ namespace ApplicationUI.ViewModels
             }
         }
 
-        public PageViewModel(MainWindow mainWindow, IUserService<BookDTO, UserDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService,LoginPageVM loginPageVM,SignupPageVM signupPageVM,MyLibraryPageVM myLibraryPageVM,AllBooksPageVM allBooksPageVM,MyProfilePageVM myProfilePageVM, NotificationPageVM notificationPageVM)
+        public PageViewModel(MainWindow mainWindow, IUserService<BookDTO, UserDTO, NotificationDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService,LoginPageVM loginPageVM,SignupPageVM signupPageVM,MyLibraryPageVM myLibraryPageVM,AllBooksPageVM allBooksPageVM,MyProfilePageVM myProfilePageVM, NotificationPageVM notificationPageVM)
         {
             this.userService = userService;
             this.bookService = bookService;

@@ -13,7 +13,7 @@ namespace ApplicationUI.ViewModels
     public class NotificationPageVM : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        private IUserService<BookDTO, UserDTO> _userService;
+        private IUserService<BookDTO, UserDTO, NotificationDTO> _userService;
 
         public void OnNotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -22,7 +22,7 @@ namespace ApplicationUI.ViewModels
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-        public NotificationPageVM(IUserService<BookDTO, UserDTO> userService)
+        public NotificationPageVM(IUserService<BookDTO, UserDTO, NotificationDTO> userService)
         {
             _userService = userService;
         }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    public class UserRepository : IUserRepository<BookEntity,UserEntity>
+    public class UserRepository : IUserRepository<BookEntity,UserEntity,NotificationEntity>
     {
         public AppDBContext _dbContext;
         public UserRepository(AppDBContext dBContext) { _dbContext = dBContext;}
@@ -29,6 +29,18 @@ namespace DAL.Repositories
             {
                 user.Books.Add(book);
                 book.Users.Add(user);
+                await tempDB.SaveChangesAsync();
+            }
+        }
+
+        public async Task AddNotification(UserEntity userEntity, NotificationEntity entity)
+        {
+            AppDBContext tempDB = new AppDBContext();
+            var user = await tempDB.Users.Include(u => u.Notifications).FirstOrDefaultAsync(u => u.Id == userEntity.Id);
+            if (user != null)
+            {
+                await tempDB.Notifications.AddAsync(entity);
+                user.Notifications.Add(entity);
                 await tempDB.SaveChangesAsync();
             }
         }
@@ -56,6 +68,25 @@ namespace DAL.Repositories
                 user.Books.Remove(book);
                 book.Users.Remove(user);
                 await tempDB.SaveChangesAsync();
+            }
+        }
+
+        public async Task RemoveNotification(UserEntity userEntity, NotificationEntity entity)
+        {
+            AppDBContext tempDB = new AppDBContext();
+            var user = await tempDB.Users.Include(u => u.Notifications).FirstOrDefaultAsync(u => u.Id == userEntity.Id);
+            if (user != null)
+            {
+                var NotificationToRemove = user.Notifications.FirstOrDefault(uc => uc.Id == entity.Id);
+
+                if (NotificationToRemove != null)
+                {
+                    user.Notifications.Remove(NotificationToRemove);
+
+                    tempDB.Notifications.Remove(NotificationToRemove);
+
+                    await tempDB.SaveChangesAsync();
+                }
             }
         }
 

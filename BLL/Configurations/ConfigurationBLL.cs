@@ -18,7 +18,7 @@ namespace BLL.Configurations
     {
         public static void ConfigureServiceCollection(ServiceCollection services)
         {
-            services.AddTransient(typeof(IUserRepository<BookEntity, UserEntity>), typeof(UserRepository));
+            services.AddTransient(typeof(IUserRepository<BookEntity, UserEntity, NotificationEntity>), typeof(UserRepository));
             services.AddTransient(typeof(IBookRepository<BookEntity, ParagraphEntity, UserCommentEntity>), typeof(BooksRepository));
 
             services.AddDbContext<AppDBContext>();

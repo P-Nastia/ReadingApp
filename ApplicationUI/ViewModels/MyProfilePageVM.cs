@@ -21,7 +21,7 @@ namespace ApplicationUI.ViewModels
     public class MyProfilePageVM : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        private IUserService<BookDTO, UserDTO> _userService;
+        private IUserService<BookDTO, UserDTO, NotificationDTO> _userService;
         public BaseCommand ChangePasswordCommand => new BaseCommand(obj => ChangePassword(), canExecute => true);
         public BaseCommand ChangeNicknameCommand => new BaseCommand(obj => ChangeNickname(), canExecute => true);
         public BaseCommand ChangePhoneCommand => new BaseCommand(obj => ChangePhone(), canExecute => true);
@@ -262,7 +262,7 @@ namespace ApplicationUI.ViewModels
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-        public MyProfilePageVM(IUserService<BookDTO, UserDTO> userService)
+        public MyProfilePageVM(IUserService<BookDTO, UserDTO, NotificationDTO> userService)
         {
             _userService = userService;
             CanChangeNickname = false;

@@ -24,7 +24,7 @@ namespace ApplicationUI.ViewModels
     public class AllBooksPageVM : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        private IUserService<BookDTO, UserDTO> _userService;
+        private IUserService<BookDTO, UserDTO, NotificationDTO> _userService;
         private IBookService<BookDTO, ParagraphDTO, UserCommentDTO> _bookService;
         
         string href;
@@ -41,7 +41,7 @@ namespace ApplicationUI.ViewModels
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-        public AllBooksPageVM(IUserService<BookDTO, UserDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService)
+        public AllBooksPageVM(IUserService<BookDTO, UserDTO, NotificationDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService)
         {
             _userService = userService;
             _bookService = bookService;
