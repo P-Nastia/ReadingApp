@@ -18,9 +18,9 @@ namespace DAL.Entities
         [Required]
         [StringLength(10000)]
         public string Text { get; set; }
-        [ForeignKey("Book")]
-        public int BookId { get; set; }
-        public BookEntity Book { get; set; }
-        public ObservableCollection<UserCommentEntity> UserComments { get; set; }
+        [ForeignKey("Chapter")]
+        public int ChapterId { get; set; }
+        public ChapterEntity Chapter { get; set; }
+        public ICollection<UserCommentEntity> UserComments { get; set; }
     }
 }

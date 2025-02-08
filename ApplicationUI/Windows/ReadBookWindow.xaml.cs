@@ -72,7 +72,7 @@ namespace ApplicationUI.Windows
                     Book = _userService.LoadParagraphs(Book);
 
                     paragraphsLB.ItemsSource = null;
-                    paragraphsLB.ItemsSource = Book.Paragraphs;
+                    //paragraphsLB.ItemsSource = Book.Paragraphs;
                     OnNotifyPropertyChanged("Book");
 
                     scrollViewer.ScrollToVerticalOffset(scrollViewer.ScrollableHeight);

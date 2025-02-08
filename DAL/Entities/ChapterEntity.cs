@@ -9,18 +9,16 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
-    [Table("tbl_books")]
-    public class BookEntity
+    [Table("tbl_chapters")]
+    public class ChapterEntity
     {
         [Key]
         public int Id { get; set; }
         [Required]
-        [StringLength(200)]
+        [StringLength(150)]
         public string Name { get; set; }
-        [Required]
-        [StringLength(200)]
-        public string Author { get; set; }
-        public ICollection<ChapterEntity> Chapters { get; set; } 
-        public ICollection<UserEntity> Users { get; set; }
+        public int BookId { get; set; }
+        public BookEntity Book { get; set; }
+        public ICollection<ParagraphEntity> Paragraphs { get; set; }
     }
 }

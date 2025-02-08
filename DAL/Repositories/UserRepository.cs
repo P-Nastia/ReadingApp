@@ -50,7 +50,7 @@ namespace DAL.Repositories
         {
             AppDBContext tempDB = new AppDBContext();
             var user = await tempDB.Users.Include(u=>u.Books).FirstOrDefaultAsync(i => i.Id == userEntity.Id);
-            var book = await tempDB.Books.Include(b => b.Users).Include(b => b.Paragraphs).FirstOrDefaultAsync(i => i.Id == entity.Id);
+            var book = await tempDB.Books.Include(b => b.Users).Include(b => b.Chapters).ThenInclude(b => b.Paragraphs).FirstOrDefaultAsync(i => i.Id == entity.Id);
             if (user != null && book != null)
             {
                 user.Books.Remove(book);
@@ -62,7 +62,7 @@ namespace DAL.Repositories
         public async Task UpdateUser(UserEntity user)
         {
             AppDBContext tempDB = new AppDBContext();
-            var userFromDB = await tempDB.Users.Include(u => u.Books).ThenInclude(b => b.Paragraphs).ThenInclude(p => p.UserComments).FirstOrDefaultAsync(i => i.Id == user.Id);
+            var userFromDB = await tempDB.Users.Include(u => u.Books).ThenInclude(b => b.Chapters).ThenInclude(b => b.Paragraphs).ThenInclude(p => p.UserComments).FirstOrDefaultAsync(i => i.Id == user.Id);
             if (userFromDB != null)
             {
                 userFromDB.Password = user.Password;

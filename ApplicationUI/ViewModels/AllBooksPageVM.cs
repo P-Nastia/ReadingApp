@@ -135,47 +135,47 @@ namespace ApplicationUI.ViewModels
                                 string pdfPath = filesFromDirectory.Where(f => f.Contains(".pdf")).FirstOrDefault();
                                 string text = "";
 
-                                try
-                                {
-                                    using (PdfReader reader = new PdfReader(pdfPath))
-                                    using (PdfDocument pdfDoc = new PdfDocument(reader))
-                                    {
-                                        for (int i = 1; i <= pdfDoc.GetNumberOfPages(); i++)
-                                        {
-                                            var page = pdfDoc.GetPage(i);
-                                            var strategy = new LocationTextExtractionStrategy();
-                                            var textFromPage = PdfTextExtractor.GetTextFromPage(page, strategy);
-                                            text += textFromPage;
-                                        }
+                                //try
+                                //{
+                                //    using (PdfReader reader = new PdfReader(pdfPath))
+                                //    using (PdfDocument pdfDoc = new PdfDocument(reader))
+                                //    {
+                                //        for (int i = 1; i <= pdfDoc.GetNumberOfPages(); i++)
+                                //        {
+                                //            var page = pdfDoc.GetPage(i);
+                                //            var strategy = new LocationTextExtractionStrategy();
+                                //            var textFromPage = PdfTextExtractor.GetTextFromPage(page, strategy);
+                                //            text += textFromPage;
+                                //        }
 
-                                        List<string> paragraphs = text.Split(new[] { ".\n" }, StringSplitOptions.None).ToList();
+                                //        List<string> paragraphs = text.Split(new[] { ".\n" }, StringSplitOptions.None).ToList();
 
-                                        BookDTO tempBook = new BookDTO()
-                                        {
-                                            Author = info[0],
-                                            Name = info[1],
-                                            Users = new List<UserDTO>()
-                                        };
-                                        List<ParagraphDTO> p = new List<ParagraphDTO>();
-                                        foreach (var par in paragraphs)
-                                        {
-                                            p.Add(new ParagraphDTO() { Text = par, Book = tempBook, UserComments = new List<UserCommentDTO>() });
-                                        }
-                                        tempBook.Paragraphs = p;
-                                        _bookService.AddBook(tempBook);
-                                        var bookFromDB = _bookService.GetByNameAndAuthor(tempBook.Name, tempBook.Author);
-                                        _userService.AddBook(StaticUser.User, bookFromDB);
+                                //        BookDTO tempBook = new BookDTO()
+                                //        {
+                                //            Author = info[0],
+                                //            Name = info[1],
+                                //            Users = new List<UserDTO>()
+                                //        };
+                                //        List<ParagraphDTO> p = new List<ParagraphDTO>();
+                                //        foreach (var par in paragraphs)
+                                //        {
+                                //            p.Add(new ParagraphDTO() { Text = par, Book = tempBook, UserComments = new List<UserCommentDTO>() });
+                                //        }
+                                //        tempBook.Paragraphs = p;
+                                //        _bookService.AddBook(tempBook);
+                                //        var bookFromDB = _bookService.GetByNameAndAuthor(tempBook.Name, tempBook.Author);
+                                //        _userService.AddBook(StaticUser.User, bookFromDB);
 
-                                        SearchString = String.Empty;
-                                        OnNotifyPropertyChanged("SearchString");
-                                        MessageBox.Show("Book added to your library", "Download completed", MessageBoxButton.OK, MessageBoxImage.Information);
-                                        isDownloaded = true;
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
-                                    MessageBox.Show($"Error: {ex.Message}");
-                                }
+                                //        SearchString = String.Empty;
+                                //        OnNotifyPropertyChanged("SearchString");
+                                //        MessageBox.Show("Book added to your library", "Download completed", MessageBoxButton.OK, MessageBoxImage.Information);
+                                //        isDownloaded = true;
+                                //    }
+                                //}
+                                //catch (Exception ex)
+                                //{
+                                //    MessageBox.Show($"Error: {ex.Message}");
+                                //}
                             }
                             else
                             {
