@@ -69,6 +69,14 @@
                         </StackPanel>
                     </Border>
                 </Button>
+                <Button Command="{Binding ShowAllBooksPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
+                    <Border >
+                        <StackPanel Orientation="Horizontal" Width="230">
+                            <Image x:Name="NotificationImage" Height="70" Width="70"></Image>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Notifications</TextBlock>
+                        </StackPanel>
+                    </Border>
+                </Button>
                 <Button Command="{Binding ShowLogOutPage}" BorderThickness="0" Margin="100,380,0,0" IsEnabled="{Binding IsLoggedIn}">
                     <Border>
                         <Image x:Name="LogOutImage" Height="50" Width="70"></Image>
