@@ -49,35 +49,40 @@ namespace ApplicationUI.Pages
         }
         private async void textRB_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var listBox = (ListBox)sender;
-            var clickedItem = (ParagraphDTO)listBox.SelectedItem;
-            CommentsWindow commentsWindow = new CommentsWindow(clickedItem, _bookService, _userService);
-            commentsWindow.ShowDialog();
-
+            Dispatcher.Invoke(() =>
+            {
+                var listBox = (ListBox)sender;
+                var clickedItem = (ParagraphDTO)listBox.SelectedItem;
+                CommentsWindow commentsWindow = new CommentsWindow(clickedItem, _bookService, _userService);
+                commentsWindow.ShowDialog();
+            });
         }
 
         // Загрузка нових абзаців, якщо scroll досяг низу
         private async void Page_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            var scrollViewer = FindVisualChild<ScrollViewer>(paragraphsLB);
-
-            if (scrollViewer != null)
+            Dispatcher.Invoke(() =>
             {
-                bool isAtBottom = scrollViewer.VerticalOffset == scrollViewer.ScrollableHeight;
+                var scrollViewer = FindVisualChild<ScrollViewer>(paragraphsLB);
 
-                if (isAtBottom && e.Delta < 0)
+                if (scrollViewer != null)
                 {
-                    double verticalOffset = scrollViewer.VerticalOffset;
+                    bool isAtBottom = scrollViewer.VerticalOffset == scrollViewer.ScrollableHeight;
 
-                    Chapter = _userService.LoadParagraphs(Chapter);
+                    if (isAtBottom && e.Delta < 0)
+                    {
+                        double verticalOffset = scrollViewer.VerticalOffset;
 
-                    paragraphsLB.ItemsSource = null;
-                    paragraphsLB.ItemsSource = Chapter.Paragraphs;
-                    OnNotifyPropertyChanged("Book");
+                        Chapter = _userService.LoadParagraphs(Chapter);
 
-                    scrollViewer.ScrollToVerticalOffset(scrollViewer.ScrollableHeight);
+                        paragraphsLB.ItemsSource = null;
+                        paragraphsLB.ItemsSource = Chapter.Paragraphs;
+                        OnNotifyPropertyChanged("Book");
+
+                        scrollViewer.ScrollToVerticalOffset(scrollViewer.ScrollableHeight);
+                    }
                 }
-            }
+            });
 
         }
 
