@@ -45,31 +45,26 @@ namespace BLL.Services
             AppDBContext context = new AppDBContext();
             return context.Users.AsQueryable().ProjectTo<UserDTO>(_mapper.ConfigurationProvider);
         }
-        //public BookDTO LoadParagraphs(ChapterDTO ch)
-        //{
-        //    AppDBContext context = new AppDBContext();
-        //    List<ChapterDTO> chapter = context.Chapters.AsQueryable().Where(x => x.BookId == book.Id).ProjectTo<ChapterDTO>(_mapper.ConfigurationProvider).ToList();
-        //    if(chapter. == null)
-        //    {
-        //        book.Paragraphs = context.Paragraphs.AsQueryable()
-        //       .Where(x => x.BookId == book.Id)
-        //       .Skip(0)
-        //       .Take(15)
-        //       .ProjectTo<ParagraphDTO>(_mapper.ConfigurationProvider)
-        //       .ToList();
-        //        return book;
-        //    }
-        //    else
-        //    {
-        //        book.Paragraphs.AddRange(context.Paragraphs.AsQueryable()
-        //        .Where(x => x.BookId == book.Id)
-        //        .Skip(book.Paragraphs.Count)
-        //        .Take(10)
-        //        .ProjectTo<ParagraphDTO>(_mapper.ConfigurationProvider)
-        //        .ToList());
-        //        return book;
-        //    }
-        //}
+        public ChapterDTO LoadParagraphs(ChapterDTO chapter)
+        {
+            AppDBContext context = new AppDBContext();
+            if(chapter.Paragraphs != null)
+            {
+                chapter.Paragraphs = context.Paragraphs.AsQueryable().Where(x => x.ChapterId == chapter.Id).Skip(0).Take(15).ProjectTo<ParagraphDTO>(_mapper.ConfigurationProvider).ToList();
+                return chapter;
+            }
+            else
+            {
+                chapter.Paragraphs = context.Paragraphs.AsQueryable().Where(x => x.ChapterId == chapter.Id).Skip(chapter.Paragraphs.Count).Take(10).ProjectTo<ParagraphDTO>(_mapper.ConfigurationProvider).ToList();
+                return chapter;
+            }
+        }
+        public BookDTO LoadChapters(BookDTO book)
+        {
+            AppDBContext context = new AppDBContext();
+            book.Chapters = context.Chapters.AsQueryable().Where(x => x.BookId == book.Id).ProjectTo<ChapterDTO>(_mapper.ConfigurationProvider).ToList();
+            return book;
+        }
 
         public BookDTO GetBook(UserDTO entity, int id)
         {
@@ -81,11 +76,6 @@ namespace BLL.Services
         {
             AppDBContext context = new AppDBContext();
             return context.Users.AsQueryable().Where(x => x.Id == id).ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefault();
-        }
-
-        public BookDTO LoadParagraphs(BookDTO book)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task Remove(UserDTO item)

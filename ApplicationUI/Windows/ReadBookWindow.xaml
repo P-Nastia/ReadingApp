@@ -5,9 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApplicationUI.Windows"
         mc:Ignorable="d"
-        Title="Read Book"  MinHeight="800" MinWidth="1300"  MaxHeight="800" MaxWidth="1300" WindowStartupLocation="CenterScreen" PreviewMouseWheel="Window_PreviewMouseWheel">
-    <ListBox Padding="5" x:Name="paragraphsLB" FontSize="14" ScrollViewer.VerticalScrollBarVisibility="Visible" MouseDoubleClick="textRB_MouseDoubleClick"
-             ItemsSource="{Binding Book.Paragraphs}" 
-             DisplayMemberPath="DisplayText">
-    </ListBox>
+        Title="Read Book"  MinHeight="800" MinWidth="1300"  MaxHeight="800" MaxWidth="1300" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.22*"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <ListBox Grid.Column="0" Padding="5" x:Name="chaptersLB" FontSize="14" ScrollViewer.VerticalScrollBarVisibility="Visible"
+         ItemsSource="{Binding Book.Chapters}" DisplayMemberPath="Name" SelectionChanged="chaptersLB_SelectionChanged">
+        </ListBox>
+        <Frame x:Name="chapterFrame" Grid.Column="1" Margin="5">
+        </Frame>
+    </Grid>
 </Window>

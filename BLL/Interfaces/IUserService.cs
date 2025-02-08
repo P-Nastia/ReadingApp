@@ -17,6 +17,7 @@ namespace BLL.Interfaces
         IEnumerable<T2> GetAll();
         T2 GetById(int id);
         Task UpdateUser(T2 item);
-        BookDTO LoadParagraphs(BookDTO book);
+        ChapterDTO LoadParagraphs(ChapterDTO chapter);
+        BookDTO LoadChapters(BookDTO book);
     }
 }
