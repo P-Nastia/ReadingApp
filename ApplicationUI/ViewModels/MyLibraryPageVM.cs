@@ -51,6 +51,7 @@ namespace ApplicationUI.ViewModels
         }
         private async void Show()
         {
+            SoundPlayer.PlayButtonSound();
             await Task.Run(() =>
             {
                 _user = _userService.GetById(StaticUser.User.Id);

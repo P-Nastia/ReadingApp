@@ -48,7 +48,7 @@ namespace ApplicationUI.ViewModels
         }
         private async void Search()
         {
-            
+            SoundPlayer.PlayButtonSound();
             if (!String.IsNullOrWhiteSpace(SearchString) && !String.IsNullOrWhiteSpace(SearchString))
             {
                 await Task.Run(() =>
@@ -93,6 +93,7 @@ namespace ApplicationUI.ViewModels
         }
         private async void Download()
         {
+            SoundPlayer.PlayButtonSound();
             if (CanDownload)
             {
                 await Task.Run(() =>

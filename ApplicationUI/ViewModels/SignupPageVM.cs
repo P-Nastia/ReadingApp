@@ -35,6 +35,7 @@ namespace ApplicationUI.ViewModels
         }
         private void PickIcon()
         {
+            SoundPlayer.PlayButtonSound();
             OpenFileDialog dialog = new OpenFileDialog() {Filter = "Image Files (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png" };
             dialog.ShowDialog();
             if(!String.IsNullOrEmpty(dialog.FileName) && !String.IsNullOrWhiteSpace(dialog.FileName))
