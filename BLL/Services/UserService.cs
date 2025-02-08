@@ -55,6 +55,7 @@ namespace BLL.Services
             }
             else
             {
+                chapter.Paragraphs = new List<ParagraphDTO>();
                 chapter.Paragraphs = context.Paragraphs.AsQueryable().Where(x => x.ChapterId == chapter.Id).Skip(chapter.Paragraphs.Count).Take(10).ProjectTo<ParagraphDTO>(_mapper.ConfigurationProvider).ToList();
                 return chapter;
             }

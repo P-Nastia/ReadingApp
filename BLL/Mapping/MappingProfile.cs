@@ -56,7 +56,7 @@ namespace BLL.Mapping
                 .ForMember(x => x.DisplayBook, opt => opt.Ignore());
 
             CreateMap<ChapterEntity, ChapterDTO>()
-                .ForMember(x => x.Paragraphs, opt => opt.MapFrom(x => x.Paragraphs))
+                .ForMember(x => x.Paragraphs, opt => opt.Ignore())
                 .ForMember(x => x.BookId, opt => opt.MapFrom(x => x.BookId))
                 .ForMember(x => x.Book, opt => opt.MapFrom(x => x.Book));
 
