@@ -49,10 +49,10 @@ namespace ApplicationUI.Windows
             OnNotifyPropertyChanged("Book");
         }
 
-        private void chaptersLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void chaptersLB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ChapterDTO selectedChapter = this.chaptersLB.SelectedItem as ChapterDTO;
-            if(selectedChapter != null)
+            if (selectedChapter != null)
             {
                 this.chapterFrame.Content = new ChapterPage(selectedChapter, _bookService, _userService);
             }

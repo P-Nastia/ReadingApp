@@ -47,16 +47,17 @@ namespace ApplicationUI.Pages
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-        private void textRB_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private async void textRB_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var listBox = (ListBox)sender;
             var clickedItem = (ParagraphDTO)listBox.SelectedItem;
             CommentsWindow commentsWindow = new CommentsWindow(clickedItem, _bookService, _userService);
             commentsWindow.ShowDialog();
+
         }
 
         // Загрузка нових абзаців, якщо scroll досяг низу
-        private void Page_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        private async void Page_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             var scrollViewer = FindVisualChild<ScrollViewer>(paragraphsLB);
 
@@ -77,6 +78,7 @@ namespace ApplicationUI.Pages
                     scrollViewer.ScrollToVerticalOffset(scrollViewer.ScrollableHeight);
                 }
             }
+
         }
 
         // залишає scroll на місці, де закінчилився абзац
