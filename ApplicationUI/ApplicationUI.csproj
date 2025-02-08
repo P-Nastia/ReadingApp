@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj" />
+    <ProjectReference Include="..\EmailSender\EmailSender.csproj" />
   </ItemGroup>
 
 </Project>

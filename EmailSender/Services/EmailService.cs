@@ -6,38 +6,41 @@ namespace EmailSender.Services;
 
 public static class EmailService
 {
-    public static void SendEmail(string to, string subject, string bodyText)
+    public async static void SendEmail(string to, string subject, string bodyText)
     {
-        var message = new MimeMessage();
-        message.From.Add(new MailboxAddress(EmailConfiguration.From));
-        message.To.Add(new MailboxAddress(to));
-        message.Subject = subject;
-
-        var body = new TextPart("plain")
+        await Task.Run(() =>
         {
-            Text = bodyText
-        };
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress(EmailConfiguration.From));
+            message.To.Add(new MailboxAddress(to));
+            message.Subject = subject;
 
-        var multipart = new Multipart("mixed") { body };
+            var body = new TextPart("plain")
+            {
+                Text = bodyText
+            };
 
-        message.Body = multipart;
+            var multipart = new Multipart("mixed") { body };
 
-        using var client = new MailKit.Net.Smtp.SmtpClient();
-        try
-        {
-            client.Connect(EmailConfiguration.SmtpServer, EmailConfiguration.Port, true);
-            client.Authenticate(EmailConfiguration.UserName, EmailConfiguration.Password);
-            client.Send(message);
+            message.Body = multipart;
 
-        }
-        catch (Exception ex)
-        {
+            using var client = new MailKit.Net.Smtp.SmtpClient();
+            try
+            {
+                client.Connect(EmailConfiguration.SmtpServer, EmailConfiguration.Port, true);
+                client.Authenticate(EmailConfiguration.UserName, EmailConfiguration.Password);
+                client.Send(message);
 
-        }
-        finally
-        {
-            client.Disconnect(true);
-        }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                client.Disconnect(true);
+            }
+        });
     }
     public static bool IsValidEmail(string email)
     {
