@@ -21,6 +21,6 @@ namespace DAL.Entities
         public string Message { get; set; }
 
         [StringLength(100)]
-        public string HotLoadLink { get; set; }
+        public string HotLoadLink { get; set; } // Instructions for the program to respond to user interaction
     }
 }
