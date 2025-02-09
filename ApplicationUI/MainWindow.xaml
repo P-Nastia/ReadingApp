@@ -78,8 +78,6 @@
 
             </StackPanel>
 
-
-            
             <Frame x:Name="MainFrame" Grid.Column="1" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden"></Frame>
         </Grid>
     </Border>
