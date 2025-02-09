@@ -5,10 +5,39 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ApplicationUI.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="800" d:DesignWidth="800"
       Title="NotificationPage">
 
-    <Grid>
-        
+    <Grid Margin="20" Background="#FF3C2F2F">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <ListBox x:Name="NotificationList" Grid.Row="0" ItemsSource="{Binding NotificationCollection}" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                 ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="25">
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete" Click="DeleteNotification"></MenuItem>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="5" MinWidth="350" MinHeight="65">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Column="1"  Grid.Row="0" VerticalAlignment="Center" Text="{Binding Subject}" FontWeight="Bold" FontSize="17" Foreground="#FF292929"/>
+
+                        <TextBlock Grid.Column="1" Grid.Row="1" FontWeight="SemiBold" FontStyle="Oblique" VerticalAlignment="Center" Text="{Binding Message}" Margin="25,0,0,0" FontSize="16" Width="300" TextWrapping="Wrap"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Clear All" Margin="25" FontSize="20" Padding="10" FontWeight="Bold"></Button>
     </Grid>
 </Page>

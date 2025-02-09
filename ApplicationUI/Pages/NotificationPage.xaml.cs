@@ -28,5 +28,10 @@ namespace ApplicationUI.Pages
             _notificationPageVM = notificationPageVM;
             this.DataContext = _notificationPageVM;
         }
+
+        private void DeleteNotification(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
