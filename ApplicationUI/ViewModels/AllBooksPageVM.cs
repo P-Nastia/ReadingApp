@@ -17,7 +17,7 @@ using System.Windows;
 using ApplicationUI.Statics;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using iText.Kernel.Pdf.Canvas.Parser;
-using System.Collections.ObjectModel;
+using OpenQA.Selenium.Support.UI;
 
 namespace ApplicationUI.ViewModels
 {
@@ -46,6 +46,56 @@ namespace ApplicationUI.ViewModels
             _userService = userService;
             _bookService = bookService;
         }
+
+
+        //private async void Search()
+        //{
+        //    SoundPlayer.PlayButtonSound();
+        //    if (!String.IsNullOrWhiteSpace(SearchString) && !String.IsNullOrWhiteSpace(SearchString))
+        //    {
+        //        await Task.Run(() =>
+        //        {
+        //            var driverService = ChromeDriverService.CreateDefaultService();
+        //            driverService.HideCommandPromptWindow = true;
+        //            ChromeOptions options = new ChromeOptions();
+        //            options.AddArgument("--headless");
+
+        //            using (IWebDriver driver = new ChromeDriver(driverService, options))
+        //            {
+        //                driver.Navigate().GoToUrl("https://www.ukrlib.com.ua/search.php?");
+
+        //                IWebElement inputField = driver.FindElement(By.XPath("//*[@id=\"cse-search-box\"]/input[1]"));
+
+        //                inputField.Clear();
+        //                Response = SearchString;
+        //                SearchString += " скачати повністю";
+        //                inputField.SendKeys(SearchString);
+
+        //                IWebElement submitButton = driver.FindElement(By.XPath("//*[@id=\"cse-search-box\"]/input[2]"));
+
+        //                submitButton.Click();
+        //                IReadOnlyCollection<IWebElement> links = driver.FindElements(By.XPath("//*[@id=\"___gcse_1\"]/div/div/div/div[5]/div[2]/div[1]/div/div[1]/div[1]/div/div[1]/div/a"));
+        //                if (links.Any())
+        //                {
+        //                    CanDownload = true;
+        //                    OnNotifyPropertyChanged("CanDownload");
+        //                    Response += " found";
+        //                    OnNotifyPropertyChanged("Response");
+        //                    href = links.First().GetAttribute("href");
+        //                }
+        //                else
+        //                {
+        //                    Response += " not found";
+        //                    OnNotifyPropertyChanged("Response");
+        //                }
+        //                driver.Quit();
+        //            }
+        //        });
+        //    }
+        //}
+
+
+
         private async void Search()
         {
             SoundPlayer.PlayButtonSound();
@@ -57,22 +107,36 @@ namespace ApplicationUI.ViewModels
                     driverService.HideCommandPromptWindow = true;
                     ChromeOptions options = new ChromeOptions();
                     options.AddArgument("--headless");
-
                     using (IWebDriver driver = new ChromeDriver(driverService, options))
                     {
-                        driver.Navigate().GoToUrl("https://www.ukrlib.com.ua/search.php?");
+                        driver.Navigate().GoToUrl("https://oceanofpdf.com/?s=");
 
-                        IWebElement inputField = driver.FindElement(By.XPath("//*[@id=\"cse-search-box\"]/input[1]"));
+                        if (driver.Url.Contains("https://oceanofpdf.com/?s="))
+                        {
+                            MessageBox.Show("Перехід успішний!");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Щось пішло не так.");
+                        }
+
+
+                        IWebElement element = driver.FindElement(By.CssSelector(".header-icons"));
+                        element.Click();
+
+
+                        IWebElement inputField = driver.FindElement(By.ClassName("search-form-input"));
 
                         inputField.Clear();
                         Response = SearchString;
-                        SearchString += " скачати повністю";
+                        SearchString += " download";
                         inputField.SendKeys(SearchString);
 
-                        IWebElement submitButton = driver.FindElement(By.XPath("//*[@id=\"cse-search-box\"]/input[2]"));
+                        IWebElement submitButton = driver.FindElement(By.XPath("//*[@id=\"searchform-1\"]/button"));
 
                         submitButton.Click();
-                        IReadOnlyCollection<IWebElement> links = driver.FindElements(By.XPath("//*[@id=\"___gcse_1\"]/div/div/div/div[5]/div[2]/div[1]/div/div[1]/div[1]/div/div[1]/div/a"));
+                        IReadOnlyCollection<IWebElement> links = driver.FindElements(By.XPath("//*[@id=\"genesis-content\"]/article[1]/a"));
+
                         if (links.Any())
                         {
                             CanDownload = true;
@@ -81,6 +145,7 @@ namespace ApplicationUI.ViewModels
                             OnNotifyPropertyChanged("Response");
                             href = links.First().GetAttribute("href");
                         }
+
                         else
                         {
                             Response += " not found";
@@ -91,6 +156,12 @@ namespace ApplicationUI.ViewModels
                 });
             }
         }
+
+
+
+
+
+
         private async void Download()
         {
             SoundPlayer.PlayButtonSound();
