@@ -38,7 +38,18 @@ namespace ApplicationUI.ViewModels
         public string SearchString { get; set; }
         public string Response { get; set; }
         private List<LibraryBook> _availableBooks;
-        public List<LibraryBook> AvailableBooks;
+        public List<LibraryBook> AvailableBooks
+        {
+            get => _availableBooks;
+            set
+            {
+                if (_availableBooks != value)
+                {
+                    _availableBooks = value;
+                    OnNotifyPropertyChanged(nameof(AvailableBooks));
+                }
+            }
+        }
         public LibraryBook SelectedBook { get; set; }
         public BaseCommand SearchCommand => new BaseCommand(execute => Search(), canExecute => true);
         public BaseCommand DownloadCommand => new BaseCommand(execute => Download(SelectedBook), canExecute => true);
@@ -54,7 +65,7 @@ namespace ApplicationUI.ViewModels
             _userService = userService;
             _bookService = bookService;
         }
-        private void Search()
+        private async void Search()
         {
             //SoundPlayer.PlayButtonSound();
             if (!String.IsNullOrWhiteSpace(SearchString) && !String.IsNullOrWhiteSpace(SearchString))
@@ -69,6 +80,7 @@ namespace ApplicationUI.ViewModels
                     ChromeOptions options = new ChromeOptions();
                     var driverService = ChromeDriverService.CreateDefaultService();
                     driverService.HideCommandPromptWindow = true;
+                    options.AddArgument("--headless");
                     using (IWebDriver driver = new ChromeDriver(driverService,options))
                     {
                         driver.Manage().Window.Maximize();
@@ -120,7 +132,6 @@ namespace ApplicationUI.ViewModels
                             MessageBox.Show("No books");
                         }
                         OnNotifyPropertyChanged(nameof(AvailableBooks));
-                        Thread.Sleep(1000);
                         driver.Quit();
                     }
                 });
@@ -131,26 +142,48 @@ namespace ApplicationUI.ViewModels
         EpubBook bookFile;
         public void Download(LibraryBook libraryBook)
         {
-            var driverService = ChromeDriverService.CreateDefaultService();
-            driverService.HideCommandPromptWindow = true;
-            ChromeOptions options = new ChromeOptions();
-            string downloadDirectory = Directory.GetCurrentDirectory() + $"\\Files";
-            Directory.CreateDirectory(downloadDirectory);
-
-            options.AddUserProfilePreference("download.default_directory", downloadDirectory);
-            options.AddUserProfilePreference("plugins.always_open_pdf_externally", true);
-            options.AddUserProfilePreference("download.prompt_for_download", false);
-
-            using(IWebDriver driver=new ChromeDriver(driverService, options))
+            if (libraryBook != null)
             {
-                driver.Navigate().GoToUrl(libraryBook.BookPageLink);
-                Thread.Sleep(3000);
-                driver.Quit();
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    var driverService = ChromeDriverService.CreateDefaultService();
+                    driverService.HideCommandPromptWindow = true;
+                    ChromeOptions options = new ChromeOptions();
+                    string downloadDirectory = Directory.GetCurrentDirectory() + $"\\Files";
+                    Directory.CreateDirectory(downloadDirectory);
+
+                    options.AddArgument("--headless");
+                    options.AddUserProfilePreference("download.default_directory", downloadDirectory);
+                    options.AddUserProfilePreference("plugins.always_open_pdf_externally", true);
+                    options.AddUserProfilePreference("download.prompt_for_download", false);
+
+                    using (IWebDriver driver = new ChromeDriver(driverService, options))
+                    {
+                        try
+                        {
+                            driver.Navigate().GoToUrl(libraryBook.BookPageLink);
+                            Thread.Sleep(5000);
+                            var elements = driver.FindElements(By.CssSelector(".lib_book_download_container a"));
+                            elements[3].Click();
+                            Thread.Sleep(3000);
+                            libraryBook.FilePath = $"{Directory.GetFiles(downloadDirectory)[0]}";
+                            Thread.Sleep(2000);
+                            
+                            ParseBook(libraryBook);
+                        }
+                        catch (Exception ex) { MessageBox.Show("Unable to download file"); }
+                        driver.Quit();
+                    }
+                    AvailableBooks = new List<LibraryBook>();
+                    OnNotifyPropertyChanged(nameof(AvailableBooks));
+                    
+                });
+                
             }
         }
-        private async void ParseBook(LibraryBook libraryBook)
+        private void ParseBook(LibraryBook libraryBook)
         {
-            await Task.Run(() =>
+            if (libraryBook.FilePath != null)
             {
                 bookFile = EpubReader.ReadBook(libraryBook.FilePath);
                 BookDTO book = new BookDTO()
@@ -188,7 +221,11 @@ namespace ApplicationUI.ViewModels
                 _bookService.AddBook(book);
                 var bookFromDB = _bookService.GetByNameAndAuthor(book.Name, book.Author);
                 _userService.AddBook(StaticUser.User, bookFromDB);
-            });
+                foreach (var f in Directory.GetFiles(downloadDirectory))
+                    Directory.Delete(f);
+                Directory.Delete(downloadDirectory);
+                MessageBox.Show("Book downloaded");
+            }
         }
     }
 }
