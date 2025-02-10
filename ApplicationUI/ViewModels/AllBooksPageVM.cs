@@ -17,7 +17,10 @@ using System.Windows;
 using ApplicationUI.Statics;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using iText.Kernel.Pdf.Canvas.Parser;
+using OpenQA.Selenium.Support.UI;
 using System.Collections.ObjectModel;
+using ApplicationUI.TempModels;
+using System.Windows.Threading;
 
 namespace ApplicationUI.ViewModels
 {
@@ -27,11 +30,23 @@ namespace ApplicationUI.ViewModels
         private IUserService<BookDTO, UserDTO> _userService;
         private IBookService<BookDTO, ParagraphDTO, UserCommentDTO> _bookService;
         
-        string href;
         private string downloadDirectory;
         public bool CanDownload { get; set; } = false;
         public string SearchString { get; set; }
         public string Response { get; set; }
+        private List<LibraryBook> _availableBooks;
+        public List<LibraryBook> AvailableBooks
+        {
+            get => _availableBooks;
+            set
+            {
+                if(_availableBooks != value)
+                {
+                    _availableBooks = value;
+                    OnNotifyPropertyChanged(nameof(AvailableBooks));
+                }
+            }
+        }
         public BaseCommand SearchCommand => new BaseCommand(execute => Search(), canExecute => true);
         public BaseCommand DownloadCommand => new BaseCommand(execute => Download(), canExecute => true);
         public void OnNotifyPropertyChanged([CallerMemberName] string propertyName = null)
@@ -46,51 +61,83 @@ namespace ApplicationUI.ViewModels
             _userService = userService;
             _bookService = bookService;
         }
+
         private async void Search()
         {
             SoundPlayer.PlayButtonSound();
             if (!String.IsNullOrWhiteSpace(SearchString) && !String.IsNullOrWhiteSpace(SearchString))
             {
-                await Task.Run(() =>
+                AvailableBooks = null;
+                OnNotifyPropertyChanged(nameof(AvailableBooks));
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    var driverService = ChromeDriverService.CreateDefaultService();
-                    driverService.HideCommandPromptWindow = true;
+                    string downloadDirectory = Directory.GetCurrentDirectory() + $"\\Files";
+                    Directory.CreateDirectory(downloadDirectory);
+
                     ChromeOptions options = new ChromeOptions();
-                    options.AddArgument("--headless");
 
-                    using (IWebDriver driver = new ChromeDriver(driverService, options))
+                    using (IWebDriver driver = new ChromeDriver(options))
                     {
-                        driver.Navigate().GoToUrl("https://www.ukrlib.com.ua/search.php?");
+                        driver.Manage().Window.Maximize();
+                        driver.Navigate().GoToUrl("https://knigogo.top/");
 
-                        IWebElement inputField = driver.FindElement(By.XPath("//*[@id=\"cse-search-box\"]/input[1]"));
-
+                        IWebElement inputField = driver.FindElement(By.XPath("//*[@id=\"searchform\"]/input"));
                         inputField.Clear();
-                        Response = SearchString;
-                        SearchString += " скачати повністю";
-                        inputField.SendKeys(SearchString);
-
-                        IWebElement submitButton = driver.FindElement(By.XPath("//*[@id=\"cse-search-box\"]/input[2]"));
-
+                        inputField.SendKeys($"{SearchString}");
+                        IWebElement submitButton = driver.FindElement(By.XPath("//*[@id=\"searchform\"]/button"));
                         submitButton.Click();
-                        IReadOnlyCollection<IWebElement> links = driver.FindElements(By.XPath("//*[@id=\"___gcse_1\"]/div/div/div/div[5]/div[2]/div[1]/div/div[1]/div[1]/div/div[1]/div/a"));
-                        if (links.Any())
+                        Thread.Sleep(1000);
+                        IWebElement resultResponse = driver.FindElement(By.XPath("/html/body/div[2]/div/div[1]/div/div[1]/h2"));
+
+                        AvailableBooks = new List<LibraryBook>();
+                        _availableBooks = new List<LibraryBook>();
+                        if (resultResponse.GetAttribute("innerText") == "КНИГИ")
                         {
-                            CanDownload = true;
-                            OnNotifyPropertyChanged("CanDownload");
-                            Response += " found";
-                            OnNotifyPropertyChanged("Response");
-                            href = links.First().GetAttribute("href");
+                            try
+                            {
+                                int count = 1;
+                                while (true)
+                                {
+                                    LibraryBook book = new LibraryBook();
+                                    string downloadResponse = driver.FindElement(By.XPath($"/html/body/div[2]/div/div[1]/div/div[1]/div[2]/div[1]/div[{count}]/div/div/div[1]/a/span")).GetAttribute("innerText");
+                                    if (downloadResponse == "Скачати")
+                                    {
+                                        string bookWebSource = driver.FindElement(By.XPath($"/html/body/div[2]/div/div[1]/div/div[1]/div[2]/div[1]/div[{count}]/a")).GetAttribute("href");
+                                        string title = driver.FindElement(By.XPath($"/html/body/div[2]/div/div[1]/div/div[1]/div[2]/div[1]/div[{count}]/div/a")).GetAttribute("innerText");
+                                        string author = driver.FindElement(By.XPath($"/html/body/div[2]/div/div[1]/div/div[1]/div[2]/div[1]/div[{count}]/div/span/a")).GetAttribute("innerText");
+                                        string url = driver.FindElement(By.XPath($"/html/body/div[2]/div/div[1]/div/div[1]/div[2]/div[1]/div[{count}]/a/span/img")).GetAttribute("src");
+                                        book.Author = author;
+                                        book.Name = title;
+                                        book.BookPageLink = bookWebSource;
+                                        book.CoverURL = url;
+                                        book.Id = AvailableBooks.Count + 1;
+
+                                        AvailableBooks.Add(book);
+                                    }
+                                    count++;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
                         }
                         else
                         {
-                            Response += " not found";
-                            OnNotifyPropertyChanged("Response");
+                            MessageBox.Show("No books");
                         }
+                        OnNotifyPropertyChanged(nameof(AvailableBooks));
                         driver.Quit();
                     }
                 });
             }
         }
+
+
+
+
+
+
         private async void Download()
         {
             SoundPlayer.PlayButtonSound();
@@ -116,7 +163,7 @@ namespace ApplicationUI.ViewModels
                     using (IWebDriver driver = new ChromeDriver(driverService, options))
                     {
 
-                        driver.Navigate().GoToUrl(href);
+                        //driver.Navigate().GoToUrl(href);
 
                         var pdfSources = driver.FindElements(By.XPath("//*[@id=\"mm-0\"]/div[2]/div/div[6]/div[3]/a[6]"));
 
