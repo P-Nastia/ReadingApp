@@ -3,6 +3,7 @@ using System;
 using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DAL.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250210094307_ChangedTypeOfBookCover")]
+    partial class ChangedTypeOfBookCover
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,39 +88,6 @@ namespace DAL.Migrations
                     b.HasIndex("BookId");
 
                     b.ToTable("tbl_chapters");
-                });
-
-            modelBuilder.Entity("DAL.Entities.NotificationEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("HotLoadLink")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("character varying(60)");
-
-                    b.Property<int?>("UserEntityId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserEntityId");
-
-                    b.ToTable("tbl_notifications");
                 });
 
             modelBuilder.Entity("DAL.Entities.ParagraphEntity", b =>
@@ -224,13 +194,6 @@ namespace DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DAL.Entities.NotificationEntity", b =>
-                {
-                    b.HasOne("DAL.Entities.UserEntity", null)
-                        .WithMany("Notifications")
-                        .HasForeignKey("UserEntityId");
-                });
-
             modelBuilder.Entity("DAL.Entities.ChapterEntity", b =>
                 {
                     b.HasOne("DAL.Entities.BookEntity", "Book")
@@ -285,11 +248,6 @@ namespace DAL.Migrations
             modelBuilder.Entity("DAL.Entities.ParagraphEntity", b =>
                 {
                     b.Navigation("UserComments");
-                });
-
-            modelBuilder.Entity("DAL.Entities.UserEntity", b =>
-                {
-                    b.Navigation("Notifications");
                 });
 #pragma warning restore 612, 618
         }

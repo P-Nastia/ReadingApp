@@ -1,4 +1,7 @@
-﻿using ApplicationUI.ViewModels;
+﻿using ApplicationUI.TempModels;
+using ApplicationUI.ViewModels;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Media;
 
 namespace ApplicationUI.Pages
 {
@@ -31,11 +35,16 @@ namespace ApplicationUI.Pages
             // Setting images/Icons
             string CD = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\Images\\"; // Maybe there is  a better way to get the project directory...
             SearchImage.Source = new BitmapImage(new Uri($"{CD}searchButton.png", UriKind.Absolute));
-            DownloadImage.Source = new BitmapImage(new Uri($"{CD}DownloadImage.png", UriKind.Absolute));
+            downloadFromDeviceImage.Source = new BitmapImage(new Uri($"{CD}downloadImage.png", UriKind.Absolute));
             #endregion
 
             _allBooksPageVM = allBooksPageVM;
             this.DataContext = _allBooksPageVM;
+        }
+
+        private void booksLB_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            _allBooksPageVM.Download(_allBooksPageVM.SelectedBook);
         }
     }
 }

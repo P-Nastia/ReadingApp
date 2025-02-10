@@ -25,7 +25,7 @@ namespace DAL.Repositories
         public async Task AddComment(UserCommentEntity itemToAdd)
         {
             AppDBContext tempDB = new AppDBContext();
-            var paragraph = await tempDB.Paragraphs.Include(p => p.UserComments).Include(p => p.Book).FirstOrDefaultAsync(p => p.Id == itemToAdd.ParagraphId);
+            var paragraph = await tempDB.Paragraphs.Include(p => p.UserComments).FirstOrDefaultAsync(p => p.Id == itemToAdd.ParagraphId);
 
             if (paragraph != null)
             {
@@ -58,8 +58,8 @@ namespace DAL.Repositories
         public IQueryable<BookEntity> GetAll()
         {
             AppDBContext tempDB = new AppDBContext();
-            return tempDB.Books.Include(b => b.Users).ThenInclude(u => u.Books).Include(b => b.Paragraphs).ThenInclude(p => p.UserComments).ThenInclude(uc => uc.User)
-                .Include(b => b.Users).ThenInclude(u => u.Books).Include(b => b.Paragraphs).ThenInclude(p => p.UserComments).ThenInclude(uc => uc.Paragraph);
+            return tempDB.Books.Include(b => b.Users).ThenInclude(u => u.Books).Include(b => b.Chapters).ThenInclude(c=>c.Paragraphs).ThenInclude(p => p.UserComments).ThenInclude(uc => uc.User)
+                .Include(b => b.Users).ThenInclude(u => u.Books).Include(b => b.Chapters).ThenInclude(b => b.Paragraphs).ThenInclude(p => p.UserComments).ThenInclude(uc => uc.Paragraph);
         }
     }
 }

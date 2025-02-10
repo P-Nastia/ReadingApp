@@ -10,11 +10,14 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.72" />
     <PackageReference Include="itext7" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1" />
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="9.0.1" />
+    <PackageReference Include="Selenium.Support" Version="4.28.0" />
     <PackageReference Include="Selenium.WebDriver" Version="4.28.0" />
     <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="132.0.6834.15900" />
+    <PackageReference Include="VersOne.Epub" Version="3.2.0" />
   </ItemGroup>
 
   <ItemGroup>

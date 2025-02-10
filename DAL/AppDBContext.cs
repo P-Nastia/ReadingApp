@@ -14,6 +14,7 @@ namespace DAL
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<BookEntity> Books { get; set; }
         public DbSet<UserCommentEntity> UsersComments { get; set; }
+        public DbSet<ChapterEntity> Chapters { get; set; }
         public DbSet<NotificationEntity> Notifications { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

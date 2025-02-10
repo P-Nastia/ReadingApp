@@ -1,0 +1,24 @@
+﻿<Page x:Class="ApplicationUI.Pages.ChapterPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ApplicationUI.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1000"
+      Title="ChapterPage" PreviewMouseWheel="Page_PreviewMouseWheel">
+
+    <Grid>
+        <ListBox Grid.Column="0" Padding="5" x:Name="paragraphsLB" FontSize="14" ScrollViewer.VerticalScrollBarVisibility="Visible" MouseDoubleClick="textRB_MouseDoubleClick"
+                 ItemsSource="{Binding Chapter.Paragraphs}" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding DisplayText}" 
+                       MaxWidth="1000" 
+                       TextWrapping="Wrap" 
+                       TextTrimming="CharacterEllipsis" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Page>
