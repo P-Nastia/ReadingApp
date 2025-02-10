@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApplicationUI"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="800" MinWidth="1300" MaxHeight="800" MouseMove="Window_MouseMove" MaxWidth="1300" WindowStartupLocation="CenterScreen">
+        Title="Main" MinHeight="800" MinWidth="1300" MaxHeight="800" MouseMove="Window_MouseMove" MaxWidth="1300" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Background" Value="#FF443434"/>

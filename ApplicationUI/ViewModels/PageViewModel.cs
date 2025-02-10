@@ -101,11 +101,17 @@ namespace ApplicationUI.ViewModels
                     {
                         break;
                     }
-                    else if(StaticUser.UserNeedsToSignUp == true)
+                    else if (StaticUser.UserNeedsToSignUp == true)
                     {
                         this.CurrentPage = _signUpPage;
                         OnNotifyPropertyChanged("CurrentPage");
                     }
+                    else if (StaticUser.UserNeedsToSignUp == false)
+                    {
+                        this.CurrentPage = _loginPage;
+                        OnNotifyPropertyChanged("CurrentPage");
+                    }
+
                 }
                 if (StaticUser.IsLoggedIn == true)
                 {

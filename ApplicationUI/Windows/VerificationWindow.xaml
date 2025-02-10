@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApplicationUI.Windows"
         mc:Ignorable="d"
-        Title="VerificationWindow" Height="450" Width="800">
+        Title="Verification Window" Height="450" Width="480" WindowStartupLocation="CenterScreen">
     <Viewbox>
         <Border Style="{StaticResource BorderStyle}">
             <StackPanel Margin="10">
                 <TextBlock Text="Verification" Style="{StaticResource MainTextBlock}"/>
                 <TextBlock Style="{StaticResource DefaultTextBlock}">Enter your code:</TextBlock>
-                <TextBox x:Name="codeTB" BorderBrush="#DDDDDD" BorderThickness="1" FontSize="14" Padding="10" />
+                <TextBox x:Name="codeTB" BorderBrush="#DDDDDD" BorderThickness="5" FontSize="14" Padding="10" />
 
                 <Button Style="{StaticResource ButtonStyle}" Click="Confirm_Click">Confirm</Button>
             </StackPanel>
