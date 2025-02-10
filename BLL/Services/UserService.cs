@@ -45,29 +45,26 @@ namespace BLL.Services
             AppDBContext context = new AppDBContext();
             return context.Users.AsQueryable().ProjectTo<UserDTO>(_mapper.ConfigurationProvider);
         }
-        public BookDTO LoadParagraphs(BookDTO book)
+        public ChapterDTO LoadParagraphs(ChapterDTO chapter)
         {
             AppDBContext context = new AppDBContext();
-            if(book.Paragraphs == null)
+            if(chapter.Paragraphs == null)
             {
-                book.Paragraphs = context.Paragraphs.AsQueryable()
-               .Where(x => x.BookId == book.Id)
-               .Skip(0)
-               .Take(15)
-               .ProjectTo<ParagraphDTO>(_mapper.ConfigurationProvider)
-               .ToList();
-                return book;
+                chapter.Paragraphs = new List<ParagraphDTO>();
+                chapter.Paragraphs = context.Paragraphs.AsQueryable().Where(x => x.ChapterId == chapter.Id).Skip(0).Take(15).ProjectTo<ParagraphDTO>(_mapper.ConfigurationProvider).ToList();
+                return chapter;
             }
             else
             {
-                book.Paragraphs.AddRange(context.Paragraphs.AsQueryable()
-                .Where(x => x.BookId == book.Id)
-                .Skip(book.Paragraphs.Count)
-                .Take(10)
-                .ProjectTo<ParagraphDTO>(_mapper.ConfigurationProvider)
-                .ToList());
-                return book;
+                chapter.Paragraphs.AddRange(context.Paragraphs.AsQueryable().Where(x => x.ChapterId == chapter.Id).Skip(chapter.Paragraphs.Count).Take(10).ProjectTo<ParagraphDTO>(_mapper.ConfigurationProvider).ToList());
+                return chapter;
             }
+        }
+        public BookDTO LoadChapters(BookDTO book)
+        {
+            AppDBContext context = new AppDBContext();
+            book.Chapters = context.Chapters.AsQueryable().Where(x => x.BookId == book.Id).ProjectTo<ChapterDTO>(_mapper.ConfigurationProvider).ToList();
+            return book;
         }
 
         public BookDTO GetBook(UserDTO entity, int id)
