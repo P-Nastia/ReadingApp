@@ -144,41 +144,52 @@ namespace ApplicationUI.ViewModels
         {
             if (libraryBook != null)
             {
-                Application.Current.Dispatcher.Invoke(() =>
+                var bookFromDB = _bookService.GetByNameAndAuthor(libraryBook.Name, libraryBook.Author);
+                if (bookFromDB == null)
                 {
-                    var driverService = ChromeDriverService.CreateDefaultService();
-                    driverService.HideCommandPromptWindow = true;
-                    ChromeOptions options = new ChromeOptions();
-                    string downloadDirectory = Directory.GetCurrentDirectory() + $"\\Files";
-                    Directory.CreateDirectory(downloadDirectory);
-
-                    options.AddArgument("--headless");
-                    options.AddUserProfilePreference("download.default_directory", downloadDirectory);
-                    options.AddUserProfilePreference("plugins.always_open_pdf_externally", true);
-                    options.AddUserProfilePreference("download.prompt_for_download", false);
-
-                    using (IWebDriver driver = new ChromeDriver(driverService, options))
+                    Application.Current.Dispatcher.Invoke(() =>
                     {
-                        try
+                        var driverService = ChromeDriverService.CreateDefaultService();
+                        driverService.HideCommandPromptWindow = true;
+                        ChromeOptions options = new ChromeOptions();
+                        string downloadDirectory = Directory.GetCurrentDirectory() + $"\\Files";
+                        Directory.CreateDirectory(downloadDirectory);
+                        foreach (var f in Directory.GetFiles(downloadDirectory))
                         {
-                            driver.Navigate().GoToUrl(libraryBook.BookPageLink);
-                            Thread.Sleep(5000);
-                            var elements = driver.FindElements(By.CssSelector(".lib_book_download_container a"));
-                            elements[3].Click();
-                            Thread.Sleep(3000);
-                            libraryBook.FilePath = $"{Directory.GetFiles(downloadDirectory)[0]}";
-                            Thread.Sleep(2000);
-                            
-                            ParseBook(libraryBook);
+                            File.Delete(f);
                         }
-                        catch (Exception ex) { MessageBox.Show("Unable to download file"); }
-                        driver.Quit();
-                    }
-                    AvailableBooks = new List<LibraryBook>();
-                    OnNotifyPropertyChanged(nameof(AvailableBooks));
-                    
-                });
-                
+                        options.AddArgument("--headless");
+                        options.AddUserProfilePreference("download.default_directory", downloadDirectory);
+                        options.AddUserProfilePreference("plugins.always_open_pdf_externally", true);
+                        options.AddUserProfilePreference("download.prompt_for_download", false);
+
+                        using (IWebDriver driver = new ChromeDriver(driverService, options))
+                        {
+                            try
+                            {
+                                driver.Navigate().GoToUrl(libraryBook.BookPageLink);
+                                Thread.Sleep(5000);
+                                var elements = driver.FindElements(By.CssSelector(".lib_book_download_container a"));
+                                elements[3].Click();
+                                Thread.Sleep(3000);
+                                libraryBook.FilePath = $"{Directory.GetFiles(downloadDirectory)[0]}";
+                                Thread.Sleep(2000);
+
+                                ParseBook(libraryBook);
+                            }
+                            catch (Exception ex) { MessageBox.Show("Unable to download file"); }
+                            driver.Quit();
+                        }
+                        AvailableBooks = new List<LibraryBook>();
+                        OnNotifyPropertyChanged(nameof(AvailableBooks));
+
+                    });
+                }
+                else
+                {
+                    _userService.AddBook(StaticUser.User, bookFromDB);
+                    MessageBox.Show("Book added to library");
+                }
             }
         }
         private void ParseBook(LibraryBook libraryBook)
@@ -221,9 +232,7 @@ namespace ApplicationUI.ViewModels
                 _bookService.AddBook(book);
                 var bookFromDB = _bookService.GetByNameAndAuthor(book.Name, book.Author);
                 _userService.AddBook(StaticUser.User, bookFromDB);
-                foreach (var f in Directory.GetFiles(downloadDirectory))
-                    Directory.Delete(f);
-                Directory.Delete(downloadDirectory);
+                
                 MessageBox.Show("Book downloaded");
             }
         }
