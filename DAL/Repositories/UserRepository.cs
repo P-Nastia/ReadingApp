@@ -23,7 +23,7 @@ namespace DAL.Repositories
         public async Task AddBook(UserEntity userEntity, BookEntity entity)
         {
             AppDBContext tempDB = new AppDBContext();
-            var user = await tempDB.Users.Include(u=>u.Books).FirstOrDefaultAsync(u => u.Id == userEntity.Id);
+            var user = await tempDB.Users.Include(b=>b.Books).FirstOrDefaultAsync(u => u.Id == userEntity.Id);
             var book = await tempDB.Books.Include(b=>b.Users).FirstOrDefaultAsync(b => b.Id == entity.Id);
             if (user != null && book != null)
             {
@@ -35,14 +35,12 @@ namespace DAL.Repositories
 
         public async Task AddNotification(UserEntity userEntity, NotificationEntity entity)
         {
-            //AppDBContext tempDB = new AppDBContext();
-            var user = await _dbContext.Users.Include(u => u.Notifications).FirstOrDefaultAsync(u => u.Id == userEntity.Id);
+            AppDBContext tempDB = new AppDBContext();
+            var user = await tempDB.Users.Include(n => n.Notifications).Include(b => b.Books).FirstOrDefaultAsync(u => u.Id == userEntity.Id);
             if (user != null)
             {
-                await _dbContext.Notifications.AddAsync(entity);
                 user.Notifications.Add(entity);
-                UpdateUser(user);
-                //await _dbContext.SaveChangesAsync();
+                await tempDB.SaveChangesAsync();
             }
         }
 
@@ -75,7 +73,7 @@ namespace DAL.Repositories
         public async Task RemoveNotification(UserEntity userEntity, NotificationEntity entity)
         {
             AppDBContext tempDB = new AppDBContext();
-            var user = await tempDB.Users.Include(u => u.Notifications).FirstOrDefaultAsync(u => u.Id == userEntity.Id);
+            var user = await tempDB.Users.Include(n => n.Notifications).FirstOrDefaultAsync(u => u.Id == userEntity.Id);
             if (user != null)
             {
                 var NotificationToRemove = user.Notifications.FirstOrDefault(uc => uc.Id == entity.Id);
