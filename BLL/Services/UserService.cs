@@ -48,15 +48,15 @@ namespace BLL.Services
         public ChapterDTO LoadParagraphs(ChapterDTO chapter)
         {
             AppDBContext context = new AppDBContext();
-            if(chapter.Paragraphs != null)
+            if(chapter.Paragraphs == null)
             {
+                chapter.Paragraphs = new List<ParagraphDTO>();
                 chapter.Paragraphs = context.Paragraphs.AsQueryable().Where(x => x.ChapterId == chapter.Id).Skip(0).Take(15).ProjectTo<ParagraphDTO>(_mapper.ConfigurationProvider).ToList();
                 return chapter;
             }
             else
             {
-                chapter.Paragraphs = new List<ParagraphDTO>();
-                chapter.Paragraphs = context.Paragraphs.AsQueryable().Where(x => x.ChapterId == chapter.Id).Skip(chapter.Paragraphs.Count).Take(10).ProjectTo<ParagraphDTO>(_mapper.ConfigurationProvider).ToList();
+                chapter.Paragraphs.AddRange(context.Paragraphs.AsQueryable().Where(x => x.ChapterId == chapter.Id).Skip(chapter.Paragraphs.Count).Take(10).ProjectTo<ParagraphDTO>(_mapper.ConfigurationProvider).ToList());
                 return chapter;
             }
         }

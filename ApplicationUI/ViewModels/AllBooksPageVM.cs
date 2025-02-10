@@ -23,6 +23,8 @@ using HtmlAgilityPack;
 using ApplicationUI.TempModels;
 using System.Security.Policy;
 using System.Media;
+using Microsoft.Win32;
+using System.Drawing;
 
 namespace ApplicationUI.ViewModels
 {
@@ -52,7 +54,7 @@ namespace ApplicationUI.ViewModels
         }
         public LibraryBook SelectedBook { get; set; }
         public BaseCommand SearchCommand => new BaseCommand(execute => Search(), canExecute => true);
-        public BaseCommand DownloadCommand => new BaseCommand(execute => Download(SelectedBook), canExecute => true);
+        public BaseCommand DownloadCommand => new BaseCommand(execute => DownloadFile(), canExecute => true);
         public void OnNotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
             if (PropertyChanged != null)
@@ -64,6 +66,17 @@ namespace ApplicationUI.ViewModels
         {
             _userService = userService;
             _bookService = bookService;
+        }
+        private void DownloadFile()
+        {
+            OpenFileDialog dialog = new OpenFileDialog() { Filter = "EPUB Files (*.epub)|*.epub" };
+            dialog.ShowDialog();
+            if (!String.IsNullOrEmpty(dialog.FileName) && !String.IsNullOrWhiteSpace(dialog.FileName))
+            {
+                LibraryBook book = new LibraryBook();
+                book.FilePath = dialog.FileName;
+                ParseBook(book);
+            }
         }
         private async void Search()
         {
@@ -138,7 +151,6 @@ namespace ApplicationUI.ViewModels
             }
         }
 
-
         EpubBook bookFile;
         public void Download(LibraryBook libraryBook)
         {
@@ -197,6 +209,12 @@ namespace ApplicationUI.ViewModels
             if (libraryBook.FilePath != null)
             {
                 bookFile = EpubReader.ReadBook(libraryBook.FilePath);
+                if (libraryBook.Name == null)
+                {
+                    libraryBook.Name = bookFile.Title;
+                    libraryBook.Author = bookFile.Author;
+                    libraryBook.CoverURL = "https://clipart-library.com/img/1144207.png";// static book cover url for books, that are downloaded from device and not from selenium
+                }
                 BookDTO book = new BookDTO()
                 {
                     Name = libraryBook.Name,
@@ -205,11 +223,12 @@ namespace ApplicationUI.ViewModels
                     Chapters = new List<ChapterDTO>(),
                     CoverURL = libraryBook.CoverURL
                 };
+                int partCount = 1;
                 foreach (EpubTextContentFile textContentFile in bookFile.ReadingOrder)
                 {
                     ChapterDTO chapter = new ChapterDTO()
                     {
-                        Name = textContentFile.FileName,
+                        Name = $"Part {partCount++}",
                         Book = book,
                         Paragraphs = new List<ParagraphDTO>()
                     };
@@ -218,9 +237,13 @@ namespace ApplicationUI.ViewModels
                     string s = "";
                     foreach (HtmlNode node in htmlDocument.DocumentNode.SelectNodes("//text()"))
                     {
-                        s += node.InnerText.Trim() + '\n';
+                        if (node.InnerText.Trim() != "\n")
+                        {
+                            s += node.InnerText.Trim() + '\n';
+                        }
                     }
                     List<string> paragraphs = s.Split(new[] { ".\n" }, StringSplitOptions.None).ToList();
+
                     List<ParagraphDTO> paragraphDTOs = new List<ParagraphDTO>();
                     foreach (var par in paragraphs)
                     {

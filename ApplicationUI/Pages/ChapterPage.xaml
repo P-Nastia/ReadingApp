@@ -10,8 +10,15 @@
 
     <Grid>
         <ListBox Grid.Column="0" Padding="5" x:Name="paragraphsLB" FontSize="14" ScrollViewer.VerticalScrollBarVisibility="Visible" MouseDoubleClick="textRB_MouseDoubleClick"
-                 ItemsSource="{Binding Chapter.Paragraphs}" 
-                 DisplayMemberPath="DisplayText">
+                 ItemsSource="{Binding Chapter.Paragraphs}" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding DisplayText}" 
+                       MaxWidth="1000" 
+                       TextWrapping="Wrap" 
+                       TextTrimming="CharacterEllipsis" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
     </Grid>
 </Page>
