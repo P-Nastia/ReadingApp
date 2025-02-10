@@ -35,13 +35,14 @@ namespace DAL.Repositories
 
         public async Task AddNotification(UserEntity userEntity, NotificationEntity entity)
         {
-            AppDBContext tempDB = new AppDBContext();
-            var user = await tempDB.Users.Include(u => u.Notifications).FirstOrDefaultAsync(u => u.Id == userEntity.Id);
+            //AppDBContext tempDB = new AppDBContext();
+            var user = await _dbContext.Users.Include(u => u.Notifications).FirstOrDefaultAsync(u => u.Id == userEntity.Id);
             if (user != null)
             {
-                await tempDB.Notifications.AddAsync(entity);
+                await _dbContext.Notifications.AddAsync(entity);
                 user.Notifications.Add(entity);
-                await tempDB.SaveChangesAsync();
+                UpdateUser(user);
+                //await _dbContext.SaveChangesAsync();
             }
         }
 
@@ -93,7 +94,7 @@ namespace DAL.Repositories
         public async Task UpdateUser(UserEntity user)
         {
             AppDBContext tempDB = new AppDBContext();
-            var userFromDB = await tempDB.Users.Include(u => u.Books).ThenInclude(b => b.Chapters).ThenInclude(b => b.Paragraphs).ThenInclude(p => p.UserComments).FirstOrDefaultAsync(i => i.Id == user.Id);
+            var userFromDB = await tempDB.Users.Include(n=>n.Notifications).Include(u => u.Books).ThenInclude(b => b.Chapters).ThenInclude(b => b.Paragraphs).ThenInclude(p => p.UserComments).FirstOrDefaultAsync(i => i.Id == user.Id);
             if (userFromDB != null)
             {
                 userFromDB.Password = user.Password;
