@@ -1,4 +1,5 @@
-﻿using EmailSender.Services;
+﻿using ApplicationUI.Statics;
+using EmailSender.Services;
 using System.Windows;
 
 namespace ApplicationUI.Windows
@@ -23,6 +24,7 @@ namespace ApplicationUI.Windows
         }
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {
+            SoundPlayer.PlayButtonSound();
             if (codeTB.Text == _verificationCode)
             {
                 MessageBox.Show("Success", "Information", MessageBoxButton.OK, MessageBoxImage.Information);

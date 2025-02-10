@@ -119,25 +119,37 @@ namespace ApplicationUI.ViewModels
         {
             get
             {
-                return new BaseCommand(obj => CurrentPage = _allBooksPage);
+                return new BaseCommand(obj =>
+                {
+                    SoundPlayer.PlayButtonSound();
+                    CurrentPage = _allBooksPage;
+                });
             }
         }
+
         public ICommand ShowMyLibraryPage
         {
             get
             {
-                return new BaseCommand(obj => CurrentPage = _myLibraryPage);
+                return new BaseCommand(obj =>
+                {
+                    SoundPlayer.PlayButtonSound();
+                    CurrentPage = _myLibraryPage;
+                });
             }
         }
+
         public ICommand ShowMyProfilePage
         {
             get
             {
-                return new BaseCommand(obj => CurrentPage = _myProfilePage);
+                return new BaseCommand(obj =>
+                {
+                    SoundPlayer.PlayButtonSound();
+                    CurrentPage = _myProfilePage;
+                });
             }
         }
-
-
 
         public ICommand ShowLogOutPage
         {
@@ -145,13 +157,12 @@ namespace ApplicationUI.ViewModels
             {
                 return new BaseCommand(obj =>
                 {
+                    SoundPlayer.PlayButtonSound();
                     StaticUser.IsLoggedIn = false;
                     CurrentPage = _loginPage;
                     OnNotifyPropertyChanged(nameof(IsLoggedIn));
                     RunWhileLoggin();
-
                 });
-           
             }
         }
 

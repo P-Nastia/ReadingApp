@@ -17,6 +17,7 @@ using System.Windows;
 using ApplicationUI.Statics;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using iText.Kernel.Pdf.Canvas.Parser;
+using OpenQA.Selenium.Support.UI;
 using System.Collections.ObjectModel;
 using VersOne.Epub;
 using HtmlAgilityPack;
@@ -34,7 +35,6 @@ namespace ApplicationUI.ViewModels
         private IUserService<BookDTO, UserDTO> _userService;
         private IBookService<BookDTO, ParagraphDTO, UserCommentDTO> _bookService;
         
-        string href;
         private string downloadDirectory;
         public bool CanDownload { get; set; } = true;
         public string SearchString { get; set; }

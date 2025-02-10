@@ -161,6 +161,7 @@ namespace ApplicationUI.ViewModels
         }
         private async void ChangePassword()
         {
+            SoundPlayer.PlayButtonSound();
             if (CanChangePassword == false)
             {
                 CanChangePassword = true;
@@ -196,6 +197,7 @@ namespace ApplicationUI.ViewModels
         }
         private async void ChangeNickname()
         {
+            SoundPlayer.PlayButtonSound();
             if (CanChangeNickname == false)
             {
                 CanChangeNickname = true;
@@ -211,6 +213,7 @@ namespace ApplicationUI.ViewModels
         }
         private async void ChangePhone()
         {
+            SoundPlayer.PlayButtonSound();
             if (CanChangePhone == false)
             {
                 CanChangePhone = true;
@@ -226,6 +229,7 @@ namespace ApplicationUI.ViewModels
         }
         private async void ChangeEmail()
         {
+            SoundPlayer.PlayButtonSound();
             if (CanChangeEmail == false)
             {
                 CanChangeEmail = true;
@@ -241,6 +245,7 @@ namespace ApplicationUI.ViewModels
         }
         private async void ChangeIcon()
         {
+            SoundPlayer.PlayButtonSound();
             OpenFileDialog dialog = new OpenFileDialog() { Filter = "Image Files (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png" };
             dialog.ShowDialog();
             if (!String.IsNullOrEmpty(dialog.FileName) && !String.IsNullOrWhiteSpace(dialog.FileName))
