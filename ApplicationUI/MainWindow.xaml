@@ -31,9 +31,13 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
+            <Grid Grid.Row="0" Grid.Column="0" x:Name="Sidebar"  Background="#FF443434" Width="270" HorizontalAlignment="Left">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="0.1*"></RowDefinition>
+                </Grid.RowDefinitions>
 
-            <StackPanel Background="#FF443434"  x:Name="Sidebar" Width="270" HorizontalAlignment="Left">
-                <StackPanel.Resources>
+                <Grid.Resources>
                     <!--//Анімація розширення-->
                     <Storyboard x:Key="ExpandSidebar" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" >
                         <DoubleAnimation Storyboard.TargetName="Sidebar" Storyboard.TargetProperty="Width" 
@@ -44,42 +48,43 @@
                         <DoubleAnimation Storyboard.TargetName="Sidebar" Storyboard.TargetProperty="Width" 
                       To="0" Duration="0:0:0.3"/>
                     </Storyboard>
-                </StackPanel.Resources>
-                <Button Command="{Binding ShowMyProfilePage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
-                    <Border>
-                        <StackPanel Orientation="Horizontal" Width="230">
-                            <Image x:Name="MyProfileImage" Height="70" Width="70"></Image>
-                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">My profile</TextBlock>
-                        </StackPanel>
-                    </Border>
-                </Button>
-                <Button Command="{Binding ShowMyLibraryPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
-                    <Border >
-                        <StackPanel Orientation="Horizontal" Width="230">
-                            <Image x:Name="MyBooksImage" Height="70" Width="70"></Image>
-                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"> My books</TextBlock>
-                        </StackPanel>
-                    </Border>
-                </Button>
-                <Button Command="{Binding ShowAllBooksPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
-                    <Border >
-                        <StackPanel Orientation="Horizontal" Width="230">
-                            <Image x:Name="LibraryImage" Height="70" Width="70"></Image>
-                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Library</TextBlock>
-                        </StackPanel>
-                    </Border>
-                </Button>
-                <Button Command="{Binding ShowLogOutPage}" BorderThickness="0" Margin="100,380,0,0" IsEnabled="{Binding IsLoggedIn}">
+                </Grid.Resources>
+
+                <StackPanel Grid.Row="0">
+                    <Button Command="{Binding ShowMyProfilePage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
+                        <Border>
+                            <StackPanel Orientation="Horizontal" Width="230">
+                                <Image x:Name="MyProfileImage" Height="70" Width="70"></Image>
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">My profile</TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </Button>
+                    <Button Command="{Binding ShowMyLibraryPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
+                        <Border >
+                            <StackPanel Orientation="Horizontal" Width="230">
+                                <Image x:Name="MyBooksImage" Height="70" Width="70"></Image>
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"> My books</TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </Button>
+                    <Button Command="{Binding ShowAllBooksPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
+                        <Border >
+                            <StackPanel Orientation="Horizontal" Width="230">
+                                <Image x:Name="LibraryImage" Height="70" Width="70"></Image>
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Library</TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </Button>
+                </StackPanel>
+
+                <Button Grid.Row="1" Command="{Binding ShowLogOutPage}" Margin="0,0,15,0" BorderThickness="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" IsEnabled="{Binding IsLoggedIn}">
                     <Border>
                         <Image x:Name="LogOutImage" Height="50" Width="70"></Image>
                     </Border>
                 </Button>
 
+            </Grid>
 
-            </StackPanel>
-
-
-            
             <Frame x:Name="MainFrame" Grid.Column="1" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden"></Frame>
         </Grid>
     </Border>
