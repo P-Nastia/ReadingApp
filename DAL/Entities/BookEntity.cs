@@ -22,6 +22,6 @@ namespace DAL.Entities
         public string Author { get; set; }
         public ICollection<ChapterEntity> Chapters { get; set; } 
         public ICollection<UserEntity> Users { get; set; }
-        public byte[] Cover { get; set; }
+        public string CoverURL { get; set; }
     }
 }

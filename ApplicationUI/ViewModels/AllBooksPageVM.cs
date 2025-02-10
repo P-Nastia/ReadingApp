@@ -22,6 +22,7 @@ using VersOne.Epub;
 using HtmlAgilityPack;
 using ApplicationUI.TempModels;
 using System.Security.Policy;
+using System.Media;
 
 namespace ApplicationUI.ViewModels
 {
@@ -36,8 +37,11 @@ namespace ApplicationUI.ViewModels
         public bool CanDownload { get; set; } = true;
         public string SearchString { get; set; }
         public string Response { get; set; }
+        private List<LibraryBook> _availableBooks;
+        public List<LibraryBook> AvailableBooks;
+        public LibraryBook SelectedBook { get; set; }
         public BaseCommand SearchCommand => new BaseCommand(execute => Search(), canExecute => true);
-        public BaseCommand DownloadCommand => new BaseCommand(execute => Download(), canExecute => true);
+        public BaseCommand DownloadCommand => new BaseCommand(execute => Download(SelectedBook), canExecute => true);
         public void OnNotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
             if (PropertyChanged != null)
@@ -50,71 +54,112 @@ namespace ApplicationUI.ViewModels
             _userService = userService;
             _bookService = bookService;
         }
-        private async void Search()
+        private void Search()
         {
-            
+            //SoundPlayer.PlayButtonSound();
             if (!String.IsNullOrWhiteSpace(SearchString) && !String.IsNullOrWhiteSpace(SearchString))
             {
-                await Task.Run(() =>
+                AvailableBooks = null;
+                OnNotifyPropertyChanged(nameof(AvailableBooks));
+                Application.Current.Dispatcher.Invoke(() =>
                 {
+                    string downloadDirectory = Directory.GetCurrentDirectory() + $"\\Files";
+                    Directory.CreateDirectory(downloadDirectory);
+
+                    ChromeOptions options = new ChromeOptions();
                     var driverService = ChromeDriverService.CreateDefaultService();
                     driverService.HideCommandPromptWindow = true;
-                    ChromeOptions options = new ChromeOptions();
-                    options.AddArgument("--headless");
-
-                    using (IWebDriver driver = new ChromeDriver(driverService, options))
+                    using (IWebDriver driver = new ChromeDriver(driverService,options))
                     {
-                        driver.Navigate().GoToUrl("https://www.ukrlib.com.ua/search.php?");
+                        driver.Manage().Window.Maximize();
+                        driver.Navigate().GoToUrl("https://knigogo.top/");
 
-                        IWebElement inputField = driver.FindElement(By.XPath("//*[@id=\"cse-search-box\"]/input[1]"));
-
+                        IWebElement inputField = driver.FindElement(By.XPath("//*[@id=\"searchform\"]/input"));
                         inputField.Clear();
-                        Response = SearchString;
-                        SearchString += " скачати повністю";
-                        inputField.SendKeys(SearchString);
-
-                        IWebElement submitButton = driver.FindElement(By.XPath("//*[@id=\"cse-search-box\"]/input[2]"));
-
+                        inputField.SendKeys($"{SearchString}");
+                        IWebElement submitButton = driver.FindElement(By.XPath("//*[@id=\"searchform\"]/button"));
                         submitButton.Click();
-                        IReadOnlyCollection<IWebElement> links = driver.FindElements(By.XPath("//*[@id=\"___gcse_1\"]/div/div/div/div[5]/div[2]/div[1]/div/div[1]/div[1]/div/div[1]/div/a"));
-                        if (links.Any())
+                        Thread.Sleep(1000);
+                        IWebElement resultResponse = driver.FindElement(By.XPath("/html/body/div[2]/div/div[1]/div/div[1]/h2"));
+
+                        AvailableBooks = new List<LibraryBook>();
+                        _availableBooks = new List<LibraryBook>();
+                        if (resultResponse.GetAttribute("innerText") == "КНИГИ")
                         {
-                            CanDownload = true;
-                            OnNotifyPropertyChanged("CanDownload");
-                            Response += " found";
-                            OnNotifyPropertyChanged("Response");
-                            href = links.First().GetAttribute("href");
+                            try
+                            {
+                                int count = 1;
+                                while (true)
+                                {
+                                    LibraryBook book = new LibraryBook();
+                                    string downloadResponse = driver.FindElement(By.XPath($"/html/body/div[2]/div/div[1]/div/div[1]/div[2]/div[1]/div[{count}]/div/div/div[1]/a/span")).GetAttribute("innerText");
+                                    if (downloadResponse == "Скачати")
+                                    {
+                                        string bookWebSource = driver.FindElement(By.XPath($"/html/body/div[2]/div/div[1]/div/div[1]/div[2]/div[1]/div[{count}]/a")).GetAttribute("href");
+                                        string title = driver.FindElement(By.XPath($"/html/body/div[2]/div/div[1]/div/div[1]/div[2]/div[1]/div[{count}]/div/a")).GetAttribute("innerText");
+                                        string author = driver.FindElement(By.XPath($"/html/body/div[2]/div/div[1]/div/div[1]/div[2]/div[1]/div[{count}]/div/span/a")).GetAttribute("innerText");
+                                        string url = driver.FindElement(By.XPath($"/html/body/div[2]/div/div[1]/div/div[1]/div[2]/div[1]/div[{count}]/a/span/img")).GetAttribute("src");
+                                        book.Author = author;
+                                        book.Name = title;
+                                        book.BookPageLink = bookWebSource;
+                                        book.CoverURL = url;
+                                        book.Id = AvailableBooks.Count + 1;
+
+                                        AvailableBooks.Add(book);
+                                    }
+                                    count++;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
                         }
                         else
                         {
-                            Response += " not found";
-                            OnNotifyPropertyChanged("Response");
+                            MessageBox.Show("No books");
                         }
+                        OnNotifyPropertyChanged(nameof(AvailableBooks));
+                        Thread.Sleep(1000);
                         driver.Quit();
                     }
                 });
             }
         }
+
+
         EpubBook bookFile;
-        private async void Download()//private async void Download(LibraryBook libraryBook)
+        public void Download(LibraryBook libraryBook)
+        {
+            var driverService = ChromeDriverService.CreateDefaultService();
+            driverService.HideCommandPromptWindow = true;
+            ChromeOptions options = new ChromeOptions();
+            string downloadDirectory = Directory.GetCurrentDirectory() + $"\\Files";
+            Directory.CreateDirectory(downloadDirectory);
+
+            options.AddUserProfilePreference("download.default_directory", downloadDirectory);
+            options.AddUserProfilePreference("plugins.always_open_pdf_externally", true);
+            options.AddUserProfilePreference("download.prompt_for_download", false);
+
+            using(IWebDriver driver=new ChromeDriver(driverService, options))
+            {
+                driver.Navigate().GoToUrl(libraryBook.BookPageLink);
+                Thread.Sleep(3000);
+                driver.Quit();
+            }
+        }
+        private async void ParseBook(LibraryBook libraryBook)
         {
             await Task.Run(() =>
             {
-                LibraryBook libraryBook = new LibraryBook()
-                {
-                    Name = "Lessons In Faking",
-                    Author = "Selina Mae",
-                    FilePath = "D:\\Викачування\\_OceanofPDF.com_Lessons_in_Faking_-_Selina_Mae.epub",
-                    Cover = File.ReadAllBytes("D:\\Викачування\\PDF-EPUB-Lessons-In-Faking-by-Selina-Mae-Download.jpg")
-                };
                 bookFile = EpubReader.ReadBook(libraryBook.FilePath);
                 BookDTO book = new BookDTO()
                 {
                     Name = libraryBook.Name,
                     Author = libraryBook.Author,
                     Users = new List<UserDTO>(),
-                    Chapters = new List<ChapterDTO>()
-                    
+                    Chapters = new List<ChapterDTO>(),
+                    CoverURL = libraryBook.CoverURL
                 };
                 foreach (EpubTextContentFile textContentFile in bookFile.ReadingOrder)
                 {

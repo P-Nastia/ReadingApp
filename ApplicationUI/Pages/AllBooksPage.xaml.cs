@@ -31,11 +31,15 @@ namespace ApplicationUI.Pages
             // Setting images/Icons
             string CD = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\Images\\"; // Maybe there is  a better way to get the project directory...
             SearchImage.Source = new BitmapImage(new Uri($"{CD}searchButton.png", UriKind.Absolute));
-            DownloadImage.Source = new BitmapImage(new Uri($"{CD}DownloadImage.png", UriKind.Absolute));
             #endregion
 
             _allBooksPageVM = allBooksPageVM;
             this.DataContext = _allBooksPageVM;
+        }
+
+        private void booksLB_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            _allBooksPageVM.Download(_allBooksPageVM.SelectedBook);
         }
     }
 }

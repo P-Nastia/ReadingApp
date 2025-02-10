@@ -16,6 +16,6 @@ namespace BLL.ModelsDTO
         public List<ChapterDTO> Chapters { get; set; }
         public ICollection<UserDTO> Users { get; set; }
         public string DisplayBook => $"{Author}, {Name}";
-        public byte[] Cover { get; set; }
+        public string CoverURL { get; set; }
     }
 }
