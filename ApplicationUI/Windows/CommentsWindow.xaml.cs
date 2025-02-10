@@ -115,9 +115,44 @@ namespace ApplicationUI.Windows
                     UserId = StaticUser.User.Id
                 };
                 await this._bookService.AddComment(uc);
+
+                NotifyCommentReply(this.commentTB.Text);
                 this.commentTB.Clear();
                 Paragraph = this._bookService.GetParagraph(Paragraph.Id);
                 UserCommentCollection = Paragraph.UserComments;
+            }
+        }
+
+        private void NotifyCommentReply(string reply)
+        {
+            if (commentTB.Text.Contains("↵"))
+            {
+                //Verifying reply...
+                int MesText = commentTB.Text.IndexOf(":");
+                int ReplyEnd = commentTB.Text.IndexOf("↵");
+                string UserNickname = commentTB.Text.Substring(0,MesText);
+                string Message = commentTB.Text.Substring(MesText+2, (ReplyEnd - MesText) - 2);
+                int ShortMesLength = Message.Length > 25? 25 : Message.Length-1;
+
+                var Original = UserCommentCollection.Where(X=>{
+                    string XComment = X.Comment;
+                    if (XComment.Contains("↵")) // Remove XReply message as it is not included in the current reply message
+                    {
+                        XComment = XComment.Substring(XComment.IndexOf("↵") + 1);
+                    }
+
+                    if (X.User.Nickname == UserNickname && XComment.Length>=ShortMesLength && XComment.Substring(0, ShortMesLength) == Message.Substring(0, ShortMesLength))
+                    {
+                        return true;
+                    }
+                    return false;
+                }).FirstOrDefault();
+
+                if (Original != null)// Completed verification
+                {
+                    // Sending Notification
+                    _userService.AddNotification(Original.User, new NotificationDTO() { Subject = "Someone Replied to your comment!", Message = $"{StaticUser.User.Nickname} replied to your comment: {Message}" });
+                }
             }
         }
 
@@ -147,17 +182,21 @@ namespace ApplicationUI.Windows
             var clickedItem = (UserCommentDTO)listBox.SelectedItem;
             if (clickedItem != null) {
                 string CommentDescription = clickedItem.Comment;
-                
+
+                if (commentTB.Text.Contains("↵"))
+                {
+                    commentTB.Text = commentTB.Text.Substring(commentTB.Text.IndexOf("↵") + 1); // Clears any other reply text, limiting the user to only reply to one message.
+                }
                 if (CommentDescription.Contains("↵"))// If reply is to a reply
                 {
-                    CommentDescription = CommentDescription.Substring(CommentDescription.IndexOf("↵") + 2);
+                    CommentDescription = CommentDescription.Substring(CommentDescription.IndexOf("↵") + 1);
                 }
                 if(CommentDescription.Length > 25)// Shortening a long message
                 {
                     CommentDescription = CommentDescription.Substring(0, 30) + "...";
                 }
 
-                string ReplyDescription = $"{clickedItem.User.Nickname}: {CommentDescription}↵\n";
+                string ReplyDescription = $"{clickedItem.User.Nickname}: {CommentDescription}↵";
                 this.commentTB.Text = this.commentTB.Text.Insert(0, ReplyDescription);
             }
         }

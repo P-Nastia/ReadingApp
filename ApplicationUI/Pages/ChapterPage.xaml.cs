@@ -27,8 +27,8 @@ namespace ApplicationUI.Pages
     {
         public ChapterDTO Chapter { get; set; }
         private IBookService<BookDTO, ParagraphDTO, UserCommentDTO> _bookService;
-        private IUserService<BookDTO, UserDTO> _userService;
-        public ChapterPage(ChapterDTO chapter, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService, IUserService<BookDTO, UserDTO> userService)
+        private IUserService<BookDTO, UserDTO, NotificationDTO> _userService;
+        public ChapterPage(ChapterDTO chapter, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService, IUserService<BookDTO, UserDTO, NotificationDTO> userService)
         {
             InitializeComponent();
             Chapter = chapter;
