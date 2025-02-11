@@ -36,7 +36,7 @@ namespace DAL.Repositories
         public async Task AddNotification(UserEntity userEntity, NotificationEntity entity)
         {
             AppDBContext tempDB = new AppDBContext();
-            var user = await tempDB.Users.Include(n => n.Notifications).Include(b => b.Books).FirstOrDefaultAsync(u => u.Id == userEntity.Id);
+            var user = await tempDB.Users.Include(n => n.Notifications).FirstOrDefaultAsync(u => u.Id == userEntity.Id);
             if (user != null)
             {
                 user.Notifications.Add(entity);
@@ -74,18 +74,12 @@ namespace DAL.Repositories
         {
             AppDBContext tempDB = new AppDBContext();
             var user = await tempDB.Users.Include(n => n.Notifications).FirstOrDefaultAsync(u => u.Id == userEntity.Id);
-            if (user != null)
+            var Notification = await tempDB.Notifications.FirstOrDefaultAsync(u => u.Id == entity.Id);
+            if (user != null && Notification != null)
             {
-                var NotificationToRemove = user.Notifications.FirstOrDefault(uc => uc.Id == entity.Id);
+                user.Notifications.Remove(Notification);
 
-                if (NotificationToRemove != null)
-                {
-                    user.Notifications.Remove(NotificationToRemove);
-
-                    tempDB.Notifications.Remove(NotificationToRemove);
-
-                    await tempDB.SaveChangesAsync();
-                }
+                await tempDB.SaveChangesAsync();
             }
         }
 

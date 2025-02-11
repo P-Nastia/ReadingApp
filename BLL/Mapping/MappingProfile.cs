@@ -46,7 +46,7 @@ namespace BLL.Mapping
                 .ForMember(x => x.HotLoadLink, opt => opt.MapFrom(x => x.HotLoadLink))
                 .ForMember(x => x.Message, opt => opt.MapFrom(x => x.Message))
                 .ForMember(x => x.Subject, opt => opt.MapFrom(x => x.Subject))
-                .ForMember(x => x.Id, opt => opt.Ignore());
+                .ForMember(x => x.Id, opt => opt.MapFrom(x=>x.Id));
 
             CreateMap<UserDTO, UserEntity>()
                 .ForMember(x => x.Books, opt => opt.Ignore())

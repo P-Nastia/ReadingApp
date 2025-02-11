@@ -136,7 +136,7 @@ namespace ApplicationUI.Windows
 
                 var Original = UserCommentCollection.Where(X=>{
                     string XComment = X.Comment;
-                    if (XComment.Contains("↵")) // Remove XReply message as it is not included in the current reply message
+                    if (XComment.Contains("↵")) // Remove X Reply message as it is not included in the current reply message
                     {
                         XComment = XComment.Substring(XComment.IndexOf("↵") + 1);
                     }
@@ -148,10 +148,11 @@ namespace ApplicationUI.Windows
                     return false;
                 }).FirstOrDefault();
 
-                if (Original != null)// Completed verification
+                if (Original != null)// When Verified
                 {
                     // Sending Notification
-                    _userService.AddNotification(Original.User, new NotificationDTO() { Subject = "Someone Replied to your comment!", Message = $"{StaticUser.User.Nickname} replied to your comment: {Message}" });
+                    string LoadLink = $"Comment:{_paragraphDTO.Chapter.Book.Name}/{_paragraphDTO.Chapter.Book.Author}/{_paragraphDTO.Chapter.Name}/{_paragraphDTO.Id}";
+                    _userService.AddNotification(Original.User, new NotificationDTO() { Subject = "Someone Replied to your comment!", Message = $"{StaticUser.User.Nickname} replied to your comment: {Message}", HotLoadLink=LoadLink });
                 }
             }
         }

@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace ApplicationUI.ViewModels
 {
@@ -114,6 +115,7 @@ namespace ApplicationUI.ViewModels
                 if (StaticUser.IsLoggedIn == true)
                 {
                     this.CurrentPage = _myLibraryPage;
+                    _notificationPageVM.Show();
                     OnNotifyPropertyChanged(nameof(StaticUser.IsLoggedIn));
                     OnNotifyPropertyChanged("CurrentPage");
                 }

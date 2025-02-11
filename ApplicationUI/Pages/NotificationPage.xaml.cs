@@ -1,6 +1,9 @@
-﻿using ApplicationUI.ViewModels;
+﻿using ApplicationUI.Statics;
+using ApplicationUI.ViewModels;
+using BLL.ModelsDTO;
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices.Protocols;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,7 +34,24 @@ namespace ApplicationUI.Pages
 
         private void DeleteNotification(object sender, RoutedEventArgs e)
         {
+            //_notificationPageVM.Selected = (NotificationDTO)NotificationList.SelectedItem;
+            _notificationPageVM.DeleteNotification();
+        }
 
+        private void ClearAll_Click(object sender, RoutedEventArgs e)
+        {
+            foreach(var item in NotificationList.Items)
+            {
+                _notificationPageVM.Selected = (NotificationDTO)item;
+                _notificationPageVM.DeleteNotification();
+            }
+        }
+
+        private void LoadHotLink(object sender, MouseButtonEventArgs e)
+        {
+            SoundPlayer.PlayButtonSound();
+            //_notificationPageVM.Selected = (NotificationDTO)NotificationList.SelectedItem;
+            _notificationPageVM.HotLoadLink();
         }
     }
 }
