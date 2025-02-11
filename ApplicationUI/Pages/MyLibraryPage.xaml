@@ -21,7 +21,7 @@
     <StackPanel Background="#FF3C2F2F" Margin="20">
         <Frame x:Name="bookFrame"></Frame>
         <Button Command="{Binding ShowBooksCommand}" >Show my books</Button>
-        <ListBox Grid.Row="1" Grid.Column="0" Background="Transparent" ItemsSource="{Binding UserBooks}" Name="booksLB" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectedItem="{Binding SelectedBook}">
+        <ListBox Grid.Row="1" Grid.Column="0" Background="Transparent" ItemsSource="{Binding UserBooks}" Name="booksLB" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectedItem="{Binding SelectedBook}" MaxHeight="650">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
