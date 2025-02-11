@@ -1,6 +1,7 @@
 ﻿using ApplicationUI.Commands;
 using ApplicationUI.Pages;
 using ApplicationUI.Statics;
+using ApplicationUI.TempModels;
 using BLL.Interfaces;
 using BLL.ModelsDTO;
 using BLL.Services;
@@ -134,6 +135,19 @@ namespace ApplicationUI.ViewModels
                 return new BaseCommand(obj =>
                 {
                     SoundPlayer.PlayButtonSound();
+                    List<LibraryBook> books = new List<LibraryBook>();
+                    foreach(var book in bookService.GetAll())
+                    {
+                        var tempBook = new LibraryBook()
+                        {
+                            Name = book.Name,
+                            Author = book.Author,
+                            CoverURL = book.CoverURL
+                        };
+                        books.Add(tempBook);
+                    }
+                    _allBooksPageVM.AvailableBooks = books;
+                    _allBooksPageVM.OnNotifyPropertyChanged(nameof(_allBooksPageVM.AvailableBooks));
                     CurrentPage = _allBooksPage;
                 });
             }

@@ -11,6 +11,5 @@ namespace DAL.Interfaces
         void AddBook(T1 item);
         Task AddComment(T3 itemToAdd);
         Task DeleteComment(T3 item);
-        IQueryable<T1> GetAll();
     }
 }
