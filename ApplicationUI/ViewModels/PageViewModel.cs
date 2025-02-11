@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace ApplicationUI.ViewModels
 {
@@ -23,15 +24,17 @@ namespace ApplicationUI.ViewModels
         private SignupPage _signUpPage;
         private MyLibraryPage _myLibraryPage;
         private MyProfilePage _myProfilePage;
+        private NotificationPage _notificationPage;
 
         private AllBooksPageVM _allBooksPageVM;
         private LoginPageVM _loginPageVM;
         private SignupPageVM _signUpPageVM;
         private MyLibraryPageVM _myLibraryPageVM;
         private MyProfilePageVM _myProfilePageVM;
+        private NotificationPageVM _notificationPageVM;
 
         private Page _currentPage;
-        public IUserService<BookDTO, UserDTO> userService;
+        public IUserService<BookDTO, UserDTO, NotificationDTO> userService;
         public IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService;
 
         private readonly bool _isLoggedIn;
@@ -65,7 +68,7 @@ namespace ApplicationUI.ViewModels
             }
         }
 
-        public PageViewModel(MainWindow mainWindow, IUserService<BookDTO, UserDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService,LoginPageVM loginPageVM,SignupPageVM signupPageVM,MyLibraryPageVM myLibraryPageVM,AllBooksPageVM allBooksPageVM,MyProfilePageVM myProfilePageVM)
+        public PageViewModel(MainWindow mainWindow, IUserService<BookDTO, UserDTO, NotificationDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService,LoginPageVM loginPageVM,SignupPageVM signupPageVM,MyLibraryPageVM myLibraryPageVM,AllBooksPageVM allBooksPageVM,MyProfilePageVM myProfilePageVM, NotificationPageVM notificationPageVM)
         {
             this.userService = userService;
             this.bookService = bookService;
@@ -75,12 +78,14 @@ namespace ApplicationUI.ViewModels
             this._myLibraryPageVM = myLibraryPageVM;
             this._allBooksPageVM = allBooksPageVM;
             this._myProfilePageVM = myProfilePageVM;
+            this._notificationPageVM = notificationPageVM;
 
             this._loginPage = new LoginPage(loginPageVM);
             this._signUpPage = new SignupPage(signupPageVM);
             this._myLibraryPage = new MyLibraryPage(myLibraryPageVM);
             this._allBooksPage = new AllBooksPage(allBooksPageVM);
             this._myProfilePage = new MyProfilePage(myProfilePageVM);
+            this._notificationPage = new NotificationPage(notificationPageVM);
             this.CurrentPage = _loginPage;
             RunWhileLoggin();
         }
@@ -153,6 +158,19 @@ namespace ApplicationUI.ViewModels
                 {
                     SoundPlayer.PlayButtonSound();
                     CurrentPage = _myProfilePage;
+                });
+            }
+        }
+
+        public ICommand ShowNotificationPage
+        {
+            get
+            {
+                return new BaseCommand(obj =>
+                {
+                    SoundPlayer.PlayButtonSound();
+                    _notificationPageVM.Show();
+                    CurrentPage = _notificationPage;
                 });
             }
         }

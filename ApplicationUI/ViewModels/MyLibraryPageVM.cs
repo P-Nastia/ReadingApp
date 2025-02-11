@@ -15,7 +15,7 @@ namespace ApplicationUI.ViewModels
     public class MyLibraryPageVM : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        public IUserService<BookDTO, UserDTO> _userService;
+        public IUserService<BookDTO, UserDTO, NotificationDTO> _userService;
         public IBookService<BookDTO, ParagraphDTO, UserCommentDTO> _bookService;
         private UserDTO _user;
         public BaseCommand ShowBooksCommand => new BaseCommand(execute => Show(), canExecute => true);
@@ -43,7 +43,7 @@ namespace ApplicationUI.ViewModels
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-        public MyLibraryPageVM(IUserService<BookDTO, UserDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService)
+        public MyLibraryPageVM(IUserService<BookDTO, UserDTO, NotificationDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService)
         {
             _userService = userService;
             _bookService = bookService;

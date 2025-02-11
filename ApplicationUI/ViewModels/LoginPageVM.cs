@@ -19,7 +19,7 @@ namespace ApplicationUI.ViewModels
     public class LoginPageVM : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        private IUserService<BookDTO, UserDTO> _userService;
+        private IUserService<BookDTO, UserDTO, NotificationDTO> _userService;
         public string Nickname { get; set; }
         public string Password { get; set; }
         public void OnNotifyPropertyChanged([CallerMemberName] string propertyName = null)
@@ -29,7 +29,7 @@ namespace ApplicationUI.ViewModels
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-        public LoginPageVM(IUserService<BookDTO, UserDTO> userService)
+        public LoginPageVM(IUserService<BookDTO, UserDTO, NotificationDTO> userService)
         {
             _userService = userService;
         }

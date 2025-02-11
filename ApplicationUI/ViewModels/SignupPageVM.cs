@@ -15,7 +15,8 @@ namespace ApplicationUI.ViewModels
 {
     public class SignupPageVM : INotifyPropertyChanged
     {
-        private IUserService<BookDTO, UserDTO> _userService;
+        private IUserService<BookDTO, UserDTO , NotificationDTO> _userService;
+
         public event PropertyChangedEventHandler? PropertyChanged;
         public void OnNotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -37,7 +38,7 @@ namespace ApplicationUI.ViewModels
 
 
         public BaseCommand PickIconCommand => new BaseCommand(execute => PickIcon(), canExecute => true);
-        public SignupPageVM(IUserService<BookDTO, UserDTO> userService)
+        public SignupPageVM(IUserService<BookDTO, UserDTO, NotificationDTO> userService)
         {
             _userService = userService;
         }

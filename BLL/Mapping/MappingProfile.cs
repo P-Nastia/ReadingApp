@@ -42,8 +42,15 @@ namespace BLL.Mapping
                 .ForMember(x => x.ParagraphId, opt => opt.MapFrom(x => x.ParagraphId))
                 .ForMember(x => x.Paragraph, opt => opt.Ignore());
 
+            CreateMap<NotificationDTO, NotificationEntity>()
+                .ForMember(x => x.HotLoadLink, opt => opt.MapFrom(x => x.HotLoadLink))
+                .ForMember(x => x.Message, opt => opt.MapFrom(x => x.Message))
+                .ForMember(x => x.Subject, opt => opt.MapFrom(x => x.Subject))
+                .ForMember(x => x.Id, opt => opt.MapFrom(x=>x.Id));
+
             CreateMap<UserDTO, UserEntity>()
-                .ForMember(x => x.Books, opt => opt.Ignore());
+                .ForMember(x => x.Books, opt => opt.Ignore())
+                .ForMember(x => x.Notifications, opt => opt.MapFrom(x=>x.Notifications));
         }
 
         private void EntitiesToDTOs()
@@ -72,8 +79,14 @@ namespace BLL.Mapping
                 .ForMember(x => x.ParagraphId, opt => opt.MapFrom(x => x.ParagraphId))
                 .ForMember(x => x.Paragraph, opt => opt.MapFrom(x => x.Paragraph));
 
+            CreateMap<NotificationEntity, NotificationDTO>()
+                .ForMember(x => x.HotLoadLink, opt => opt.MapFrom(x => x.HotLoadLink))
+                .ForMember(x => x.Message, opt => opt.MapFrom(x => x.Message))
+                .ForMember(x => x.Subject, opt => opt.MapFrom(x => x.Subject));
+
             CreateMap<UserEntity, UserDTO>()
-                .ForMember(x => x.Books, opt => opt.MapFrom(x => x.Books));
+                .ForMember(x => x.Books, opt => opt.MapFrom(x => x.Books))
+                .ForMember(x => x.Notifications, opt => opt.MapFrom(x => x.Notifications));
         }
     }
 }

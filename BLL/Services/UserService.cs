@@ -14,11 +14,11 @@ using AutoMapper.QueryableExtensions;
 
 namespace BLL.Services
 {
-    public class UserService : IUserService<BookDTO, UserDTO>
+    public class UserService : IUserService<BookDTO, UserDTO, NotificationDTO>
     {
-        private readonly IUserRepository<BookEntity, UserEntity> _userRepository;
+        private readonly IUserRepository<BookEntity, UserEntity, NotificationEntity> _userRepository;
         private IMapper _mapper;
-        public UserService(IUserRepository<BookEntity, UserEntity> repository)
+        public UserService(IUserRepository<BookEntity, UserEntity, NotificationEntity> repository)
         {
             _userRepository = repository;
             var configuration = new MapperConfiguration(c =>
@@ -38,6 +38,13 @@ namespace BLL.Services
             var user = _mapper.Map<UserDTO, UserEntity>(userEntity);
             var book = _mapper.Map<BookDTO, BookEntity>(entity);
             await _userRepository.AddBook(user, book);
+        }
+
+        public async Task AddNotification(UserDTO userEntity, NotificationDTO entity)
+        {
+            var user = _mapper.Map<UserDTO, UserEntity>(userEntity);
+            var notification = _mapper.Map<NotificationDTO, NotificationEntity>(entity);
+            await _userRepository.AddNotification(user, notification);
         }
 
         public IEnumerable<UserDTO> GetAll()
@@ -90,6 +97,13 @@ namespace BLL.Services
             var user = _mapper.Map<UserDTO, UserEntity>(userEntity);
             var book = _mapper.Map<BookDTO, BookEntity>(entity);
             await _userRepository.RemoveBook(user, book);
+        }
+
+        public async Task RemoveNotification(UserDTO userEntity, NotificationDTO entity)
+        {
+            var user = _mapper.Map<UserDTO, UserEntity>(userEntity);
+            var notification = _mapper.Map<NotificationDTO, NotificationEntity>(entity);
+            await _userRepository.RemoveNotification(user, notification);
         }
 
         public async Task UpdateUser(UserDTO item)

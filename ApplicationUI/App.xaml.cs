@@ -26,7 +26,7 @@ namespace ApplicationUI
 
         private void ConfigurationService(ServiceCollection services)
         {
-            services.AddTransient(typeof(IUserService<BookDTO, UserDTO>),typeof(UserService));
+            services.AddTransient(typeof(IUserService<BookDTO, UserDTO, NotificationDTO>),typeof(UserService));
             services.AddTransient(typeof(IBookService<BookDTO, ParagraphDTO, UserCommentDTO>),typeof(BooksService));
             services.AddTransient(typeof(UserService));
             services.AddTransient(typeof(BooksService));
@@ -35,6 +35,7 @@ namespace ApplicationUI
             services.AddTransient(typeof(MyLibraryPageVM));
             services.AddTransient(typeof(AllBooksPageVM));
             services.AddTransient(typeof(MyProfilePageVM));
+            services.AddTransient(typeof(NotificationPageVM));
             services.AddTransient(typeof(PageViewModel));
             
             services.AddTransient(typeof(MainWindow));
