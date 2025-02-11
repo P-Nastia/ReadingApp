@@ -63,7 +63,7 @@ namespace ApplicationUI.ViewModels
                 bool isUnique = true;
                 foreach (var user in users)
                 {
-                    if (BCrypt.Net.BCrypt.Verify(Password, user.Password) && user.Nickname == Nickname)
+                if (BCrypt.Net.BCrypt.Verify(Password, user.Password) || user.Nickname == Nickname || user.Email == Email)
                     {
                         MessageBox.Show("This user exists", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                         isUnique = false;
@@ -96,26 +96,17 @@ namespace ApplicationUI.ViewModels
                     if (StaticUser.IsLoggedIn == false)
                     {
                         MessageBox.Show("User wasn`t registered", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Nickname = string.Empty;
+                    Password = string.Empty;
+                    Email = string.Empty;
+                    Phone = string.Empty;
+                    OnNotifyPropertyChanged(nameof(Nickname));
+                    OnNotifyPropertyChanged(nameof(Password));
+                    OnNotifyPropertyChanged(nameof(Email));
+                    OnNotifyPropertyChanged(nameof(Phone));
                     }
                 }
             }
-
-
-
-        //public bool IsInputCorrect()
-        //{
-        //    if (String.IsNullOrEmpty(Password) || String.IsNullOrWhiteSpace(Password) || Password.Length < 6 || !Password.Any(char.IsDigit) || !Password.Any(ch => !char.IsLetterOrDigit(ch)))
-        //        return false;
-        //    if (String.IsNullOrEmpty(Phone) || String.IsNullOrWhiteSpace(Phone) || Phone[0] != '+' || Phone[1] != '3' || Phone[2] != '8' || Phone.Length != 13)
-        //        return false;
-        //    if (String.IsNullOrEmpty(Nickname) || String.IsNullOrWhiteSpace(Nickname))
-        //        return false;
-        //    if (String.IsNullOrEmpty(Icon) || String.IsNullOrWhiteSpace(Icon))
-        //        return false;
-        //    if (!EmailService.IsValidEmail(Email))
-        //        return false;
-        //    return true;
-        //}
 
         public bool IsInputCorrect()
         {
@@ -128,7 +119,7 @@ namespace ApplicationUI.ViewModels
             return !string.IsNullOrWhiteSpace(Password) &&
                    Password.Length >= 6 &&
                    Password.Any(char.IsDigit) &&
-                   Password.Any(ch => !char.IsLetterOrDigit(ch));
+                   Password.Any(ch => char.IsLetterOrDigit(ch));
         }
 
         public bool IsPhoneValid()

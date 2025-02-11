@@ -46,6 +46,8 @@ namespace ApplicationUI.ViewModels
                         StaticUser.IsLoggedIn = true;
                         Nickname = string.Empty;
                         Password = string.Empty;
+                        OnNotifyPropertyChanged("Nickname");
+                        OnNotifyPropertyChanged("Password");
                         break;             
                     }
                 }

@@ -3,6 +3,7 @@ using ApplicationUI.Pages;
 using ApplicationUI.Statics;
 using BLL.Interfaces;
 using BLL.ModelsDTO;
+using BLL.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -120,7 +121,7 @@ namespace ApplicationUI.ViewModels
                 }
                 if (StaticUser.IsLoggedIn == true)
                 {
-                    this.CurrentPage = _myLibraryPage;
+                    this.CurrentPage = _myProfilePage;
                     OnNotifyPropertyChanged(nameof(StaticUser.IsLoggedIn));
                     OnNotifyPropertyChanged("CurrentPage");
                 }
@@ -145,6 +146,8 @@ namespace ApplicationUI.ViewModels
                 return new BaseCommand(obj =>
                 {
                     SoundPlayer.PlayButtonSound();
+                    _myLibraryPageVM.UserBooks = userService.GetById(StaticUser.User.Id).Books;
+                    _myLibraryPageVM.OnNotifyPropertyChanged("UserBooks");
                     CurrentPage = _myLibraryPage;
                 });
             }
@@ -183,6 +186,8 @@ namespace ApplicationUI.ViewModels
                 {
                     SoundPlayer.PlayButtonSound();
                     StaticUser.IsLoggedIn = false;
+                    _myLibraryPageVM.UserBooks = null;
+                    _myLibraryPageVM.OnNotifyPropertyChanged(nameof(_myLibraryPageVM.UserBooks));
                     CurrentPage = _loginPage;
                     OnNotifyPropertyChanged(nameof(IsLoggedIn));
                     RunWhileLoggin();

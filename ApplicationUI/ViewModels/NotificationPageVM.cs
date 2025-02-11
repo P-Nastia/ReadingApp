@@ -92,9 +92,9 @@ namespace ApplicationUI.ViewModels
                     
                     // If we make the chapters name normal
                     //
-                    //string Chapter = Link.Substring(0, Link.IndexOf("/"));
+                    string Chapter = Link.Substring(0, Link.IndexOf("/"));
                     
-                    string Chapter = Link.Substring(0, Link.IndexOf("/", Link.IndexOf("/")+1));
+                    //string Chapter = Link.Substring(0, Link.IndexOf("/", Link.IndexOf("/")+1));
                     Link = Link.Replace(Chapter+"/", "");
                     string Paragraph = Link;
 
