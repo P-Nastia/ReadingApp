@@ -148,7 +148,7 @@ namespace ApplicationUI.Windows
                     return false;
                 }).FirstOrDefault();
 
-                if (Original != null)// When Verified
+                if (Original != null && Original.User.Nickname != StaticUser.User.Nickname)// When Verified
                 {
                     // Sending Notification
                     string LoadLink = $"Comment:{_paragraphDTO.Chapter.Book.Name}/{_paragraphDTO.Chapter.Book.Author}/{_paragraphDTO.Chapter.Name}/{_paragraphDTO.Id}";

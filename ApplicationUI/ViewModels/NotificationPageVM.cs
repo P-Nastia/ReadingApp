@@ -89,12 +89,7 @@ namespace ApplicationUI.ViewModels
                     Link = Link.Replace(Book+"/", "");
                     string Author = Link.Substring(0, Link.IndexOf("/"));
                     Link = Link.Replace(Author+"/", "");
-                    
-                    // If we make the chapters name normal
-                    //
                     string Chapter = Link.Substring(0, Link.IndexOf("/"));
-                    
-                    //string Chapter = Link.Substring(0, Link.IndexOf("/", Link.IndexOf("/")+1));
                     Link = Link.Replace(Chapter+"/", "");
                     string Paragraph = Link;
 
