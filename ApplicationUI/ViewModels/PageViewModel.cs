@@ -115,7 +115,6 @@ namespace ApplicationUI.ViewModels
                 if (StaticUser.IsLoggedIn == true)
                 {
                     this.CurrentPage = _myLibraryPage;
-                    _notificationPageVM.Show();
                     OnNotifyPropertyChanged(nameof(StaticUser.IsLoggedIn));
                     OnNotifyPropertyChanged("CurrentPage");
                 }
@@ -164,6 +163,7 @@ namespace ApplicationUI.ViewModels
                 return new BaseCommand(obj =>
                 {
                     SoundPlayer.PlayButtonSound();
+                    _notificationPageVM.Show();
                     CurrentPage = _notificationPage;
                 });
             }
