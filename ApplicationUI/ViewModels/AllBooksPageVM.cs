@@ -187,7 +187,7 @@ namespace ApplicationUI.ViewModels
                                 driver.Navigate().GoToUrl(libraryBook.BookPageLink);
                                 Thread.Sleep(5000);
                                 var elements = driver.FindElements(By.CssSelector(".lib_book_download_container a"));
-                                elements[3].Click();
+                                elements.Where(e => e.GetAttribute("innerText") == "epub").FirstOrDefault().Click();
                                 Thread.Sleep(3000);
                                 libraryBook.FilePath = $"{Directory.GetFiles(downloadDirectory)[0]}";
                                 Thread.Sleep(2000);
