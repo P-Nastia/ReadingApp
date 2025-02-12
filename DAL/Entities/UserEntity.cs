@@ -22,13 +22,10 @@ namespace DAL.Entities
         public string Phone { get; set; }
         [StringLength(100)]
         public string Email { get; set; }
-        
-        // The password encryption is long so I removed the restriction on length...
-        //
-        //[StringLength(255)] 
-        //
+       
         public string Password { get; set; }
         public ICollection<BookEntity> Books { get; set; }
+        public ICollection<NotificationEntity> Notifications { get; set; }
         public byte[] Icon { get; set; }
     }
 }

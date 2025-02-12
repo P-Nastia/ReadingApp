@@ -25,7 +25,7 @@ namespace ApplicationUI.Windows
     public partial class ReadBookWindow : Window, INotifyPropertyChanged
     {
         public BookDTO Book { get; set; }
-        public IUserService<BookDTO, UserDTO> _userService;
+        public IUserService<BookDTO, UserDTO, NotificationDTO> _userService;
         public IBookService<BookDTO, ParagraphDTO, UserCommentDTO> _bookService;
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -37,7 +37,7 @@ namespace ApplicationUI.Windows
             }
         }
 
-        public ReadBookWindow(BookDTO book, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService, IUserService<BookDTO, UserDTO> userService)
+        public ReadBookWindow(BookDTO book, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService, IUserService<BookDTO, UserDTO, NotificationDTO> userService)
         {
             InitializeComponent();
             this._bookService = bookService;

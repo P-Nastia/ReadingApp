@@ -3,6 +3,7 @@ using System;
 using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DAL.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250209010801_Add_tbl_notifications")]
+    partial class Add_tbl_notifications
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,10 +53,6 @@ namespace DAL.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<string>("CoverURL")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -62,29 +61,6 @@ namespace DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("tbl_books");
-                });
-
-            modelBuilder.Entity("DAL.Entities.ChapterEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("character varying(150)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.ToTable("tbl_chapters");
                 });
 
             modelBuilder.Entity("DAL.Entities.NotificationEntity", b =>
@@ -128,7 +104,7 @@ namespace DAL.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ChapterId")
+                    b.Property<int>("BookId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Text")
@@ -138,7 +114,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChapterId");
+                    b.HasIndex("BookId");
 
                     b.ToTable("tbl_paragraphs");
                 });
@@ -231,26 +207,15 @@ namespace DAL.Migrations
                         .HasForeignKey("UserEntityId");
                 });
 
-            modelBuilder.Entity("DAL.Entities.ChapterEntity", b =>
+            modelBuilder.Entity("DAL.Entities.ParagraphEntity", b =>
                 {
                     b.HasOne("DAL.Entities.BookEntity", "Book")
-                        .WithMany("Chapters")
+                        .WithMany("Paragraphs")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Book");
-                });
-
-            modelBuilder.Entity("DAL.Entities.ParagraphEntity", b =>
-                {
-                    b.HasOne("DAL.Entities.ChapterEntity", "Chapter")
-                        .WithMany("Paragraphs")
-                        .HasForeignKey("ChapterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Chapter");
                 });
 
             modelBuilder.Entity("DAL.Entities.UserCommentEntity", b =>
@@ -273,11 +238,6 @@ namespace DAL.Migrations
                 });
 
             modelBuilder.Entity("DAL.Entities.BookEntity", b =>
-                {
-                    b.Navigation("Chapters");
-                });
-
-            modelBuilder.Entity("DAL.Entities.ChapterEntity", b =>
                 {
                     b.Navigation("Paragraphs");
                 });
