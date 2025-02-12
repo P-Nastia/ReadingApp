@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BLL.Mapping;
 using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace BLL.Services
 {
@@ -51,6 +52,11 @@ namespace BLL.Services
         {
             AppDBContext context = new AppDBContext();
             return context.Users.AsQueryable().ProjectTo<UserDTO>(_mapper.ConfigurationProvider);
+        }
+        public UserDTO FindSimiliar(string nickname, string password, string email)
+        {
+            AppDBContext context = new AppDBContext();
+            return context.Users.AsNoTracking().Where(u => u.Nickname == nickname || u.Email == email).ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefault();
         }
         public ChapterDTO LoadParagraphs(ChapterDTO chapter)
         {

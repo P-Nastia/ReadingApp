@@ -45,7 +45,7 @@ namespace ApplicationUI.ViewModels
             get { return StaticUser.IsLoggedIn; }
             set
             {
-                if(StaticUser.IsLoggedIn != value)
+                if (StaticUser.IsLoggedIn != value)
                 {
                     StaticUser.IsLoggedIn = value;
                     _currentPage = _myLibraryPage;

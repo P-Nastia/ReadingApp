@@ -37,10 +37,10 @@ namespace ApplicationUI.ViewModels
         {
             if (Nickname != null && Password != null)
             {
-                var users = _userService.GetAll();
-                foreach (var user in users)
+                var user = _userService.FindSimiliar(Nickname, Password,"");
+                if (user != null)
                 {
-                    if (BCrypt.Net.BCrypt.Verify(Password,user.Password) && user.Nickname == Nickname)
+                    if (BCrypt.Net.BCrypt.Verify(Password, user.Password))
                     {
                         StaticUser.User = user;
                         StaticUser.IsLoggedIn = true;
@@ -48,7 +48,6 @@ namespace ApplicationUI.ViewModels
                         Password = string.Empty;
                         OnNotifyPropertyChanged("Nickname");
                         OnNotifyPropertyChanged("Password");
-                        break;             
                     }
                 }
                 if(StaticUser.IsLoggedIn == false)
