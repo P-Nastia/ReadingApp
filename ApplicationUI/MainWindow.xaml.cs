@@ -31,16 +31,6 @@ namespace ApplicationUI
         public MainWindow(IUserService<BookDTO, UserDTO, NotificationDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService, LoginPageVM loginPageVM, SignupPageVM signupPageVM, MyLibraryPageVM myLibraryPageVM, AllBooksPageVM allBooksPageVM,MyProfilePageVM myProfilePageVM, NotificationPageVM notificationPageVM)
         {
             InitializeComponent();
-
-            #region ImageConfig 
-            // Setting images/Icons
-            string CD = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\Images\\"; // Maybe there is a better way to get the project directory...
-            MyProfileImage.Source = new BitmapImage(new Uri($"{CD}myProfile.png", UriKind.Absolute));
-            MyBooksImage.Source = new BitmapImage(new Uri($"{CD}myLibrary.jpg", UriKind.Absolute));
-            LibraryImage.Source = new BitmapImage(new Uri($"{CD}libraryPageImage.png", UriKind.Absolute));
-            LogOutImage.Source = new BitmapImage(new Uri($"{CD}LogOut.jpg", UriKind.Absolute));
-            NotificationImage.Source = new BitmapImage(new Uri($"{CD}NotificationBell.png", UriKind.Absolute));
-            #endregion
             StaticUser.User = new UserDTO();
             PageViewModel pageViewModel = new PageViewModel(this, userService, bookService, loginPageVM, signupPageVM, myLibraryPageVM, allBooksPageVM, myProfilePageVM, notificationPageVM);
             this.DataContext = pageViewModel;

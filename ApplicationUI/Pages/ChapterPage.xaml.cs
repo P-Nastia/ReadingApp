@@ -36,12 +36,6 @@ namespace ApplicationUI.Pages
         {
             InitializeComponent();
 
-            #region ImageConfig 
-            // Setting images/Icons
-            string CD = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\Images\\"; // Maybe there is a better way to get the project directory...
-            MessageIconSource = $"{CD}CommentBox.png";
-            #endregion
-
             Chapter = chapter;
             _bookService = bookService;
             _userService = userService;

@@ -36,10 +36,10 @@
         </Grid.ColumnDefinitions>
         <TextBox Grid.Column="0" Grid.Row="0" Margin="20" FontSize="30" VerticalAlignment="Center" Text="{Binding SearchString}"></TextBox>
         <Button Grid.Column="1" Grid.Row="0" Background="Transparent" IsEnabled="True" Command="{Binding SearchCommand}">
-            <Image x:Name="SearchImage" Cursor="Hand"></Image>
+            <Image Source="pack://application:,,,/Images/searchButton.png" Cursor="Hand"></Image>
         </Button>
         <Button Grid.Column="1" Grid.Row="1" Background="Transparent" IsEnabled="True" Command="{Binding DownloadCommand}">
-            <Image x:Name="downloadFromDeviceImage" Cursor="Hand" Height="50" Width="50"></Image>
+            <Image Source="pack://application:,,,/Images/downloadImage.png" Cursor="Hand" Height="50" Width="50"></Image>
         </Button>
         
         <ListBox Margin="20" Grid.Row="2" Grid.Column="0" Background="Transparent" ItemsSource="{Binding AvailableBooks}" MouseLeftButtonUp="booksLB_MouseLeftButtonUp" Name="booksLB" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectedItem="{Binding SelectedBook}">

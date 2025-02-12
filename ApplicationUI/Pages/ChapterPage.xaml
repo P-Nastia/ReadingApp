@@ -30,11 +30,11 @@
                        TextWrapping="Wrap" 
                        TextTrimming="CharacterEllipsis" />
 
-                        <Border x:Name="CommentPortal" HorizontalAlignment="Right" VerticalAlignment="Top" MouseLeftButtonUp="textRB_MouseDoubleClick" BorderBrush="Black" Width="100" Height="100">
+                        <Border x:Name="CommentPortal" HorizontalAlignment="Right" VerticalAlignment="Top" MouseLeftButtonUp="textRB_MouseDoubleClick" BorderBrush="Black" Height="50" Width="85">
                             <Border.Background>
-                                <ImageBrush ImageSource="Images/CommentBox.png"></ImageBrush>
+                                <ImageBrush ImageSource="pack://application:,,,/Images/CommentBox.png"></ImageBrush>
                             </Border.Background>
-                            <TextBlock Text="{Binding UserComments.Count}" Margin="20"></TextBlock>
+                            <TextBlock Text="{Binding UserComments.Count}" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"></TextBlock>
                         </Border>
                     </Grid>
                 </DataTemplate>

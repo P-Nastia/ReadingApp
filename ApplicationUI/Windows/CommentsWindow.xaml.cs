@@ -70,12 +70,6 @@ namespace ApplicationUI.Windows
         {
             InitializeComponent();
 
-            #region ImageConfig 
-            // Setting images/Icons
-            string CD = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\Images\\"; // Maybe there is a better way to get the project directory...
-            AddCommentImage.Source = new BitmapImage(new Uri($"{CD}addComment.png", UriKind.Absolute));
-            #endregion
-
             _bookService = bookService;
             _userService = userService;
             this.DataContext = this;

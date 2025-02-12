@@ -50,7 +50,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <TextBox Grid.Row="1" Grid.Column="0" x:Name="commentTB" Margin="20,10,0,10" AcceptsReturn="True" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto"></TextBox>
-        <Image x:Name="AddCommentImage" Grid.Row="1" Grid.Column="1" Margin="10" Cursor="Hand" MouseLeftButtonUp="SendComment"></Image>
+        <Image Source="pack://application:,,,/Images/addComment.png" Grid.Row="1" Grid.Column="1" Margin="10" Cursor="Hand" MouseLeftButtonUp="SendComment"></Image>
     </Grid>
     
 </Window>

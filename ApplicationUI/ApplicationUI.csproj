@@ -9,7 +9,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\addComment.png" />
     <None Remove="Images\CommentBox.png" />
+    <None Remove="Images\downloadImage.png" />
+    <None Remove="Images\libraryPageImage.png" />
+    <None Remove="Images\login.png" />
+    <None Remove="Images\Logotype-WithoutPhone.png" />
+    <None Remove="Images\Logotype.jpg" />
+    <None Remove="Images\LogOut.jpg" />
+    <None Remove="Images\myLibrary.jpg" />
+    <None Remove="Images\myProfile.png" />
+    <None Remove="Images\NotificationBell.png" />
+    <None Remove="Images\Return.jpg" />
+    <None Remove="Images\searchButton.png" />
+    <None Remove="Images\signUp.png" />
+    <None Remove="Images\Verification.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,9 +44,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\addComment.png" />
     <Resource Include="Images\CommentBox.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\downloadImage.png" />
+    <Resource Include="Images\libraryPageImage.png" />
+    <Resource Include="Images\login.png" />
+    <Resource Include="Images\Logotype-WithoutPhone.png" />
+    <Resource Include="Images\Logotype.jpg" />
+    <Resource Include="Images\LogOut.jpg" />
+    <Resource Include="Images\myLibrary.jpg" />
+    <Resource Include="Images\myProfile.png" />
+    <Resource Include="Images\NotificationBell.png" />
+    <Resource Include="Images\Return.jpg" />
+    <Resource Include="Images\searchButton.png" />
+    <Resource Include="Images\signUp.png" />
+    <Resource Include="Images\Verification.png" />
   </ItemGroup>
 
 </Project>
