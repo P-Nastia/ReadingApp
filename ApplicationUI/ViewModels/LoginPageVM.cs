@@ -33,20 +33,21 @@ namespace ApplicationUI.ViewModels
         {
             _userService = userService;
         }
-        public async void Login()
+        public async Task Login()
         {
-            if (Nickname != null && Password != null)
+            if (IsInputCorrect())
             {
-                var users = _userService.GetAll();
-                foreach (var user in users)
+                var user = _userService.FindSimiliar(Nickname, Password,"");
+                if (user != null)
                 {
-                    if (BCrypt.Net.BCrypt.Verify(Password,user.Password) && user.Nickname == Nickname)
+                    if (user.Nickname == Nickname && BCrypt.Net.BCrypt.Verify(Password, user.Password))
                     {
                         StaticUser.User = user;
                         StaticUser.IsLoggedIn = true;
                         Nickname = string.Empty;
                         Password = string.Empty;
-                        break;             
+                        OnNotifyPropertyChanged("Nickname");
+                        OnNotifyPropertyChanged("Password");
                     }
                 }
                 if(StaticUser.IsLoggedIn == false)
@@ -59,6 +60,24 @@ namespace ApplicationUI.ViewModels
                 }
             }
         }
+
+
+        public bool IsInputCorrect()
+        {
+            return IsNicknameLoginValid() && IsPasswordLoginValid();
+        }
+
+        public bool IsNicknameLoginValid()
+        {
+            return !string.IsNullOrWhiteSpace(Nickname);
+        }
+
+        public bool IsPasswordLoginValid()
+        {
+            return !string.IsNullOrWhiteSpace(Password);
+        }
+
+
         public void SignUp() {
             StaticUser.UserNeedsToSignUp = true;
         }

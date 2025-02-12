@@ -7,7 +7,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1000"
       Title="ChapterPage" PreviewMouseWheel="Page_PreviewMouseWheel">
-
     <Grid>
         <ListBox Grid.Column="0" Padding="5" x:Name="paragraphsLB" FontSize="14" ScrollViewer.VerticalScrollBarVisibility="Visible"
                  ItemsSource="{Binding Chapter.Paragraphs}" >

@@ -50,18 +50,39 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="1" Grid.Column="0">Nickname:</TextBlock>
-        <TextBox Text="{Binding Path=Nickname}" ToolTip="{Binding NicknameToolTip}" Grid.Row="1" Grid.Column="1"></TextBox>
+        <TextBox Text="{Binding Path=Nickname}" x:Name="NicknameTB" Grid.Row="1" Grid.Column="1">
+            <TextBox.ToolTip>
+                <ToolTip x:Name="NicknameToolTip" Content="Nickname cannot be empty" FontSize="12" IsOpen="False" Placement="Bottom" HorizontalOffset="840" VerticalOffset="230"/>
+            </TextBox.ToolTip>
+        </TextBox>
         <TextBlock Grid.Row="2" Grid.Column="0">Password:</TextBlock>
-        <PasswordBox x:Name="passwordPB" TextInput="TextBox_TextInput" ToolTip="{Binding PasswordToolTip}" Grid.Row="2" Grid.Column="1"></PasswordBox>
+        <PasswordBox x:Name="passwordPB" TextInput="TextBox_TextInput"  Grid.Row="2" Grid.Column="1">
+            <PasswordBox.ToolTip>
+                <ToolTip x:Name="PasswordToolTip" Content="Password must be at least 6 characters long and one or more digits" IsOpen="False" HorizontalOffset="840" VerticalOffset="330" Placement="Bottom"/>
+          </PasswordBox.ToolTip>
+        </PasswordBox>
         <TextBlock Grid.Row="3" Grid.Column="0">Phone:</TextBlock>
-        <TextBox Text="{Binding Phone}" ToolTip="{Binding PhoneToolTip}" Grid.Row="3" Grid.Column="1"></TextBox>
+        <TextBox Text="{Binding Phone}" x:Name="PhoneTB"  Grid.Row="3" Grid.Column="1">
+            <TextBox.ToolTip>
+                <ToolTip x:Name="PhoneToolTip" Content="Phone must be 13 characters long and start +38" HorizontalOffset="840" FontSize="12" VerticalOffset="430" IsOpen="False" Placement="Bottom"/>
+            </TextBox.ToolTip>
+        </TextBox>
         <TextBlock Grid.Row="4" Grid.Column="0">Email:</TextBlock>
-        <TextBox Text="{Binding Email}" ToolTip="{Binding EmailToolTip}" Grid.Row="4" Grid.Column="1"></TextBox>
+        <TextBox Text="{Binding Email}" x:Name="EmailTB" Grid.Row="4" Grid.Column="1">
+            <TextBox.ToolTip>
+                <ToolTip x:Name="EmailToolTip" Content= "Email must include '@' symbol" IsOpen="False" Placement="Bottom" FontSize="12" HorizontalOffset="840" VerticalOffset="530"/>
+            </TextBox.ToolTip>
+        </TextBox>
         <TextBlock Grid.Row="5" Grid.Column="0">User icon:</TextBlock>
-        <Button Grid.Row="5" Grid.Column="1" Command="{Binding PickIconCommand}" Margin="20,15,300,10" FontSize="30" Cursor="Hand" Background="WhiteSmoke" VerticalAlignment="Center">...</Button>
+        <Button x:Name="IconBT" Grid.Row="5" Grid.Column="1" Command="{Binding PickIconCommand}" Margin="20,15,300,10" FontSize="30" Cursor="Hand" Background="WhiteSmoke" VerticalAlignment="Center">...
+            <Button.ToolTip>
+                <ToolTip x:Name="IconToolTip" Content="Icon must be" IsOpen="False" Placement="Bottom" FontSize="12" HorizontalOffset="840" VerticalOffset="630"/>
+            </Button.ToolTip>
+        </Button>
         <Image x:Name="SignUpImage" Grid.Row="6"  Grid.ColumnSpan="2" Width="500" Height="200" VerticalAlignment="Center" Cursor="Hand"  MouseLeftButtonUp="signUpClick"></Image>
 
         <Image x:Name="ReturnImage" Grid.Column="0" Width="250" Height="50" VerticalAlignment="Center" Grid.Row="0" Margin="0,0,120,0" Cursor="Hand"  MouseLeftButtonUp="ReturnImage_MouseLeftButtonUp"></Image>
+
 
 
     </Grid>
