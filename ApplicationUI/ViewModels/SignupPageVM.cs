@@ -56,7 +56,6 @@ namespace ApplicationUI.ViewModels
 
         public async Task SignUp()
         {
-
                 var users = _userService.GetAll();
 
                 bool isUnique = true;
@@ -101,20 +100,6 @@ namespace ApplicationUI.ViewModels
 
 
 
-        //public bool IsInputCorrect()
-        //{
-        //    if (String.IsNullOrEmpty(Password) || String.IsNullOrWhiteSpace(Password) || Password.Length < 6 || !Password.Any(char.IsDigit) || !Password.Any(ch => !char.IsLetterOrDigit(ch)))
-        //        return false;
-        //    if (String.IsNullOrEmpty(Phone) || String.IsNullOrWhiteSpace(Phone) || Phone[0] != '+' || Phone[1] != '3' || Phone[2] != '8' || Phone.Length != 13)
-        //        return false;
-        //    if (String.IsNullOrEmpty(Nickname) || String.IsNullOrWhiteSpace(Nickname))
-        //        return false;
-        //    if (String.IsNullOrEmpty(Icon) || String.IsNullOrWhiteSpace(Icon))
-        //        return false;
-        //    if (!EmailService.IsValidEmail(Email))
-        //        return false;
-        //    return true;
-        //}
 
         public bool IsInputCorrect()
         {
@@ -126,8 +111,7 @@ namespace ApplicationUI.ViewModels
         {
             return !string.IsNullOrWhiteSpace(Password) &&
                    Password.Length >= 6 &&
-                   Password.Any(char.IsDigit) &&
-                   Password.Any(ch => !char.IsLetterOrDigit(ch));
+                   Password.Any(char.IsDigit);
         }
 
         public bool IsPhoneValid()
@@ -139,7 +123,8 @@ namespace ApplicationUI.ViewModels
 
         public bool IsNicknameValid()
         {
-            return !string.IsNullOrWhiteSpace(Nickname);
+            return !string.IsNullOrWhiteSpace(Nickname) &&
+                Nickname.Length >= 6;
         }
 
         public bool IsIconValid()

@@ -46,9 +46,17 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="1" Grid.Column="0">Nickname:</TextBlock>
-        <TextBox Text="{Binding Path=Nickname}" x:Name="NickName_TextInput" Grid.Row="1" Grid.Column="1"></TextBox>
+        <TextBox Text="{Binding Path=Nickname}" x:Name="NickName_TextInput" Grid.Row="1" Grid.Column="1">
+            <TextBox.ToolTip>
+                <ToolTip x:Name="NicknameLoginToolTip" Content="Nickame is empty" IsOpen="False" Placement="Bottom" FontSize="12" HorizontalOffset="840" VerticalOffset="348"/>
+            </TextBox.ToolTip>
+        </TextBox>
         <TextBlock Grid.Row="2" Grid.Column="0">Password:</TextBlock>
-        <PasswordBox x:Name="passwordPB" TextInput="PasswordBox_TextInput"  Grid.Row="2" Grid.Column="1"></PasswordBox>
+        <PasswordBox x:Name="passwordPB" TextInput="PasswordBox_TextInput"  Grid.Row="2" Grid.Column="1">
+            <PasswordBox.ToolTip>
+                <ToolTip x:Name="PasswordLoginToolTip" Content="Password is empty" IsOpen="False" Placement="Bottom" FontSize="12" HorizontalOffset="840" VerticalOffset="448"/>
+            </PasswordBox.ToolTip>
+        </PasswordBox>
         <Image x:Name="LoginImage" Grid.Row="3" Grid.Column="0" Width="250" Height="200" VerticalAlignment="Center" Cursor="Hand" Source="\Images\login.png" MouseLeftButtonUp="logInClick"></Image>
         <Image x:Name ="SignUpImage" Grid.Row="3" Grid.Column="1" Width="500" Height="200" VerticalAlignment="Center" Cursor="Hand" Source="\Images\signUp.png" MouseLeftButtonUp="signUpClick"></Image>
     </Grid>

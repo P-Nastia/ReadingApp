@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BLL.Mapping;
 using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace BLL.Services
 {
@@ -18,6 +19,7 @@ namespace BLL.Services
     {
         private readonly IUserRepository<BookEntity, UserEntity> _userRepository;
         private IMapper _mapper;
+
         public UserService(IUserRepository<BookEntity, UserEntity> repository)
         {
             _userRepository = repository;
@@ -39,6 +41,7 @@ namespace BLL.Services
             var book = _mapper.Map<BookDTO, BookEntity>(entity);
             await _userRepository.AddBook(user, book);
         }
+
 
         public IEnumerable<UserDTO> GetAll()
         {

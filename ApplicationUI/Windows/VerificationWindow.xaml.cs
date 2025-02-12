@@ -1,6 +1,9 @@
-﻿using ApplicationUI.Statics;
+﻿using ApplicationUI.Pages;
+using ApplicationUI.Statics;
 using EmailSender.Services;
+using System.IO;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace ApplicationUI.Windows
 {
@@ -19,6 +22,7 @@ namespace ApplicationUI.Windows
             var random = new Random();
             for (int i = 0; i < 6; i++)
                 _verificationCode += random.Next(0, 10).ToString();
+
 
             EmailService.SendEmail(email, "Verification", $"Your verification code is: {_verificationCode}");
         }

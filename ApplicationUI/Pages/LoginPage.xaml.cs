@@ -1,9 +1,11 @@
 ﻿using ApplicationUI.Statics;
 using ApplicationUI.ViewModels;
 using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace ApplicationUI.Pages
 {
@@ -28,12 +30,41 @@ namespace ApplicationUI.Pages
             this.DataContext = _loginPageVM;
         }
 
-        private void logInClick(object sender, MouseButtonEventArgs e)
+        private async void logInClick(object sender, MouseButtonEventArgs e)
         {
             SoundPlayer.PlayButtonSound();
-            _loginPageVM.Password = this.passwordPB.Password;
-            _loginPageVM.Login();
-            NickName_TextInput.Clear();
+            _loginPageVM.Password = passwordPB.Password;
+            _loginPageVM.Nickname = NickName_TextInput.Text;
+            ResetTextBoxBorders();
+            if (_loginPageVM.IsInputCorrect())
+            {
+                NicknameLoginToolTip.IsOpen = false;    
+                PasswordLoginToolTip.IsOpen = false;
+                await _loginPageVM.Login();
+            }
+            else {
+                if (!_loginPageVM.IsNicknameLoginValid())
+                {
+                    NickName_TextInput.BorderBrush = Brushes.Red;
+                    NickName_TextInput.BorderThickness = new Thickness(2);
+                    NicknameLoginToolTip.IsOpen = true;
+                }
+                else
+                {
+                    NicknameLoginToolTip.IsOpen= false;
+                }
+
+                if (!_loginPageVM.IsPasswordLoginValid())
+                {
+                    passwordPB.BorderBrush = Brushes.Red;
+                    passwordPB.BorderThickness = new Thickness(2);
+                    PasswordLoginToolTip.IsOpen = true;
+                }
+                else
+                {
+                    PasswordLoginToolTip.IsOpen= false;
+                }
+            }
         }
         private void signUpClick(object sender, MouseButtonEventArgs e)
         {
@@ -45,5 +76,14 @@ namespace ApplicationUI.Pages
         {
            
         }
+
+
+        public void ResetTextBoxBorders()
+        {
+            NickName_TextInput.BorderBrush = Brushes.Gray;
+            passwordPB.BorderBrush = Brushes.Gray;
+
+        }
+
     }
 }
