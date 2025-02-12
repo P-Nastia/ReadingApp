@@ -119,8 +119,7 @@ namespace ApplicationUI.ViewModels
 
         public bool IsNicknameValid()
         {
-            return !string.IsNullOrWhiteSpace(Nickname) &&
-                Nickname.Length >= 6;
+            return !string.IsNullOrWhiteSpace(Nickname);
         }
 
         public bool IsIconValid()

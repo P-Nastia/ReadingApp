@@ -36,10 +36,10 @@ namespace ApplicationUI.Pages
             _loginPageVM.Password = passwordPB.Password;
             _loginPageVM.Nickname = NickName_TextInput.Text;
             ResetTextBoxBorders();
+            NicknameLoginToolTip.IsOpen = false;
+            PasswordLoginToolTip.IsOpen = false;
             if (_loginPageVM.IsInputCorrect())
-            {
-                NicknameLoginToolTip.IsOpen = false;    
-                PasswordLoginToolTip.IsOpen = false;
+            {   
                 await _loginPageVM.Login();
             }
             else {

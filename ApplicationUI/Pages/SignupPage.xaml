@@ -52,7 +52,7 @@
         <TextBlock Grid.Row="1" Grid.Column="0">Nickname:</TextBlock>
         <TextBox Text="{Binding Path=Nickname}" x:Name="NicknameTB" Grid.Row="1" Grid.Column="1">
             <TextBox.ToolTip>
-                <ToolTip x:Name="NicknameToolTip" Content="Nickname must be at least 6 characters long" FontSize="12" IsOpen="False" Placement="Bottom" HorizontalOffset="840" VerticalOffset="230"/>
+                <ToolTip x:Name="NicknameToolTip" Content="Nickname cannot be empty" FontSize="12" IsOpen="False" Placement="Bottom" HorizontalOffset="840" VerticalOffset="230"/>
             </TextBox.ToolTip>
         </TextBox>
         <TextBlock Grid.Row="2" Grid.Column="0">Password:</TextBlock>
@@ -70,7 +70,7 @@
         <TextBlock Grid.Row="4" Grid.Column="0">Email:</TextBlock>
         <TextBox Text="{Binding Email}" x:Name="EmailTB" Grid.Row="4" Grid.Column="1">
             <TextBox.ToolTip>
-                <ToolTip x:Name="EmailToolTip" Content="Email must be email" IsOpen="False" Placement="Bottom" FontSize="12" HorizontalOffset="840" VerticalOffset="530"/>
+                <ToolTip x:Name="EmailToolTip" Content= "Email must include '@' symbol" IsOpen="False" Placement="Bottom" FontSize="12" HorizontalOffset="840" VerticalOffset="530"/>
             </TextBox.ToolTip>
         </TextBox>
         <TextBlock Grid.Row="5" Grid.Column="0">User icon:</TextBlock>

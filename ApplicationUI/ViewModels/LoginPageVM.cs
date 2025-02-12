@@ -35,12 +35,12 @@ namespace ApplicationUI.ViewModels
         }
         public async Task Login()
         {
-            if (!IsInputCorrect())
+            if (IsInputCorrect())
             {
                 var user = _userService.FindSimiliar(Nickname, Password,"");
                 if (user != null)
                 {
-                    if (user.Nickname == Nickname)
+                    if (user.Nickname == Nickname && BCrypt.Net.BCrypt.Verify(Password, user.Password))
                     {
                         StaticUser.User = user;
                         StaticUser.IsLoggedIn = true;
@@ -61,6 +61,21 @@ namespace ApplicationUI.ViewModels
             }
         }
 
+
+        public bool IsInputCorrect()
+        {
+            return IsNicknameLoginValid() && IsPasswordLoginValid();
+        }
+
+        public bool IsNicknameLoginValid()
+        {
+            return !string.IsNullOrWhiteSpace(Nickname);
+        }
+
+        public bool IsPasswordLoginValid()
+        {
+            return !string.IsNullOrWhiteSpace(Password);
+        }
 
 
         public void SignUp() {
