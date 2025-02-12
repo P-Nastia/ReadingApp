@@ -18,7 +18,6 @@ namespace ApplicationUI.ViewModels
         public IUserService<BookDTO, UserDTO, NotificationDTO> _userService;
         public IBookService<BookDTO, ParagraphDTO, UserCommentDTO> _bookService;
         private UserDTO _user;
-        public BaseCommand ShowBooksCommand => new BaseCommand(execute => Show(), canExecute => true);
         public BaseCommand ReadBookCommand => new BaseCommand(execute => ShowReadBookPage(), canExecute => true);
         public ICollection<BookDTO> UserBooks { get; set; }
         private BookDTO _selectedBook;
@@ -48,16 +47,6 @@ namespace ApplicationUI.ViewModels
             _userService = userService;
             _bookService = bookService;
             UserBooks = new List<BookDTO>();
-        }
-        private async void Show()
-        {
-            SoundPlayer.PlayButtonSound();
-            await Task.Run(() =>
-            {
-                _user = _userService.GetById(StaticUser.User.Id);
-                UserBooks = _user.Books;
-                OnNotifyPropertyChanged("UserBooks");
-            });
         }
         private async void ShowReadBookPage()
         {

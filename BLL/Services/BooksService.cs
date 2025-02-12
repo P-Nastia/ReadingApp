@@ -50,13 +50,8 @@ namespace BLL.Services
 
         public IEnumerable<BookDTO> GetAll()
         {
-            var list = new List<BookDTO>();
-
-            foreach (var en in _bookRepository.GetAll())
-            {
-                list.Add(_mapper.Map<BookEntity, BookDTO>(en));
-            }
-            return list;
+            AppDBContext appDBContext = new AppDBContext();
+            return appDBContext.Books.ProjectTo<BookDTO>(_mapper.ConfigurationProvider);
         }
 
         public ParagraphDTO GetParagraph(int id)

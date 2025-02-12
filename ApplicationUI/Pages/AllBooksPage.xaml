@@ -9,7 +9,7 @@
       Title="AllBooksPage">
     <Page.Resources>
         <Style TargetType="ListBoxItem">
-            <Setter Property="Margin" Value="250,10"></Setter>
+            <Setter Property="Margin" Value="270,10"></Setter>
         </Style>
         <Style TargetType="Image">
             <Setter Property="Margin" Value="5"></Setter>
@@ -25,10 +25,10 @@
 
     <Grid Margin="20" Background="#FF3C2F2F">
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.3*"></RowDefinition>
             <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="0.15*"></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height="0.5*"></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -42,13 +42,13 @@
             <Image x:Name="downloadFromDeviceImage" Cursor="Hand" Height="50" Width="50"></Image>
         </Button>
         
-        <ListBox Grid.Row="1" Grid.Column="0" Background="Transparent" ItemsSource="{Binding AvailableBooks}" MouseLeftButtonUp="booksLB_MouseLeftButtonUp" Name="booksLB" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectedItem="{Binding SelectedBook}">
+        <ListBox Margin="20" Grid.Row="2" Grid.Column="0" Background="Transparent" ItemsSource="{Binding AvailableBooks}" MouseLeftButtonUp="booksLB_MouseLeftButtonUp" Name="booksLB" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectedItem="{Binding SelectedBook}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
-                        <Image Height="130" Width="130" Source="{Binding CoverURL}"></Image>
-                        <TextBlock Text="{Binding Name}" FontSize="18" FontWeight="Bold"></TextBlock>
-                        <TextBlock Text="{Binding Author}" FontSize="14"></TextBlock>
+                    <StackPanel Width="200" HorizontalAlignment="Center">
+                        <Image HorizontalAlignment="Center" Margin="10" Height="150" Width="150" Source="{Binding CoverURL}"></Image>
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding Name}" FontSize="18" FontWeight="Bold"></TextBlock>
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding Author}" FontSize="14"></TextBlock>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

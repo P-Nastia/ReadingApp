@@ -30,7 +30,7 @@ namespace ApplicationUI.Pages
             _signupPageVM = signupPageVM;
             this.DataContext = _signupPageVM;
         }
-        private  void signUpClick(object sender, MouseButtonEventArgs e)
+        private void signUpClick(object sender, MouseButtonEventArgs e)
         {
             SoundPlayer.PlayButtonSound();
             _signupPageVM.Password = this.passwordPB.Password;

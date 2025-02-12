@@ -54,12 +54,5 @@ namespace DAL.Repositories
                 }
             }
         }
-
-        public IQueryable<BookEntity> GetAll()
-        {
-            AppDBContext tempDB = new AppDBContext();
-            return tempDB.Books.Include(b => b.Users).ThenInclude(u => u.Books).Include(b => b.Chapters).ThenInclude(c=>c.Paragraphs).ThenInclude(p => p.UserComments).ThenInclude(uc => uc.User)
-                .Include(b => b.Users).ThenInclude(u => u.Books).Include(b => b.Chapters).ThenInclude(b => b.Paragraphs).ThenInclude(p => p.UserComments).ThenInclude(uc => uc.Paragraph);
-        }
     }
 }

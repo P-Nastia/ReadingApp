@@ -26,6 +26,7 @@ using System.Security.Policy;
 using System.Media;
 using Microsoft.Win32;
 using System.Drawing;
+using SoundPlayer = ApplicationUI.Statics.SoundPlayer;
 
 namespace ApplicationUI.ViewModels
 {
@@ -69,6 +70,7 @@ namespace ApplicationUI.ViewModels
         }
         private void DownloadFile()
         {
+            SoundPlayer.PlayButtonSound();
             OpenFileDialog dialog = new OpenFileDialog() { Filter = "EPUB Files (*.epub)|*.epub" };
             dialog.ShowDialog();
             if (!String.IsNullOrEmpty(dialog.FileName) && !String.IsNullOrWhiteSpace(dialog.FileName))
@@ -80,7 +82,7 @@ namespace ApplicationUI.ViewModels
         }
         private async void Search()
         {
-            //SoundPlayer.PlayButtonSound();
+            SoundPlayer.PlayButtonSound();
             if (!String.IsNullOrWhiteSpace(SearchString) && !String.IsNullOrWhiteSpace(SearchString))
             {
                 AvailableBooks = null;
@@ -146,6 +148,8 @@ namespace ApplicationUI.ViewModels
                         }
                         OnNotifyPropertyChanged(nameof(AvailableBooks));
                         driver.Quit();
+                        SearchString = string.Empty;
+                        OnNotifyPropertyChanged(nameof(SearchString));
                     }
                 });
             }
@@ -154,6 +158,7 @@ namespace ApplicationUI.ViewModels
         EpubBook bookFile;
         public void Download(LibraryBook libraryBook)
         {
+            SoundPlayer.PlayButtonSound();
             if (libraryBook != null)
             {
                 var bookFromDB = _bookService.GetByNameAndAuthor(libraryBook.Name, libraryBook.Author);
@@ -182,7 +187,7 @@ namespace ApplicationUI.ViewModels
                                 driver.Navigate().GoToUrl(libraryBook.BookPageLink);
                                 Thread.Sleep(5000);
                                 var elements = driver.FindElements(By.CssSelector(".lib_book_download_container a"));
-                                elements[3].Click();
+                                elements.Where(e => e.GetAttribute("innerText") == "epub").FirstOrDefault().Click();
                                 Thread.Sleep(3000);
                                 libraryBook.FilePath = $"{Directory.GetFiles(downloadDirectory)[0]}";
                                 Thread.Sleep(2000);

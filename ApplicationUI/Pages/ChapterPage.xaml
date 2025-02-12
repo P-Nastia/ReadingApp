@@ -7,16 +7,15 @@
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1000"
       Title="ChapterPage" PreviewMouseWheel="Page_PreviewMouseWheel">
-
     <Grid>
-        <ListBox Grid.Column="0" Padding="5" x:Name="paragraphsLB" FontSize="14" ScrollViewer.VerticalScrollBarVisibility="Visible" MouseDoubleClick="textRB_MouseDoubleClick"
-                 ItemsSource="{Binding Chapter.Paragraphs}" >
+        <ListBox Grid.Column="0" Padding="5" x:Name="paragraphsLB" FontSize="14" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                 ItemsSource="{Binding Chapter.Paragraphs}"  MouseDoubleClick="textRB_MouseDoubleClick">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding DisplayText}" 
-                       MaxWidth="1000" 
-                       TextWrapping="Wrap" 
-                       TextTrimming="CharacterEllipsis" />
+                                   MaxWidth="1000" 
+                                   TextWrapping="Wrap" 
+                                   TextTrimming="CharacterEllipsis" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
