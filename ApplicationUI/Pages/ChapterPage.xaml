@@ -9,7 +9,7 @@
       Title="ChapterPage" PreviewMouseWheel="Page_PreviewMouseWheel">
 
     <Grid>
-        <ListBox Grid.Column="0" Padding="5" x:Name="paragraphsLB" FontSize="14" ScrollViewer.VerticalScrollBarVisibility="Visible" MouseDoubleClick="textRB_MouseDoubleClick"
+        <ListBox Grid.Column="0" Padding="5" x:Name="paragraphsLB" FontSize="14" ScrollViewer.VerticalScrollBarVisibility="Visible"
                  ItemsSource="{Binding Chapter.Paragraphs}" >
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
@@ -25,10 +25,19 @@
             </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding DisplayText}" 
+                    <Grid>
+                        <TextBlock Text="{Binding DisplayText}" 
                        MaxWidth="1000" 
                        TextWrapping="Wrap" 
                        TextTrimming="CharacterEllipsis" />
+
+                        <Border x:Name="CommentPortal" HorizontalAlignment="Right" VerticalAlignment="Top" MouseLeftButtonUp="textRB_MouseDoubleClick" BorderBrush="Black" Width="100" Height="100">
+                            <Border.Background>
+                                <ImageBrush ImageSource="Images/CommentBox.png"></ImageBrush>
+                            </Border.Background>
+                            <TextBlock Text="{Binding UserComments.Count}" Margin="20"></TextBlock>
+                        </Border>
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

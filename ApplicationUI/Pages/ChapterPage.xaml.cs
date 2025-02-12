@@ -4,6 +4,7 @@ using BLL.ModelsDTO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -26,11 +27,21 @@ namespace ApplicationUI.Pages
     public partial class ChapterPage : Page, INotifyPropertyChanged
     {
         public ChapterDTO Chapter { get; set; }
+
+        public string MessageIconSource { get; set; }
+
         private IBookService<BookDTO, ParagraphDTO, UserCommentDTO> _bookService;
         private IUserService<BookDTO, UserDTO, NotificationDTO> _userService;
         public ChapterPage(ChapterDTO chapter, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService, IUserService<BookDTO, UserDTO, NotificationDTO> userService)
         {
             InitializeComponent();
+
+            #region ImageConfig 
+            // Setting images/Icons
+            string CD = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\Images\\"; // Maybe there is a better way to get the project directory...
+            MessageIconSource = $"{CD}CommentBox.png";
+            #endregion
+
             Chapter = chapter;
             _bookService = bookService;
             _userService = userService;
@@ -51,8 +62,7 @@ namespace ApplicationUI.Pages
         {
             Dispatcher.Invoke(() =>
             {
-                var listBox = (ListBox)sender;
-                var clickedItem = (ParagraphDTO)listBox.SelectedItem;
+                var clickedItem = (ParagraphDTO)paragraphsLB.SelectedItem;
                 CommentsWindow commentsWindow = new CommentsWindow(clickedItem, _bookService, _userService);
                 commentsWindow.ShowDialog();
             });
