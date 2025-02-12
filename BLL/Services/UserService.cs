@@ -53,6 +53,18 @@ namespace BLL.Services
             AppDBContext context = new AppDBContext();
             return context.Users.AsQueryable().ProjectTo<UserDTO>(_mapper.ConfigurationProvider);
         }
+        public UserDTO FindSimiliar(string nickname, string password, string email)
+        {
+            AppDBContext context = new AppDBContext();
+            foreach(var u in context.Users.AsQueryable().AsNoTracking())
+            {
+                if (BCrypt.Net.BCrypt.Verify(password, u.Password))
+                {
+                    return _mapper.Map<UserDTO>(u);
+                }
+            }
+            return context.Users.AsNoTracking().Where(u => u.Nickname == nickname || u.Email == email).ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefault();
+        }
         public ChapterDTO LoadParagraphs(ChapterDTO chapter)
         {
             AppDBContext context = new AppDBContext();

@@ -20,6 +20,7 @@ namespace BLL.Interfaces
         T2 GetById(int id);
         Task UpdateUser(T2 item);
         ChapterDTO LoadParagraphs(ChapterDTO chapter);
-        BookDTO LoadChapters(BookDTO book);
+        T1 LoadChapters(T1 book);
+        T2 FindSimiliar(string nickname, string password, string email);
     }
 }

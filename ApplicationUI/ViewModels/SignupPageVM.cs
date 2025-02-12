@@ -57,50 +57,44 @@ namespace ApplicationUI.ViewModels
 
         public async Task SignUp()
         {
-                var users = _userService.GetAll();
-
-                bool isUnique = true;
-                foreach (var user in users)
+            var user = _userService.FindSimiliar(Nickname, Password, Email);
+            if (user == null)
+            {
+                UserDTO userDTO = new UserDTO()
                 {
-                    if (BCrypt.Net.BCrypt.Verify(Password, user.Password) && user.Nickname == Nickname)
-                    {
-                        MessageBox.Show("This user exists", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-                        isUnique = false;
-                        break;
-                    }
+                    Password = BCrypt.Net.BCrypt.HashPassword(this.Password),
+                    Nickname = this.Nickname,
+                    Phone = this.Phone,
+                    Email = this.Email,
+                    Icon = File.ReadAllBytes(this.Icon),
+                    Books = new List<BookDTO>()
+                };
+                await _userService.Add(userDTO);
+                user = _userService.FindSimiliar(Nickname, Password, Email);
+                if(user != null)
+                {
+                    StaticUser.IsLoggedIn = true;
+                    StaticUser.User = user;
+                    StaticUser.UserNeedsToSignUp = false;
                 }
-                if (isUnique == true)
+                if (StaticUser.IsLoggedIn == false)
                 {
-                    UserDTO userDTO = new UserDTO()
-                    {
-                        Password = BCrypt.Net.BCrypt.HashPassword(this.Password),
-                        Nickname = this.Nickname,
-                        Phone = this.Phone,
-                        Email = this.Email,
-                        Icon = File.ReadAllBytes(this.Icon),
-                        Books = new List<BookDTO>()
-                    };
-                    _userService.Add(userDTO);
-                    users = _userService.GetAll();
-                    foreach (var user in users)
-                    {
-                        if (BCrypt.Net.BCrypt.Verify(Password, user.Password) && user.Nickname == Nickname)
-                        {
-                            StaticUser.User = user;
-                            StaticUser.IsLoggedIn = true;
-                            StaticUser.UserNeedsToSignUp = false;
-                            break;
-                        }
-                    }
-                    if (StaticUser.IsLoggedIn == false)
-                    {
-                        MessageBox.Show("User wasn`t registered", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                    MessageBox.Show("User wasn`t registered", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Nickname = string.Empty;
+                    Password = string.Empty;
+                    Email = string.Empty;
+                    Phone = string.Empty;
+                    OnNotifyPropertyChanged(nameof(Nickname));
+                    OnNotifyPropertyChanged(nameof(Password));
+                    OnNotifyPropertyChanged(nameof(Email));
+                    OnNotifyPropertyChanged(nameof(Phone));
                 }
             }
-
-
-
+            else
+            {
+                MessageBox.Show("This user exists", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
 
         public bool IsInputCorrect()
         {
@@ -112,7 +106,8 @@ namespace ApplicationUI.ViewModels
         {
             return !string.IsNullOrWhiteSpace(Password) &&
                    Password.Length >= 6 &&
-                   Password.Any(char.IsDigit);
+                   Password.Any(char.IsDigit) &&
+                   Password.Any(ch => char.IsLetterOrDigit(ch));
         }
 
         public bool IsPhoneValid()
