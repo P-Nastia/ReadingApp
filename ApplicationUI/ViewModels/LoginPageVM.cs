@@ -40,7 +40,7 @@ namespace ApplicationUI.ViewModels
                 var user = _userService.FindSimiliar(Nickname, Password,"");
                 if (user != null)
                 {
-                    if (BCrypt.Net.BCrypt.Verify(Password, user.Password))
+                    if (user.Nickname == Nickname)
                     {
                         StaticUser.User = user;
                         StaticUser.IsLoggedIn = true;
