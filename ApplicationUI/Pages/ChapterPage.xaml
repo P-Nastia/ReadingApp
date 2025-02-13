@@ -24,13 +24,13 @@
             </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid MouseEnter="Paragraph_MouseEnter" MouseLeave="Paragraph_MouseLeave">
                         <TextBlock Text="{Binding DisplayText}" 
                        MaxWidth="1000" 
                        TextWrapping="Wrap" 
                        TextTrimming="CharacterEllipsis" />
 
-                        <Border x:Name="CommentPortal" HorizontalAlignment="Right" VerticalAlignment="Top" MouseLeftButtonUp="textRB_MouseDoubleClick" BorderBrush="Black" Height="50" Width="85">
+                        <Border x:Name="CommentPortal" HorizontalAlignment="Right" VerticalAlignment="Top" MouseLeftButtonUp="textRB_MouseDoubleClick" BorderBrush="Black" Height="50" Width="85" Visibility="Hidden">
                             <Border.Background>
                                 <ImageBrush ImageSource="pack://application:,,,/Images/CommentBox.png"></ImageBrush>
                             </Border.Background>

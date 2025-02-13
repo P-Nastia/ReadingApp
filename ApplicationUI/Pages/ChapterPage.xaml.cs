@@ -111,5 +111,28 @@ namespace ApplicationUI.Pages
             return null;
         }
 
+        private void Paragraph_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Grid grid = sender as Grid;
+            foreach (var GridItem in grid.Children)
+            {
+                if(GridItem is Border && (GridItem as Border).Name == "CommentPortal")
+                {
+                    (GridItem as Border).Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        private void Paragraph_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Grid grid = sender as Grid;
+            foreach (var GridItem in grid.Children)
+            {
+                if (GridItem is Border && (GridItem as Border).Name == "CommentPortal")
+                {
+                    (GridItem as Border).Visibility = Visibility.Hidden;
+                }
+            }
+        }
     }
 }
