@@ -57,7 +57,7 @@
                 <ToolTip x:Name="PasswordLoginToolTip" Content="Password is empty" IsOpen="False" Placement="Bottom" FontSize="12" HorizontalOffset="840" VerticalOffset="448"/>
             </PasswordBox.ToolTip>
         </PasswordBox>
-        <Image x:Name="LoginImage" Grid.Row="3" Grid.Column="0" Width="250" Height="200" VerticalAlignment="Center" Cursor="Hand" Source="\Images\login.png" MouseLeftButtonUp="logInClick"></Image>
-        <Image x:Name ="SignUpImage" Grid.Row="3" Grid.Column="1" Width="500" Height="200" VerticalAlignment="Center" Cursor="Hand" Source="\Images\signUp.png" MouseLeftButtonUp="signUpClick"></Image>
+        <Image Grid.Row="3" Grid.Column="0" Width="250" Height="200" VerticalAlignment="Center" Cursor="Hand" Source="pack://application:,,,/Images/login.png"  MouseLeftButtonUp="logInClick"></Image>
+        <Image Grid.Row="3" Grid.Column="1" Width="500" Height="200" VerticalAlignment="Center" Cursor="Hand" Source="pack://application:,,,/Images/signUp.png" MouseLeftButtonUp="signUpClick"></Image>
     </Grid>
 </Page>

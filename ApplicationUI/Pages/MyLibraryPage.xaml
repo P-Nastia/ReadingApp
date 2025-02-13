@@ -20,7 +20,16 @@
     </Page.Resources>
     <StackPanel Background="#FF3C2F2F" Margin="20">
         <Frame x:Name="bookFrame"></Frame>
-        <ListBox FontWeight="Bold" Background="Transparent" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="450" Margin="20" FontSize="20" ItemsSource="{Binding UserBooks}" DisplayMemberPath="DisplayBook" SelectedItem="{Binding SelectedBook}">
+        <ListBox Grid.Row="1" Grid.Column="0" Background="Transparent" ItemsSource="{Binding UserBooks}" Name="booksLB" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectedItem="{Binding SelectedBook}" Height="450" Margin="40,20">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Image Height="130" Width="130" Source="{Binding CoverURL}"></Image>
+                        <TextBlock Text="{Binding Name}" FontSize="18" FontWeight="Bold"></TextBlock>
+                        <TextBlock Text="{Binding Author}" FontSize="14"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
         <Button Click="btSwith_Click">Read selected book</Button>
     </StackPanel>

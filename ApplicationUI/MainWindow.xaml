@@ -31,6 +31,8 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
+            <Frame x:Name="MainFrame" Margin="30,0,0,0" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden"></Frame>
+
             <Grid Grid.Row="0" Grid.Column="0" x:Name="Sidebar"  Background="#FF443434" Width="270" HorizontalAlignment="Left">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -54,7 +56,7 @@
                     <Button Command="{Binding ShowMyProfilePage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
                         <Border>
                             <StackPanel Orientation="Horizontal" Width="230">
-                                <Image x:Name="MyProfileImage" Height="70" Width="70"></Image>
+                                <Image Source="pack://application:,,,/Images/myProfile.png" Height="70" Width="70"></Image>
                                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">My profile</TextBlock>
                             </StackPanel>
                         </Border>
@@ -62,7 +64,7 @@
                     <Button Command="{Binding ShowMyLibraryPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
                         <Border >
                             <StackPanel Orientation="Horizontal" Width="230">
-                                <Image x:Name="MyBooksImage" Height="70" Width="70"></Image>
+                                <Image Source="pack://application:,,,/Images/myLibrary.jpg" Height="70" Width="70"></Image>
                                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"> My books</TextBlock>
                             </StackPanel>
                         </Border>
@@ -70,7 +72,7 @@
                     <Button Command="{Binding ShowAllBooksPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
                         <Border >
                             <StackPanel Orientation="Horizontal" Width="230">
-                                <Image x:Name="LibraryImage" Height="70" Width="70"></Image>
+                                <Image Source="pack://application:,,,/Images/LibraryPageImage.png" Height="70" Width="70"></Image>
                                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Library</TextBlock>
                             </StackPanel>
                         </Border>
@@ -78,7 +80,7 @@
                     <Button Command="{Binding ShowNotificationPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
                         <Border >
                             <StackPanel Orientation="Horizontal" Width="230">
-                                <Image x:Name="NotificationImage" Height="70" Width="70"></Image>
+                                <Image Source="pack://application:,,,/Images/NotificationBell.png" Height="70" Width="70"></Image>
                                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Notifications</TextBlock>
                             </StackPanel>
                         </Border>
@@ -87,13 +89,11 @@
 
                 <Button Grid.Row="1" Command="{Binding ShowLogOutPage}" Margin="0,0,15,0" BorderThickness="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" IsEnabled="{Binding IsLoggedIn}">
                     <Border>
-                        <Image x:Name="LogOutImage" Height="50" Width="70"></Image>
+                        <Image Source="pack://application:,,,/Images/LogOut.jpg" Height="50" Width="70"></Image>
                     </Border>
                 </Button>
 
             </Grid>
-
-            <Frame x:Name="MainFrame" Grid.Column="1" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden"></Frame>
         </Grid>
     </Border>
 </Window>

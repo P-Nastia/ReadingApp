@@ -2,6 +2,8 @@
 using BLL.Interfaces;
 using BLL.ModelsDTO;
 using System.ComponentModel;
+using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,11 +18,15 @@ namespace ApplicationUI.Pages
     public partial class ChapterPage : Page, INotifyPropertyChanged
     {
         public ChapterDTO Chapter { get; set; }
+
+        public string MessageIconSource { get; set; }
+
         private IBookService<BookDTO, ParagraphDTO, UserCommentDTO> _bookService;
         private IUserService<BookDTO, UserDTO, NotificationDTO> _userService;
         public ChapterPage(ChapterDTO chapter, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService, IUserService<BookDTO, UserDTO, NotificationDTO> userService)
         {
             InitializeComponent();
+
             Chapter = chapter;
             _bookService = bookService;
             _userService = userService;
@@ -41,8 +47,7 @@ namespace ApplicationUI.Pages
         {
             Dispatcher.Invoke(() =>
             {
-                var listBox = (ListBox)sender;
-                var clickedItem = (ParagraphDTO)listBox.SelectedItem;
+                var clickedItem = (ParagraphDTO)paragraphsLB.SelectedItem;
                 CommentsWindow commentsWindow = new CommentsWindow(clickedItem, _bookService, _userService);
                 commentsWindow.ShowDialog();
             });
@@ -97,5 +102,28 @@ namespace ApplicationUI.Pages
             return null;
         }
 
+        private void Paragraph_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Grid grid = sender as Grid;
+            foreach (var GridItem in grid.Children)
+            {
+                if(GridItem is Border && (GridItem as Border).Name == "CommentPortal")
+                {
+                    (GridItem as Border).Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        private void Paragraph_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Grid grid = sender as Grid;
+            foreach (var GridItem in grid.Children)
+            {
+                if (GridItem is Border && (GridItem as Border).Name == "CommentPortal")
+                {
+                    (GridItem as Border).Visibility = Visibility.Hidden;
+                }
+            }
+        }
     }
 }

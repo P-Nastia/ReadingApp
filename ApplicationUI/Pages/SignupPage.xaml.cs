@@ -20,13 +20,6 @@ namespace ApplicationUI.Pages
         {
             InitializeComponent();
 
-            #region ImageConfig 
-            // Setting images/Icons
-            string CD = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\Images\\"; // Maybe there is  a better way to get the project directory...
-            SignUpImage.Source = new BitmapImage(new Uri($"{CD}signUp.png", UriKind.Absolute));
-            ReturnImage.Source = new BitmapImage(new Uri($"{CD}Return.jpg", UriKind.Absolute));
-            #endregion
-
             _signupPageVM = signupPageVM;
             this.DataContext = _signupPageVM;
         }
