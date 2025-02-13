@@ -57,7 +57,7 @@ namespace ApplicationUI.ViewModels
 
         public async Task SignUp()
         {
-            var user = _userService.FindSimiliar(Nickname, Password, Email);
+            var user = _userService.FindSimiliar(Nickname, Password, Email,false);
             if (user == null)
             {
                 UserDTO userDTO = new UserDTO()
@@ -70,7 +70,7 @@ namespace ApplicationUI.ViewModels
                     Books = new List<BookDTO>()
                 };
                 await _userService.Add(userDTO);
-                user = _userService.FindSimiliar(Nickname, Password, Email);
+                user = _userService.FindSimiliar(Nickname, Password, Email,false);
                 if(user != null)
                 {
                     StaticUser.IsLoggedIn = true;

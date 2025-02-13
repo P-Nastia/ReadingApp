@@ -28,7 +28,7 @@ namespace ApplicationUI
     public partial class MainWindow : Window
     {
         private const double SidebarTriggerX = 250;
-        public MainWindow(IUserService<BookDTO, UserDTO, NotificationDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService, LoginPageVM loginPageVM, SignupPageVM signupPageVM, MyLibraryPageVM myLibraryPageVM, AllBooksPageVM allBooksPageVM,MyProfilePageVM myProfilePageVM, NotificationPageVM notificationPageVM)
+        public MainWindow(IUserService<BookDTO, UserDTO, NotificationDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService, LoginPageVM loginPageVM, SignupPageVM signupPageVM, MyLibraryPageVM myLibraryPageVM, AllBooksPageVM allBooksPageVM,MyProfilePageVM myProfilePageVM, NotificationPageVM notificationPageVM,SearchUserPageVM searchUserPageVM)
         {
             InitializeComponent();
 
@@ -40,9 +40,10 @@ namespace ApplicationUI
             LibraryImage.Source = new BitmapImage(new Uri($"{CD}libraryPageImage.png", UriKind.Absolute));
             LogOutImage.Source = new BitmapImage(new Uri($"{CD}LogOut.jpg", UriKind.Absolute));
             NotificationImage.Source = new BitmapImage(new Uri($"{CD}NotificationBell.png", UriKind.Absolute));
+            SearchUserImage.Source = new BitmapImage(new Uri($"{CD}SearchUser.png", UriKind.Absolute));
             #endregion
             StaticUser.User = new UserDTO();
-            PageViewModel pageViewModel = new PageViewModel(this, userService, bookService, loginPageVM, signupPageVM, myLibraryPageVM, allBooksPageVM, myProfilePageVM, notificationPageVM);
+            PageViewModel pageViewModel = new PageViewModel(this, userService, bookService, loginPageVM, signupPageVM, myLibraryPageVM, allBooksPageVM, myProfilePageVM, notificationPageVM,searchUserPageVM);
             this.DataContext = pageViewModel;
         }
 
