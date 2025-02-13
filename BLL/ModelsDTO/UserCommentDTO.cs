@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace BLL.ModelsDTO
+﻿namespace BLL.ModelsDTO
 {
     public class UserCommentDTO
     {

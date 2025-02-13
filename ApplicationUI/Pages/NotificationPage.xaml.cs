@@ -1,21 +1,9 @@
 ﻿using ApplicationUI.Statics;
 using ApplicationUI.ViewModels;
 using BLL.ModelsDTO;
-using System;
-using System.Collections.Generic;
-using System.DirectoryServices.Protocols;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ApplicationUI.Pages
 {
@@ -47,10 +35,9 @@ namespace ApplicationUI.Pages
             }
         }
 
-        private void LoadHotLink(object sender, MouseButtonEventArgs e)
+        private async void LoadHotLink(object sender, MouseButtonEventArgs e)
         {
-            SoundPlayer.PlayButtonSound();
-            //_notificationPageVM.Selected = (NotificationDTO)NotificationList.SelectedItem;
+            await SoundPlayer.PlayButtonSoundAsync();
             _notificationPageVM.HotLoadLink();
         }
     }
