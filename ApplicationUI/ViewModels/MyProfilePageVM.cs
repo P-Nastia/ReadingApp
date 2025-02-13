@@ -150,13 +150,13 @@ namespace ApplicationUI.ViewModels
         {
             if (StaticUser.User.Icon != null && StaticUser.User != null)
             {
-                _icon = await ServerService.DownloadImageBytesAsync(StaticUser.User.Icon);
+                Icon = await ServerService.DownloadImageBytesAsync(StaticUser.User.Icon);
             }
             else
             {
                 var path = Directory.GetCurrentDirectory().Split('\\');
                 string newPath = string.Join("\\", path.Take(path.Length - 3)) + "\\Images\\myProfile.png";
-                _icon = File.ReadAllBytes(newPath);
+                Icon = File.ReadAllBytes(newPath);
             }
         }
         private async void ChangePassword()
