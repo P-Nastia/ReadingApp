@@ -1,9 +1,6 @@
-﻿using ApplicationUI.Pages;
-using ApplicationUI.Statics;
+﻿using ApplicationUI.Statics;
 using EmailSender.Services;
-using System.IO;
 using System.Windows;
-using System.Windows.Media.Imaging;
 
 namespace ApplicationUI.Windows
 {
@@ -26,9 +23,9 @@ namespace ApplicationUI.Windows
 
             EmailService.SendEmail(email, "Verification", $"Your verification code is: {_verificationCode}");
         }
-        private void Confirm_Click(object sender, RoutedEventArgs e)
+        private async void Confirm_Click(object sender, RoutedEventArgs e)
         {
-            SoundPlayer.PlayButtonSound();
+            await SoundPlayer.PlayButtonSoundAsync();
             if (codeTB.Text == _verificationCode)
             {
                 MessageBox.Show("Success", "Information", MessageBoxButton.OK, MessageBoxImage.Information);

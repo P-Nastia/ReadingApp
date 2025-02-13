@@ -2,30 +2,16 @@
 using BLL.Interfaces;
 using BLL.ModelsDTO;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using iText.Kernel.Pdf;
 using System.Windows;
 using ApplicationUI.Statics;
-using iText.Kernel.Pdf.Canvas.Parser.Listener;
-using iText.Kernel.Pdf.Canvas.Parser;
-using OpenQA.Selenium.Support.UI;
-using System.Collections.ObjectModel;
 using VersOne.Epub;
 using HtmlAgilityPack;
 using ApplicationUI.TempModels;
-using System.Security.Policy;
-using System.Media;
 using Microsoft.Win32;
-using System.Drawing;
 using SoundPlayer = ApplicationUI.Statics.SoundPlayer;
 
 namespace ApplicationUI.ViewModels
@@ -68,9 +54,9 @@ namespace ApplicationUI.ViewModels
             _userService = userService;
             _bookService = bookService;
         }
-        private void DownloadFile()
+        private async void DownloadFile()
         {
-            SoundPlayer.PlayButtonSound();
+            await SoundPlayer.PlayButtonSoundAsync();
             OpenFileDialog dialog = new OpenFileDialog() { Filter = "EPUB Files (*.epub)|*.epub" };
             dialog.ShowDialog();
             if (!String.IsNullOrEmpty(dialog.FileName) && !String.IsNullOrWhiteSpace(dialog.FileName))
@@ -82,7 +68,7 @@ namespace ApplicationUI.ViewModels
         }
         private async void Search()
         {
-            SoundPlayer.PlayButtonSound();
+            await SoundPlayer.PlayButtonSoundAsync();
             if (!String.IsNullOrWhiteSpace(SearchString) && !String.IsNullOrWhiteSpace(SearchString))
             {
                 AvailableBooks = null;
@@ -156,9 +142,9 @@ namespace ApplicationUI.ViewModels
         }
 
         EpubBook bookFile;
-        public void Download(LibraryBook libraryBook)
+        public async void Download(LibraryBook libraryBook)
         {
-            SoundPlayer.PlayButtonSound();
+            await SoundPlayer.PlayButtonSoundAsync();
             if (libraryBook != null)
             {
                 var bookFromDB = _bookService.GetByNameAndAuthor(libraryBook.Name, libraryBook.Author);

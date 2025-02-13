@@ -26,6 +26,6 @@ namespace DAL.Entities
         public string Password { get; set; }
         public ICollection<BookEntity> Books { get; set; }
         public ICollection<NotificationEntity> Notifications { get; set; }
-        public byte[] Icon { get; set; }
+        public string Icon { get; set; }
     }
 }
