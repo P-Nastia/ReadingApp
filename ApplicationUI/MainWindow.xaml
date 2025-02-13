@@ -93,7 +93,7 @@
 
             </Grid>
 
-            <Frame x:Name="MainFrame" Grid.Column="1" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden"></Frame>
+            <Frame x:Name="MainFrame" Margin="20,0,0,0" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden"></Frame>
         </Grid>
     </Border>
 </Window>
