@@ -31,6 +31,8 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
+            <Frame x:Name="MainFrame" Margin="30,0,0,0" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden"></Frame>
+
             <Grid Grid.Row="0" Grid.Column="0" x:Name="Sidebar"  Background="#FF443434" Width="270" HorizontalAlignment="Left">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -92,8 +94,6 @@
                 </Button>
 
             </Grid>
-
-            <Frame x:Name="MainFrame" Margin="20,0,0,0" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden"></Frame>
         </Grid>
     </Border>
 </Window>
