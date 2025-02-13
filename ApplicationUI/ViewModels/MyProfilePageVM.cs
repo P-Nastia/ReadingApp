@@ -3,18 +3,11 @@ using ApplicationUI.Statics;
 using BLL.Interfaces;
 using BLL.ModelsDTO;
 using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 
 namespace ApplicationUI.ViewModels
 {
@@ -29,6 +22,7 @@ namespace ApplicationUI.ViewModels
         public BaseCommand ChangeIconCommand => new BaseCommand(obj => ChangeIcon(), canExecute => true);
 
         private bool _canChangeNickname;
+        private byte[] _icon;
         public bool CanChangeNickname
         {
             get => _canChangeNickname;
@@ -135,33 +129,39 @@ namespace ApplicationUI.ViewModels
         }
         public byte[] Icon
         {
-            get {
-                if (StaticUser.User.Icon != null && StaticUser.User != null)
-                    return StaticUser.User.Icon;
-                else
+            get
+            {
+                if (_icon == null)
                 {
-                    var path = Directory.GetCurrentDirectory().Split('\\');
-                    string newPath="";
-                    for(int i=0;i<path.Count() - 3; i++)
-                    {
-                        newPath += path[i]+"\\";
-                    }
-                    return File.ReadAllBytes($"{newPath}Images\\myProfile.png");
+                    LoadIconAsync();
                 }
-                
+                return _icon;
             }
             set
             {
-                if(value != StaticUser.User.Icon && StaticUser.User != null)
+                if (_icon != value && StaticUser.User != null)
                 {
-                    StaticUser.User.Icon = value;
+                    _icon = value;
                     OnNotifyPropertyChanged(nameof(Icon));
                 }
             }
         }
+        private async void LoadIconAsync()
+        {
+            if (StaticUser.User.Icon != null && StaticUser.User != null)
+            {
+                Icon = await ServerService.DownloadImageBytesAsync(StaticUser.User.Icon);
+            }
+            else
+            {
+                var path = Directory.GetCurrentDirectory().Split('\\');
+                string newPath = string.Join("\\", path.Take(path.Length - 3)) + "\\Images\\myProfile.png";
+                Icon = File.ReadAllBytes(newPath);
+            }
+        }
         private async void ChangePassword()
         {
-            SoundPlayer.PlayButtonSound();
+            await SoundPlayer.PlayButtonSoundAsync();
             if (CanChangePassword == false)
             {
                 CanChangePassword = true;
@@ -197,7 +197,7 @@ namespace ApplicationUI.ViewModels
         }
         private async void ChangeNickname()
         {
-            SoundPlayer.PlayButtonSound();
+            await SoundPlayer.PlayButtonSoundAsync();
             if (CanChangeNickname == false)
             {
                 CanChangeNickname = true;
@@ -213,7 +213,7 @@ namespace ApplicationUI.ViewModels
         }
         private async void ChangePhone()
         {
-            SoundPlayer.PlayButtonSound();
+            await SoundPlayer.PlayButtonSoundAsync();
             if (CanChangePhone == false)
             {
                 CanChangePhone = true;
@@ -229,7 +229,7 @@ namespace ApplicationUI.ViewModels
         }
         private async void ChangeEmail()
         {
-            SoundPlayer.PlayButtonSound();
+            await SoundPlayer.PlayButtonSoundAsync();
             if (CanChangeEmail == false)
             {
                 CanChangeEmail = true;
@@ -245,14 +245,18 @@ namespace ApplicationUI.ViewModels
         }
         private async void ChangeIcon()
         {
-            SoundPlayer.PlayButtonSound();
+            await SoundPlayer.PlayButtonSoundAsync();
             OpenFileDialog dialog = new OpenFileDialog() { Filter = "Image Files (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png" };
             dialog.ShowDialog();
             if (!String.IsNullOrEmpty(dialog.FileName) && !String.IsNullOrWhiteSpace(dialog.FileName))
             {
-                StaticUser.User.Icon = await File.ReadAllBytesAsync(dialog.FileName);
-                await _userService.UpdateUser(StaticUser.User);
-                OnNotifyPropertyChanged(nameof(Icon));
+                var imageUrl = (await ServerService.UploadImageAsync(dialog.FileName)).ImageUrl;
+                if (!string.IsNullOrEmpty(imageUrl))
+                {
+                    StaticUser.User.Icon = imageUrl;
+                    await _userService.UpdateUser(StaticUser.User);
+                    Icon = await ServerService.DownloadImageBytesAsync(imageUrl);
+                }
             }
         }
         public void OnNotifyPropertyChanged([CallerMemberName] string propertyName = null)

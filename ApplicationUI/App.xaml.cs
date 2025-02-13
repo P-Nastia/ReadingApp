@@ -3,10 +3,7 @@ using BLL.Configurations;
 using BLL.Interfaces;
 using BLL.ModelsDTO;
 using BLL.Services;
-using DAL.Entities;
 using Microsoft.Extensions.DependencyInjection;
-using System.Configuration;
-using System.Data;
 using System.Windows;
 
 namespace ApplicationUI

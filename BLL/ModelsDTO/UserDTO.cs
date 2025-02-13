@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace BLL.ModelsDTO
+﻿namespace BLL.ModelsDTO
 {
     public class UserDTO
     {
@@ -11,6 +9,6 @@ namespace BLL.ModelsDTO
         public string Password { get; set; }
         public ICollection<NotificationDTO> Notifications { get; set; }
         public ICollection<BookDTO> Books { get; set; }
-        public byte[] Icon { get; set; }
+        public string Icon { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace ApplicationUI.Pages
 
         private async void logInClick(object sender, MouseButtonEventArgs e)
         {
-            SoundPlayer.PlayButtonSound();
+            await SoundPlayer.PlayButtonSoundAsync();
             _loginPageVM.Password = passwordPB.Password;
             _loginPageVM.Nickname = NickName_TextInput.Text;
             ResetTextBoxBorders();
@@ -59,9 +59,9 @@ namespace ApplicationUI.Pages
                 }
             }
         }
-        private void signUpClick(object sender, MouseButtonEventArgs e)
+        private async void signUpClick(object sender, MouseButtonEventArgs e)
         {
-            SoundPlayer.PlayButtonSound();
+            await SoundPlayer.PlayButtonSoundAsync();
             _loginPageVM.SignUp();
         }
 

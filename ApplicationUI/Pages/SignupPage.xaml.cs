@@ -2,12 +2,11 @@
 using ApplicationUI.ViewModels;
 using ApplicationUI.Windows;
 using System.IO;
-using System.ServiceModel.Channels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using System.Windows.Media; 
+using System.Windows.Media;
 
 namespace ApplicationUI.Pages
 {
@@ -26,7 +25,7 @@ namespace ApplicationUI.Pages
         }
         private async void signUpClick(object sender, MouseButtonEventArgs e)
         {
-            SoundPlayer.PlayButtonSound();
+            await SoundPlayer.PlayButtonSoundAsync();
             //оновлюю дані з text box
             _signupPageVM.Password = this.passwordPB.Password;
             _signupPageVM.Nickname = NicknameTB.Text;
@@ -108,9 +107,9 @@ namespace ApplicationUI.Pages
 
         }
 
-        private void ReturnImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private async void ReturnImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            SoundPlayer.PlayButtonSound();
+            await SoundPlayer.PlayButtonSoundAsync();
             _signupPageVM.ReturnToSignIn();
         }
 
