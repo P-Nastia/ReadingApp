@@ -42,7 +42,7 @@
             <Image Source="pack://application:,,,/Images/downloadImage.png" Cursor="Hand" Height="50" Width="50"></Image>
         </Button>
         
-        <ListBox Margin="20" Grid.Row="2" Grid.Column="0" Background="Transparent" ItemsSource="{Binding AvailableBooks}" MouseLeftButtonUp="booksLB_MouseLeftButtonUp" Name="booksLB" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectedItem="{Binding SelectedBook}">
+        <ListBox Margin="20" Grid.Row="2" Grid.Column="0" Background="Transparent" ItemsSource="{Binding AvailableBooks}" MouseLeftButtonUp="booksLB_MouseLeftButtonUp" Name="booksLB" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectedItem="{Binding SelectedBook}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Width="200" HorizontalAlignment="Center">

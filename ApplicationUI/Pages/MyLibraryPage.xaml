@@ -24,9 +24,9 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <Image Height="130" Width="130" Source="{Binding CoverURL}"></Image>
-                        <TextBlock Text="{Binding Name}" FontSize="18" FontWeight="Bold"></TextBlock>
-                        <TextBlock Text="{Binding Author}" FontSize="14"></TextBlock>
+                        <Image HorizontalAlignment="Center" Height="130" Width="130" Source="{Binding CoverURL}"></Image>
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding Name}" FontSize="18" FontWeight="Bold"></TextBlock>
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding Author}" FontSize="14"></TextBlock>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

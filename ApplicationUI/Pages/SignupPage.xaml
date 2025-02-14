@@ -20,10 +20,13 @@
             <Setter Property="FontSize" Value="35"></Setter>
             <Setter Property="Foreground" Value="Black"></Setter>
             <Setter Property="FontFamily" Value="Cooper Black"></Setter>
-            <Setter Property="TextAlignment" Value="Center"></Setter>
+            <Setter Property="TextAlignment" Value="Left"></Setter>
             <Setter Property="Margin" Value="20"></Setter>
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
             <Setter Property="Height" Value="50"></Setter>
+            <Setter Property="Padding" Value="10,2"></Setter>
+            <Setter Property="Width" Value="500"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
         </Style>
         <Style TargetType="PasswordBox">
             <Setter Property="FontSize" Value="40"></Setter>
@@ -32,6 +35,8 @@
             <Setter Property="Margin" Value="20"></Setter>
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
             <Setter Property="Padding" Value="10,2"></Setter>
+            <Setter Property="Width" Value="500"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Left"></Setter>
         </Style>
     </Page.Resources>
     <Grid Background="#FF3C2F2F" Margin="80,20">
@@ -74,7 +79,7 @@
             </TextBox.ToolTip>
         </TextBox>
         <TextBlock Grid.Row="5" Grid.Column="0">User icon:</TextBlock>
-        <Button x:Name="IconBT" Grid.Row="5" Grid.Column="1" Command="{Binding PickIconCommand}" Margin="20,15,300,10" FontSize="30" Cursor="Hand" Background="WhiteSmoke" VerticalAlignment="Center">...
+        <Button x:Name="IconBT" Grid.Row="5" Grid.Column="1" Command="{Binding PickIconCommand}" Margin="20,15,300,10" FontSize="30" Cursor="Hand" Background="WhiteSmoke" VerticalAlignment="Center" Width="200" HorizontalAlignment="Left">...
             <Button.ToolTip>
                 <ToolTip x:Name="IconToolTip" Content="Icon must be" IsOpen="False" Placement="Bottom" FontSize="12" HorizontalOffset="840" VerticalOffset="630"/>
             </Button.ToolTip>
