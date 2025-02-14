@@ -1,5 +1,4 @@
 ﻿using ApplicationUI.Commands;
-using ApplicationUI.Pages;
 using ApplicationUI.Statics;
 using BLL.Interfaces;
 using BLL.ModelsDTO;
@@ -8,8 +7,6 @@ using Microsoft.Win32;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Input;
-using File = System.IO.File;
 
 namespace ApplicationUI.ViewModels
 {
@@ -34,6 +31,7 @@ namespace ApplicationUI.ViewModels
         public string Email { get; set; }
         public string Icon { get; set; }
 
+        private string _path;
 
 
 
@@ -42,19 +40,16 @@ namespace ApplicationUI.ViewModels
         {
             _userService = userService;
         }
-        private void PickIcon()
+        private async void PickIcon()
         {
-            SoundPlayer.PlayButtonSound();
-            OpenFileDialog dialog = new OpenFileDialog() {Filter = "Image Files (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png" };
+            await SoundPlayer.PlayButtonSoundAsync();
+            OpenFileDialog dialog = new OpenFileDialog() { Filter = "Image Files (*.jpg;*.jpeg;*.png)|*.jpg;*.jpeg;*.png" };
             dialog.ShowDialog();
-            if(!String.IsNullOrEmpty(dialog.FileName) && !String.IsNullOrWhiteSpace(dialog.FileName))
+            if (!String.IsNullOrEmpty(dialog.FileName) && !String.IsNullOrWhiteSpace(dialog.FileName))
             {
-                Icon = dialog.FileName;
+                _path = dialog.FileName;
             }
         }
-
-
-
         public async Task SignUp()
         {
             var user = _userService.FindSimiliar(Nickname, Password, Email,false);
@@ -66,7 +61,7 @@ namespace ApplicationUI.ViewModels
                     Nickname = this.Nickname,
                     Phone = this.Phone,
                     Email = this.Email,
-                    Icon = File.ReadAllBytes(this.Icon),
+                    Icon = (await ServerService.UploadImageAsync(_path)).ImageUrl,
                     Books = new List<BookDTO>()
                 };
                 await _userService.Add(userDTO);
@@ -124,7 +119,7 @@ namespace ApplicationUI.ViewModels
 
         public bool IsIconValid()
         {
-            return !string.IsNullOrWhiteSpace(Icon);
+            return !string.IsNullOrWhiteSpace(_path);
         }
 
         public bool IsEmailValid()
@@ -137,7 +132,5 @@ namespace ApplicationUI.ViewModels
         {
             StaticUser.UserNeedsToSignUp = false;   
         }
-
-
     }
 }

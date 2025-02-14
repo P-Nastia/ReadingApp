@@ -1,23 +1,13 @@
 ﻿using ApplicationUI.Statics;
 using BLL.Interfaces;
 using BLL.ModelsDTO;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ApplicationUI.Windows
 {
@@ -70,33 +60,27 @@ namespace ApplicationUI.Windows
         {
             InitializeComponent();
 
-            #region ImageConfig 
-            // Setting images/Icons
-            string CD = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\Images\\"; // Maybe there is a better way to get the project directory...
-            AddCommentImage.Source = new BitmapImage(new Uri($"{CD}addComment.png", UriKind.Absolute));
-            #endregion
-
             _bookService = bookService;
             _userService = userService;
             this.DataContext = this;
             Paragraph = this._bookService.GetParagraph(paragraph.Id);
             UserCommentCollection = Paragraph.UserComments;
         }
-        private void SetImageSource(object sender, RoutedEventArgs e)
+        private async void SetImageSource(object sender, RoutedEventArgs e)
         {
             var item = (UserCommentDTO)((FrameworkElement)sender).DataContext;
             var imageControl = (Image)sender;
 
             if (item.User.Icon != null)
             {
-                using (MemoryStream ms = new MemoryStream(item.User.Icon))
+                using (MemoryStream ms = new MemoryStream(await ServerService.DownloadImageBytesAsync(item.User.Icon)))
                 {
                     BitmapImage bitmap = new BitmapImage();
                     bitmap.BeginInit();
                     bitmap.StreamSource = ms;
                     bitmap.CacheOption = BitmapCacheOption.OnLoad;
                     bitmap.EndInit();
-                    imageControl.Source = bitmap; 
+                    imageControl.Source = bitmap;
                 }
             }
         }

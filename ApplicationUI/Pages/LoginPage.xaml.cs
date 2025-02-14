@@ -19,20 +19,13 @@ namespace ApplicationUI.Pages
         {
             InitializeComponent();
 
-            #region ImageConfig 
-            // Setting images/Icons
-            string CD = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\Images\\"; // Maybe there is  a better way to get the project directory...
-            LoginImage.Source = new BitmapImage(new Uri($"{CD}login.png", UriKind.Absolute));
-            SignUpImage.Source = new BitmapImage(new Uri($"{CD}signUp.png", UriKind.Absolute));
-            #endregion
-
             _loginPageVM = loginPageVM;
             this.DataContext = _loginPageVM;
         }
 
         private async void logInClick(object sender, MouseButtonEventArgs e)
         {
-            SoundPlayer.PlayButtonSound();
+            await SoundPlayer.PlayButtonSoundAsync();
             _loginPageVM.Password = passwordPB.Password;
             _loginPageVM.Nickname = NickName_TextInput.Text;
             ResetTextBoxBorders();
@@ -66,9 +59,9 @@ namespace ApplicationUI.Pages
                 }
             }
         }
-        private void signUpClick(object sender, MouseButtonEventArgs e)
+        private async void signUpClick(object sender, MouseButtonEventArgs e)
         {
-            SoundPlayer.PlayButtonSound();
+            await SoundPlayer.PlayButtonSoundAsync();
             _loginPageVM.SignUp();
         }
 

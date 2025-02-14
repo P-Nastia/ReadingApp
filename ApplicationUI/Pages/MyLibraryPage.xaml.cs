@@ -18,11 +18,10 @@ namespace ApplicationUI.Pages
             _myLibraryPageVM = myLibraryPageVM;
             this.DataContext = _myLibraryPageVM;
         }
-
-        private void btSwith_Click(object sender, RoutedEventArgs e)
+        private async void btSwith_Click(object sender, RoutedEventArgs e)
         {
-            SoundPlayer.PlayButtonSound();
-            ReadBookWindow readBookWindow = new ReadBookWindow(_myLibraryPageVM.SelectedBook,_myLibraryPageVM._bookService,_myLibraryPageVM._userService);
+            await SoundPlayer.PlayButtonSoundAsync();
+            ReadBookWindow readBookWindow = new ReadBookWindow(_myLibraryPageVM.SelectedBook, _myLibraryPageVM._bookService, _myLibraryPageVM._userService);
             readBookWindow.ShowDialog();
         }
     }

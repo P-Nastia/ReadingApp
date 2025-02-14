@@ -4,17 +4,10 @@ using ApplicationUI.Statics;
 using ApplicationUI.TempModels;
 using BLL.Interfaces;
 using BLL.ModelsDTO;
-using BLL.Services;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace ApplicationUI.ViewModels
 {
@@ -132,11 +125,11 @@ namespace ApplicationUI.ViewModels
         {
             get
             {
-                return new BaseCommand(obj =>
+                return new BaseCommand(async obj =>
                 {
-                    SoundPlayer.PlayButtonSound();
+                    await SoundPlayer.PlayButtonSoundAsync();
                     List<LibraryBook> books = new List<LibraryBook>();
-                    foreach(var book in bookService.GetAll())
+                    foreach (var book in bookService.GetAll())
                     {
                         var tempBook = new LibraryBook()
                         {
@@ -157,9 +150,9 @@ namespace ApplicationUI.ViewModels
         {
             get
             {
-                return new BaseCommand(obj =>
+                return new BaseCommand(async obj =>
                 {
-                    SoundPlayer.PlayButtonSound();
+                    await SoundPlayer.PlayButtonSoundAsync();
                     _myLibraryPageVM.UserBooks = userService.GetById(StaticUser.User.Id).Books;
                     _myLibraryPageVM.OnNotifyPropertyChanged("UserBooks");
                     CurrentPage = _myLibraryPage;
@@ -171,9 +164,9 @@ namespace ApplicationUI.ViewModels
         {
             get
             {
-                return new BaseCommand(obj =>
+                return new BaseCommand(async obj =>
                 {
-                    SoundPlayer.PlayButtonSound();
+                    await SoundPlayer.PlayButtonSoundAsync();
                     CurrentPage = _myProfilePage;
                 });
             }
@@ -183,9 +176,9 @@ namespace ApplicationUI.ViewModels
         {
             get
             {
-                return new BaseCommand(obj =>
+                return new BaseCommand(async obj =>
                 {
-                    SoundPlayer.PlayButtonSound();
+                    await SoundPlayer.PlayButtonSoundAsync();
                     _notificationPageVM.Show();
                     CurrentPage = _notificationPage;
                 });
@@ -196,10 +189,10 @@ namespace ApplicationUI.ViewModels
         {
             get
             {
-                return new BaseCommand(obj =>
+                return new BaseCommand(async obj =>
                 {
-                    SoundPlayer.PlayButtonSound();
-                    IsLoggedIn = false;
+                    await SoundPlayer.PlayButtonSoundAsync();
+                    StaticUser.IsLoggedIn = false;
                     _myLibraryPageVM.UserBooks = null;
                     _myLibraryPageVM.OnNotifyPropertyChanged(nameof(_myLibraryPageVM.UserBooks));
                     CurrentPage = _loginPage;

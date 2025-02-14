@@ -79,9 +79,9 @@
                 <ToolTip x:Name="IconToolTip" Content="Icon must be" IsOpen="False" Placement="Bottom" FontSize="12" HorizontalOffset="840" VerticalOffset="630"/>
             </Button.ToolTip>
         </Button>
-        <Image x:Name="SignUpImage" Grid.Row="6"  Grid.ColumnSpan="2" Width="500" Height="200" VerticalAlignment="Center" Cursor="Hand"  MouseLeftButtonUp="signUpClick"></Image>
+        <Image Source="pack://application:,,,/Images/signUp.png" Grid.Row="6"  Grid.ColumnSpan="2" Width="500" Height="200" VerticalAlignment="Center" Cursor="Hand"  MouseLeftButtonUp="signUpClick"></Image>
 
-        <Image x:Name="ReturnImage" Grid.Column="0" Width="250" Height="50" VerticalAlignment="Center" Grid.Row="0" Margin="0,0,120,0" Cursor="Hand"  MouseLeftButtonUp="ReturnImage_MouseLeftButtonUp"></Image>
+        <Image Source="pack://application:,,,/Images/Return.jpg" Grid.Column="0" Width="250" Height="50" VerticalAlignment="Center" Grid.Row="0" Margin="0,0,120,0" Cursor="Hand"  MouseLeftButtonUp="ReturnImage_MouseLeftButtonUp"></Image>
 
 
 
