@@ -17,7 +17,7 @@ namespace ApplicationUI
     {
         public const int SideBarOpenWidth = 270;
         public const int SideBarClosedWidth = 100;
-        public MainWindow(IUserService<BookDTO, UserDTO, NotificationDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService, LoginPageVM loginPageVM, SignupPageVM signupPageVM, MyLibraryPageVM myLibraryPageVM, AllBooksPageVM allBooksPageVM,MyProfilePageVM myProfilePageVM, NotificationPageVM notificationPageVM)
+        public MainWindow(IUserService<BookDTO, UserDTO, NotificationDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService, LoginPageVM loginPageVM, SignupPageVM signupPageVM, MyLibraryPageVM myLibraryPageVM, AllBooksPageVM allBooksPageVM, MyProfilePageVM myProfilePageVM, NotificationPageVM notificationPageVM, SearchUserPageVM searchUserPageVM)
         {
             InitializeComponent();
             StaticUser.User = new UserDTO();
