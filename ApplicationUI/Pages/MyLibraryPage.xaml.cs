@@ -5,6 +5,7 @@ using ApplicationUI.Windows;
 using BLL.ModelsDTO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace ApplicationUI.Pages
 {
@@ -29,6 +30,7 @@ namespace ApplicationUI.Pages
 
         private void StackPanel_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+
             if (sender is StackPanel panel && panel.Tag is BookDTO selectedBook)
             {
                 _myLibraryPageVM.SelectedBook = selectedBook;

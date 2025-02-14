@@ -22,18 +22,6 @@
         <Frame x:Name="bookFrame"></Frame>
         
         
-        <!--<ListBox Grid.Row="1" Grid.Column="0" Background="Transparent" ItemsSource="{Binding UserBooks}" Name="booksLB" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectedItem="{Binding SelectedBook}" Height="450" Margin="40,20">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <Image HorizontalAlignment="Center" Height="130" Width="130" Source="{Binding CoverURL}"></Image>
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding Name}" FontSize="18" FontWeight="Bold"></TextBlock>
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding Author}" FontSize="14"></TextBlock>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>-->
-
 
         <ScrollViewer VerticalScrollBarVisibility="Visible"  HorizontalScrollBarVisibility="Disabled" Margin="50,60,50,0" Height="550"  Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <ItemsControl ItemsSource="{Binding UserBooks}" Name="UserBooks">
@@ -44,7 +32,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderBrush="Black" BorderThickness="1" Margin="10">
+                        <Border BorderBrush="Black" BorderThickness="1" Margin="10" CornerRadius="10">
                             <StackPanel Width="300"  Tag="{Binding}" MouseDown="StackPanel_MouseDown" Height="300"  HorizontalAlignment="Center">
                                 <StackPanel.Style>
                                     <Style TargetType="StackPanel">
@@ -57,7 +45,6 @@
                                         </Style.Triggers>
                                     </Style>
                                 </StackPanel.Style>
-
                                 <Image HorizontalAlignment="Center" Height="220" Width="250" Margin="0,10,0,0" Source="{Binding CoverURL}"/>
                                 <TextBlock HorizontalAlignment="Center" Text="{Binding Name}"  TextWrapping="Wrap" FontSize="17" Foreground="Black" FontWeight="Bold"/>
                                 <TextBlock HorizontalAlignment="Center" Text="{Binding Author}" FontFamily="Malgun Gothic" TextWrapping="Wrap" FontSize="15"/>

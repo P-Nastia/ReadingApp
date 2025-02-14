@@ -92,7 +92,7 @@ namespace ApplicationUI.ViewModels
                         inputField.SendKeys($"{SearchString}");
                         IWebElement submitButton = driver.FindElement(By.XPath("//*[@id=\"searchform\"]/button"));
                         submitButton.Click();
-                        Thread.Sleep(1000);
+                        Thread.Sleep(3000);
                         IWebElement resultResponse = driver.FindElement(By.XPath("/html/body/div[2]/div/div[1]/div/div[1]/h2"));
 
                         AvailableBooks = new List<LibraryBook>();

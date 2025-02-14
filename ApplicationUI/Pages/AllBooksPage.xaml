@@ -52,7 +52,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderBrush="Black" BorderThickness="1" Margin="10">
+                        <Border BorderBrush="Black" BorderThickness="1" Margin="10" CornerRadius="10">
                             <StackPanel Width="300"  Tag="{Binding}" MouseDown="StackPanel_MouseDown" Height="300"  HorizontalAlignment="Center">
                                 <StackPanel.Style>
                                     <Style TargetType="StackPanel">
