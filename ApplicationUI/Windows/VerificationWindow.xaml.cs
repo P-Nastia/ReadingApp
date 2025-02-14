@@ -35,5 +35,14 @@ namespace ApplicationUI.Windows
             else
                 MessageBox.Show("Incorrect code", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
+        private void Window_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
