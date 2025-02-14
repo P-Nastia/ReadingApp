@@ -15,7 +15,8 @@ namespace ApplicationUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const double SidebarTriggerX = 250;
+        public const int SideBarOpenWidth = 270;
+        public const int SideBarClosedWidth = 100;
         public MainWindow(IUserService<BookDTO, UserDTO, NotificationDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService, LoginPageVM loginPageVM, SignupPageVM signupPageVM, MyLibraryPageVM myLibraryPageVM, AllBooksPageVM allBooksPageVM,MyProfilePageVM myProfilePageVM, NotificationPageVM notificationPageVM)
         {
             InitializeComponent();
@@ -29,13 +30,13 @@ namespace ApplicationUI
         {
             Point mousePosition = e.GetPosition(this); // Отримуємо координати миші
 
-            if (mousePosition.X <= SidebarTriggerX && Sidebar.Width == 0)
+            if (mousePosition.X <= SideBarClosedWidth && Sidebar.Width == SideBarClosedWidth)
             {
                 // Запускаємо анімацію відкриття
                 Storyboard expandStoryboard = (Storyboard)Sidebar.Resources["ExpandSidebar"];
                 expandStoryboard.Begin();
             }
-            else if (mousePosition.X > SidebarTriggerX && Sidebar.Width == 270)
+            else if (mousePosition.X > SideBarOpenWidth && Sidebar.Width == SideBarOpenWidth)
             {
                 // Запускаємо анімацію закриття
                 Storyboard collapseStoryboard = (Storyboard)Sidebar.Resources["CollapseSidebar"];

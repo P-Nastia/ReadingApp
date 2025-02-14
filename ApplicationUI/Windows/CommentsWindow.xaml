@@ -18,7 +18,7 @@
         </Grid.ColumnDefinitions>
         <ScrollViewer Grid.Row="0" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Height="370">
             <StackPanel>
-                <Border BorderBrush="Black" BorderThickness="0,0,0,5" CornerRadius="20" HorizontalAlignment="Left">
+                <Border BorderBrush="Black" BorderThickness="0,0,0,5" CornerRadius="20" HorizontalAlignment="Center">
                     <TextBlock Text="{Binding Paragraph.DisplayText}" FontWeight="Bold" Background="Transparent" Padding="20" TextWrapping="Wrap" Width="420"></TextBlock>
                 </Border>
                 <ListBox x:Name="CommentList"  Grid.ColumnSpan="2" Grid.Row="0" ItemsSource="{Binding UserCommentCollection}" BorderThickness="0">
