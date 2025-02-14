@@ -21,7 +21,7 @@ namespace ApplicationUI
         {
             InitializeComponent();
             StaticUser.User = new UserDTO();
-            PageViewModel pageViewModel = new PageViewModel(this, userService, bookService, loginPageVM, signupPageVM, myLibraryPageVM, allBooksPageVM, myProfilePageVM, notificationPageVM);
+            PageViewModel pageViewModel = new PageViewModel(this, userService, bookService, loginPageVM, signupPageVM, myLibraryPageVM, allBooksPageVM, myProfilePageVM, notificationPageVM,searchUserPageVM);
             this.DataContext = pageViewModel;
         }
 
