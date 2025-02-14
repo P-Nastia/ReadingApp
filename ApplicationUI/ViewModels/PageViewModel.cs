@@ -6,6 +6,7 @@ using BLL.Interfaces;
 using BLL.ModelsDTO;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -51,8 +52,20 @@ namespace ApplicationUI.ViewModels
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            } 
+        }
+
+        private int _sideBarVisibility = 2;
+        public int SideBarVisibility
+        {
+            get { return _sideBarVisibility; }
+            set
+            {
+                _sideBarVisibility = value;
+                OnNotifyPropertyChanged("_sideBarVisibility");
             }
         }
+
         public Page CurrentPage
         {
             get { return _currentPage; }
@@ -116,6 +129,8 @@ namespace ApplicationUI.ViewModels
                 if (StaticUser.IsLoggedIn == true)
                 {
                     this.CurrentPage = _myProfilePage;
+                    this.SideBarVisibility = 0;
+                    OnNotifyPropertyChanged("SideBarVisibility");
                     OnNotifyPropertyChanged(nameof(StaticUser.IsLoggedIn));
                     OnNotifyPropertyChanged("CurrentPage");
                 }

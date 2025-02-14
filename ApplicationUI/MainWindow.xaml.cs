@@ -44,6 +44,18 @@ namespace ApplicationUI
             }
         }
 
-
+        private void CascadeLoginUI(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if((bool)e.NewValue == true)
+            {
+                Sidebar.Visibility = Visibility.Visible;
+                MainFrame.Margin = new Thickness(100, 0, 0, 0);
+            }
+            else
+            {
+                Sidebar.Visibility = Visibility.Collapsed;
+                MainFrame.Margin = new Thickness(0, 0, 0, 0);
+            }
+        }
     }
 }

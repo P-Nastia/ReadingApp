@@ -31,9 +31,9 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Frame x:Name="MainFrame" Margin="100,0,0,0" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden"></Frame>
+            <Frame x:Name="MainFrame" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding CurrentPage}" NavigationUIVisibility="Hidden"></Frame>
 
-            <Border Grid.Row="0" Grid.Column="0" CornerRadius="0" BorderThickness="0,0,10,0" BorderBrush="Gainsboro" Background="#FF443434" x:Name="Sidebar" Width="270" HorizontalAlignment="Left">
+            <Border Grid.Row="0" Grid.Column="0" CornerRadius="0" BorderThickness="0,0,10,0" BorderBrush="Gainsboro" Background="#FF443434" x:Name="Sidebar" Width="270" HorizontalAlignment="Left" Visibility="Collapsed">
                 <Border.Resources>
                     <!--//Анімація розширення-->
                     <Storyboard x:Key="ExpandSidebar" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" >
@@ -61,7 +61,7 @@
                     </StackPanel>
 
                     <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,6,0">
-                        <Button Command="{Binding ShowMyProfilePage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}" HorizontalAlignment="Right">
+                        <Button Command="{Binding ShowMyProfilePage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}" IsEnabledChanged="CascadeLoginUI" HorizontalAlignment="Right">
                             <Border Width="240" HorizontalAlignment="Right">
                                 <StackPanel Orientation="Horizontal" Width="230" FlowDirection="RightToLeft" HorizontalAlignment="Right">
                                     <Image Source="pack://application:,,,/Images/myProfile.png" Height="70" Width="70" Margin="0,0,20,0"></Image>
