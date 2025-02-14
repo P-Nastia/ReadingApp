@@ -46,19 +46,31 @@ namespace BLL.Services
         public IEnumerable<UserDTO> GetAll()
         {
             AppDBContext context = new AppDBContext();
-            return context.Users.AsQueryable().ProjectTo<UserDTO>(_mapper.ConfigurationProvider);
+            return context.Users.AsQueryable().AsNoTracking().ProjectTo<UserDTO>(_mapper.ConfigurationProvider);
         }
-        public UserDTO FindSimiliar(string nickname, string password, string email)
+        public UserDTO FindSimiliar(string nickname, string password, string email, bool login)
         {
             AppDBContext context = new AppDBContext();
             foreach(var u in context.Users.AsQueryable().AsNoTracking())
             {
-                if (BCrypt.Net.BCrypt.Verify(password, u.Password))
+                if (login)
                 {
-                    return _mapper.Map<UserDTO>(u);
+                    if (BCrypt.Net.BCrypt.Verify(password, u.Password) && u.Nickname == nickname)
+                    {
+                        return _mapper.Map<UserDTO>(u);
+                    }
+                }
+                if (!login)
+                {
+                    if (BCrypt.Net.BCrypt.Verify(password, u.Password))
+                    {
+                        return _mapper.Map<UserDTO>(u);
+                    }
                 }
             }
-            return context.Users.AsNoTracking().Where(u => u.Nickname == nickname || u.Email == email).ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefault();
+            if (login)
+                return null;
+            return context.Users.AsNoTracking().AsQueryable().Where(u => u.Nickname == nickname || u.Email == email).ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefault();
         }
         public ChapterDTO LoadParagraphs(ChapterDTO chapter)
         {
@@ -66,12 +78,12 @@ namespace BLL.Services
             if(chapter.Paragraphs == null)
             {
                 chapter.Paragraphs = new List<ParagraphDTO>();
-                chapter.Paragraphs = context.Paragraphs.AsQueryable().Where(x => x.ChapterId == chapter.Id).Skip(0).Take(15).ProjectTo<ParagraphDTO>(_mapper.ConfigurationProvider).ToList();
+                chapter.Paragraphs = context.Paragraphs.AsNoTracking().AsQueryable().Where(x => x.ChapterId == chapter.Id).Skip(0).Take(15).ProjectTo<ParagraphDTO>(_mapper.ConfigurationProvider).ToList();
                 return chapter;
             }
             else
             {
-                chapter.Paragraphs.AddRange(context.Paragraphs.AsQueryable().Where(x => x.ChapterId == chapter.Id).Skip(chapter.Paragraphs.Count).Take(10).ProjectTo<ParagraphDTO>(_mapper.ConfigurationProvider).ToList());
+                chapter.Paragraphs.AddRange(context.Paragraphs.AsNoTracking().AsQueryable().Where(x => x.ChapterId == chapter.Id).Skip(chapter.Paragraphs.Count).Take(10).ProjectTo<ParagraphDTO>(_mapper.ConfigurationProvider).ToList());
                 return chapter;
             }
         }
@@ -85,13 +97,13 @@ namespace BLL.Services
         public BookDTO GetBook(UserDTO entity, int id)
         {
             AppDBContext context = new AppDBContext();
-            return context.Books.AsQueryable().Where(x => x.Id == id).ProjectTo<BookDTO>(_mapper.ConfigurationProvider).FirstOrDefault();
+            return context.Books.AsNoTracking().AsQueryable().Where(x => x.Id == id).ProjectTo<BookDTO>(_mapper.ConfigurationProvider).FirstOrDefault();
         }
 
         public UserDTO GetById(int id)
         {
             AppDBContext context = new AppDBContext();
-            return context.Users.AsQueryable().Where(x => x.Id == id).ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefault();
+            return context.Users.AsNoTracking().AsQueryable().Where(x => x.Id == id).ProjectTo<UserDTO>(_mapper.ConfigurationProvider).FirstOrDefault();
         }
 
         public async Task Remove(UserDTO item)
