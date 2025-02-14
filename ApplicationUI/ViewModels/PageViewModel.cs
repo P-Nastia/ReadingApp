@@ -196,7 +196,6 @@ namespace ApplicationUI.ViewModels
                     _myLibraryPageVM.UserBooks = null;
                     _myLibraryPageVM.OnNotifyPropertyChanged(nameof(_myLibraryPageVM.UserBooks));
                     CurrentPage = _loginPage;
-                    //OnNotifyPropertyChanged(nameof(IsLoggedIn));
                     RunWhileLoggin();
                 });
             }
@@ -206,10 +205,12 @@ namespace ApplicationUI.ViewModels
         {
             get
             {
-                return new BaseCommand(obj =>
+                return new BaseCommand(async obj =>
                 {
-                    SoundPlayer.PlayButtonSound();
+                    await SoundPlayer.PlayButtonSoundAsync();
                     _searchUserPageVM.Visibility = System.Windows.Visibility.Hidden;
+                    _searchUserPageVM.SearchString = string.Empty;
+                    _searchUserPageVM.User = new UserDTO();
                     CurrentPage = _searchUserPage;
                 });
             }

@@ -26,8 +26,6 @@ namespace ApplicationUI.Pages
         public SearchUserPage(SearchUserPageVM searchUserPageVM)
         {
             InitializeComponent();
-            string CD = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\Images\\";
-            SearchImage.Source = new BitmapImage(new Uri($"{CD}searchButton.png", UriKind.Absolute));
             _searchUserPageVM = searchUserPageVM;
             this.DataContext = _searchUserPageVM;
         }

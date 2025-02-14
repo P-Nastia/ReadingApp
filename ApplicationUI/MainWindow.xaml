@@ -89,7 +89,7 @@
                     <Button Command="{Binding ShowSearchUserPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
                         <Border >
                             <StackPanel Orientation="Horizontal" Width="230">
-                                <Image x:Name="SearchUserImage" Height="60" Width="70"></Image>
+                                <Image Source="pack://application:,,,/Images/SearchUser.png" Height="60" Width="70"></Image>
                                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Users</TextBlock>
                             </StackPanel>
                         </Border>

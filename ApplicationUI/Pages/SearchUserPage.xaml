@@ -13,19 +13,31 @@
             <RowDefinition Height="0.2*"></RowDefinition>
             <RowDefinition Height="0.2*"></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition Height="0.2*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition Width="0.13*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <TextBox Grid.Column="0" Margin="20" Background="Transparent" FontSize="35" Padding="5" VerticalAlignment="Center" FontWeight="Bold" FontFamily="Cooper Black">g</TextBox>
-        <Button Command="{Binding SearchUserCommand}" Margin="20" Background="Transparent" Grid.Row="0" Grid.Column="1">
-            <Image x:Name="SearchImage"></Image>
+        <TextBox Grid.Column="0" Margin="20" Background="Transparent" FontSize="35" Text="{Binding SearchString}" Padding="5" VerticalAlignment="Center" FontWeight="Bold" FontFamily="Cooper Black"></TextBox>
+        <Button Cursor="Hand" Command="{Binding SearchUserCommand}" Margin="20" Background="Transparent" Grid.Row="0" Grid.Column="1">
+            <Image Height="60" Width="60" Source="pack://application:,,,/Images/SearchUser.png" Cursor="Hand"></Image>
         </Button>
         <StackPanel Margin="20,10" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Visibility="{Binding Visibility}">
-            <Image Width="80" Height="80" Margin="80,0" Source="{Binding User.CoverURL}"></Image>
-            <TextBlock Margin="30,0" Text="{Binding User.Nickname}" FontFamily="Cooper Black" FontWeight="Bold" FontSize="30"></TextBlock>
+            <Image Width="80" Height="80" Margin="350,0,10,0" Source="{Binding Icon}"></Image>
+            <TextBlock VerticalAlignment="Center" Text="{Binding User.Nickname}" FontFamily="Cooper Black" FontWeight="Bold" FontSize="30"></TextBlock>
         </StackPanel>
-        
+        <ListBox Grid.Row="2" Grid.Column="0" Background="Transparent" ItemsSource="{Binding User.Books}" Name="booksLB" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectedItem="{Binding SelectedBook}" Height="400" Margin="40,20">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Image Height="130" Width="130" Source="{Binding CoverURL}"></Image>
+                        <TextBlock Text="{Binding Name}" FontSize="18" FontWeight="Bold"></TextBlock>
+                        <TextBlock Text="{Binding Author}" FontSize="14"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Grid.Row="3" Background="Transparent" Margin="250,0,250,15" Command="{Binding DownloadCommand}" FontSize="30" FontWeight="Bold" FontFamily="Cooper Black">Download book</Button>
     </Grid>
 </Page>
