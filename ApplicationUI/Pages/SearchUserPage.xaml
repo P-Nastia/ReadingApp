@@ -21,10 +21,10 @@
         </Grid.ColumnDefinitions>
         <TextBox Grid.Column="0" Margin="20" Background="Transparent" FontSize="35" Text="{Binding SearchString}" Padding="5" VerticalAlignment="Center" FontWeight="Bold" FontFamily="Cooper Black"></TextBox>
         <Button Cursor="Hand" Command="{Binding SearchUserCommand}" Margin="20" Background="Transparent" Grid.Row="0" Grid.Column="1">
-            <Image Height="60" Width="60" Source="pack://application:,,,/Images/SearchUser.png" Cursor="Hand"></Image>
+            <Image Height="65" Width="50" Stretch="Uniform" Source="pack://application:,,,/Images/SearchUser.png" Cursor="Hand"></Image>
         </Button>
         <StackPanel Margin="20,10" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Visibility="{Binding Visibility}">
-            <Image Width="80" Height="80" Margin="350,0,10,0" Source="{Binding Icon}"></Image>
+            <Image Stretch="UniformToFill" Width="80" Height="80" Margin="350,0,20,0" Source="{Binding Icon}"></Image>
             <TextBlock VerticalAlignment="Center" Text="{Binding User.Nickname}" FontFamily="Cooper Black" FontWeight="Bold" FontSize="30"></TextBlock>
         </StackPanel>
         <ListBox Grid.Row="2" Grid.Column="0" Background="Transparent" ItemsSource="{Binding User.Books}" Name="booksLB" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectedItem="{Binding SelectedBook}" Height="400" Margin="40,20">

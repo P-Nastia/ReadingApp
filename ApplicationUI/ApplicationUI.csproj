@@ -20,8 +20,10 @@
     <None Remove="Images\myLibrary.jpg" />
     <None Remove="Images\myProfile.png" />
     <None Remove="Images\NotificationBell.png" />
+    <None Remove="Images\readingMode.png" />
     <None Remove="Images\Return.jpg" />
     <None Remove="Images\searchButton.png" />
+    <None Remove="Images\SearchUser.png" />
     <None Remove="Images\signUp.png" />
     <None Remove="Images\Verification.png" />
   </ItemGroup>
@@ -57,8 +59,10 @@
     <Resource Include="Images\myLibrary.jpg" />
     <Resource Include="Images\myProfile.png" />
     <Resource Include="Images\NotificationBell.png" />
+    <Resource Include="Images\readingMode.png" />
     <Resource Include="Images\Return.jpg" />
     <Resource Include="Images\searchButton.png" />
+    <Resource Include="Images\SearchUser.png" />
     <Resource Include="Images\signUp.png" />
     <Resource Include="Images\Verification.png" />
   </ItemGroup>

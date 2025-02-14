@@ -210,6 +210,7 @@ namespace ApplicationUI.ViewModels
                     await SoundPlayer.PlayButtonSoundAsync();
                     _searchUserPageVM.Visibility = System.Windows.Visibility.Hidden;
                     _searchUserPageVM.SearchString = string.Empty;
+                    _searchUserPageVM.OnNotifyPropertyChanged(nameof(_searchUserPageVM.SearchString));
                     _searchUserPageVM.User = new UserDTO();
                     CurrentPage = _searchUserPage;
                 });
