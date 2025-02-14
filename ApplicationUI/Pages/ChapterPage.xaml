@@ -8,7 +8,18 @@
       d:DesignHeight="800" d:DesignWidth="1000"
       Title="ChapterPage" PreviewMouseWheel="Page_PreviewMouseWheel">
     <Grid>
-        <ListBox Grid.Column="0" Padding="5" x:Name="paragraphsLB" FontSize="14" ScrollViewer.VerticalScrollBarVisibility="Visible"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.06*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="0.05*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button Margin="5" Command="{Binding ChangeBackgroundCommand}" Grid.Row="0" Grid.Column="1" Background="Transparent" Cursor="Hand">
+            <Image Source="pack://application:,,,/Images/readingMode.png"></Image>
+        </Button>
+        <ListBox Background="{Binding ChapterBackground}" Grid.Row="1" Grid.ColumnSpan="2" Padding="5" x:Name="paragraphsLB" FontSize="14" ScrollViewer.VerticalScrollBarVisibility="Visible"
                  ItemsSource="{Binding Chapter.Paragraphs}" >
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
@@ -34,7 +45,7 @@
                             <Border.Background>
                                 <ImageBrush ImageSource="pack://application:,,,/Images/CommentBox.png"></ImageBrush>
                             </Border.Background>
-                            <TextBlock Text="{Binding UserComments.Count}" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"></TextBlock>
+                            <TextBlock Cursor="Hand" Text="{Binding UserComments.Count}" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"></TextBlock>
                         </Border>
                     </Grid>
                 </DataTemplate>

@@ -20,6 +20,7 @@ namespace ApplicationUI.ViewModels
         private MyLibraryPage _myLibraryPage;
         private MyProfilePage _myProfilePage;
         private NotificationPage _notificationPage;
+        private SearchUserPage _searchUserPage;
 
         private AllBooksPageVM _allBooksPageVM;
         private LoginPageVM _loginPageVM;
@@ -27,12 +28,12 @@ namespace ApplicationUI.ViewModels
         private MyLibraryPageVM _myLibraryPageVM;
         private MyProfilePageVM _myProfilePageVM;
         private NotificationPageVM _notificationPageVM;
+        private SearchUserPageVM _searchUserPageVM;
 
         private Page _currentPage;
         public IUserService<BookDTO, UserDTO, NotificationDTO> userService;
         public IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService;
 
-        private readonly bool _isLoggedIn;
         public bool IsLoggedIn
         {
             get { return StaticUser.IsLoggedIn; }
@@ -42,7 +43,7 @@ namespace ApplicationUI.ViewModels
                 {
                     StaticUser.IsLoggedIn = value;
                     _currentPage = _myLibraryPage;
-                    OnNotifyPropertyChanged(nameof(StaticUser.IsLoggedIn));
+                    OnNotifyPropertyChanged(nameof(IsLoggedIn));
                 }
             }
         }
@@ -63,7 +64,7 @@ namespace ApplicationUI.ViewModels
             }
         }
 
-        public PageViewModel(MainWindow mainWindow, IUserService<BookDTO, UserDTO, NotificationDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService,LoginPageVM loginPageVM,SignupPageVM signupPageVM,MyLibraryPageVM myLibraryPageVM,AllBooksPageVM allBooksPageVM,MyProfilePageVM myProfilePageVM, NotificationPageVM notificationPageVM)
+        public PageViewModel(MainWindow mainWindow, IUserService<BookDTO, UserDTO, NotificationDTO> userService, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService,LoginPageVM loginPageVM,SignupPageVM signupPageVM,MyLibraryPageVM myLibraryPageVM,AllBooksPageVM allBooksPageVM,MyProfilePageVM myProfilePageVM, NotificationPageVM notificationPageVM,SearchUserPageVM searchUserPageVM)
         {
             this.userService = userService;
             this.bookService = bookService;
@@ -74,13 +75,15 @@ namespace ApplicationUI.ViewModels
             this._allBooksPageVM = allBooksPageVM;
             this._myProfilePageVM = myProfilePageVM;
             this._notificationPageVM = notificationPageVM;
+            this._searchUserPageVM = searchUserPageVM;
 
-            this._loginPage = new LoginPage(loginPageVM);
-            this._signUpPage = new SignupPage(signupPageVM);
-            this._myLibraryPage = new MyLibraryPage(myLibraryPageVM);
-            this._allBooksPage = new AllBooksPage(allBooksPageVM);
-            this._myProfilePage = new MyProfilePage(myProfilePageVM);
-            this._notificationPage = new NotificationPage(notificationPageVM);
+            this._loginPage = new LoginPage(_loginPageVM);
+            this._signUpPage = new SignupPage(_signUpPageVM);
+            this._myLibraryPage = new MyLibraryPage(_myLibraryPageVM);
+            this._allBooksPage = new AllBooksPage(_allBooksPageVM);
+            this._myProfilePage = new MyProfilePage(_myProfilePageVM);
+            this._notificationPage = new NotificationPage(_notificationPageVM);
+            this._searchUserPage = new SearchUserPage(_searchUserPageVM);
             this.CurrentPage = _loginPage;
             RunWhileLoggin();
         }
@@ -104,20 +107,17 @@ namespace ApplicationUI.ViewModels
                     else if (StaticUser.UserNeedsToSignUp == true)
                     {
                         this.CurrentPage = _signUpPage;
-                        OnNotifyPropertyChanged("CurrentPage");
                     }
                     else if (StaticUser.UserNeedsToSignUp == false)
                     {
                         this.CurrentPage = _loginPage;
-                        OnNotifyPropertyChanged("CurrentPage");
                     }
 
                 }
                 if (StaticUser.IsLoggedIn == true)
                 {
                     this.CurrentPage = _myProfilePage;
-                    OnNotifyPropertyChanged(nameof(StaticUser.IsLoggedIn));
-                    OnNotifyPropertyChanged("CurrentPage");
+                    OnNotifyPropertyChanged(nameof(IsLoggedIn));
                 }
             });
         }
@@ -196,8 +196,23 @@ namespace ApplicationUI.ViewModels
                     _myLibraryPageVM.UserBooks = null;
                     _myLibraryPageVM.OnNotifyPropertyChanged(nameof(_myLibraryPageVM.UserBooks));
                     CurrentPage = _loginPage;
-                    OnNotifyPropertyChanged(nameof(IsLoggedIn));
                     RunWhileLoggin();
+                });
+            }
+        }
+
+        public ICommand ShowSearchUserPage
+        {
+            get
+            {
+                return new BaseCommand(async obj =>
+                {
+                    await SoundPlayer.PlayButtonSoundAsync();
+                    _searchUserPageVM.Visibility = System.Windows.Visibility.Hidden;
+                    _searchUserPageVM.SearchString = string.Empty;
+                    _searchUserPageVM.OnNotifyPropertyChanged(nameof(_searchUserPageVM.SearchString));
+                    _searchUserPageVM.User = new UserDTO();
+                    CurrentPage = _searchUserPage;
                 });
             }
         }

@@ -1,4 +1,5 @@
-﻿using ApplicationUI.Windows;
+﻿using ApplicationUI.Commands;
+using ApplicationUI.Windows;
 using BLL.Interfaces;
 using BLL.ModelsDTO;
 using System.ComponentModel;
@@ -23,6 +24,19 @@ namespace ApplicationUI.Pages
 
         private IBookService<BookDTO, ParagraphDTO, UserCommentDTO> _bookService;
         private IUserService<BookDTO, UserDTO, NotificationDTO> _userService;
+        private Brush _background;
+        public Brush ChapterBackground
+        {
+            get => _background;
+            set
+            {
+                if(_background!= value)
+                {
+                    _background = value;
+                    OnNotifyPropertyChanged(nameof(ChapterBackground));
+                }
+            }
+        }
         public ChapterPage(ChapterDTO chapter, IBookService<BookDTO, ParagraphDTO, UserCommentDTO> bookService, IUserService<BookDTO, UserDTO, NotificationDTO> userService)
         {
             InitializeComponent();
@@ -33,6 +47,7 @@ namespace ApplicationUI.Pages
             this.DataContext = this;
             Chapter = _userService.LoadParagraphs(Chapter);
             OnNotifyPropertyChanged(nameof(Chapter));
+            ChapterBackground = Brushes.WhiteSmoke;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -43,6 +58,7 @@ namespace ApplicationUI.Pages
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+        public BaseCommand ChangeBackgroundCommand => new BaseCommand(obj => ChangeBackground(), canExecute => true);
         private async void textRB_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Dispatcher.Invoke(() =>
@@ -50,7 +66,10 @@ namespace ApplicationUI.Pages
                 var clickedItem = (ParagraphDTO)paragraphsLB.SelectedItem;
                 CommentsWindow commentsWindow = new CommentsWindow(clickedItem, _bookService, _userService);
                 commentsWindow.ShowDialog();
+                
             });
+            Chapter.Paragraphs = _userService.LoadParagraphs(Chapter).Paragraphs;
+            OnNotifyPropertyChanged(nameof(Chapter.Paragraphs));
         }
 
         // Загрузка нових абзаців, якщо scroll досяг низу
@@ -124,6 +143,13 @@ namespace ApplicationUI.Pages
                     (GridItem as Border).Visibility = Visibility.Hidden;
                 }
             }
+        }
+        private void ChangeBackground()
+        {
+            if (ChapterBackground == Brushes.WhiteSmoke)
+                ChapterBackground = Brushes.Moccasin;
+            else
+                ChapterBackground = Brushes.WhiteSmoke;
         }
     }
 }

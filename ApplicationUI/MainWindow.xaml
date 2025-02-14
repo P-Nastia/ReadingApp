@@ -85,6 +85,15 @@
                             </StackPanel>
                         </Border>
                     </Button>
+
+                    <Button Command="{Binding ShowSearchUserPage}" BorderThickness="0" IsEnabled="{Binding IsLoggedIn}">
+                        <Border >
+                            <StackPanel Orientation="Horizontal" Width="230">
+                                <Image Source="pack://application:,,,/Images/SearchUser.png" Height="60" Width="70"></Image>
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Users</TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </Button>
                 </StackPanel>
 
                 <Button Grid.Row="1" Command="{Binding ShowLogOutPage}" Margin="0,0,15,0" BorderThickness="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" IsEnabled="{Binding IsLoggedIn}">

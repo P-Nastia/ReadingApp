@@ -44,7 +44,7 @@ namespace BLL.Services
         public IEnumerable<BookDTO> GetAll()
         {
             AppDBContext appDBContext = new AppDBContext();
-            return appDBContext.Books.ProjectTo<BookDTO>(_mapper.ConfigurationProvider);
+            return appDBContext.Books.AsQueryable().ProjectTo<BookDTO>(_mapper.ConfigurationProvider);
         }
 
         public ParagraphDTO GetParagraph(int id)

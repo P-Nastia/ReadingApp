@@ -28,18 +28,15 @@ namespace ApplicationUI.ViewModels
         {
             if (IsInputCorrect())
             {
-                var user = _userService.FindSimiliar(Nickname, Password,"");
+                var user = _userService.FindSimiliar(Nickname, Password, "", true);
                 if (user != null)
                 {
-                    if (user.Nickname == Nickname && BCrypt.Net.BCrypt.Verify(Password, user.Password))
-                    {
-                        StaticUser.User = user;
-                        StaticUser.IsLoggedIn = true;
-                        Nickname = string.Empty;
-                        Password = string.Empty;
-                        OnNotifyPropertyChanged("Nickname");
-                        OnNotifyPropertyChanged("Password");
-                    }
+                    StaticUser.User = user;
+                    StaticUser.IsLoggedIn = true;
+                    Nickname = string.Empty;
+                    Password = string.Empty;
+                    OnNotifyPropertyChanged("Nickname");
+                    OnNotifyPropertyChanged("Password");
                 }
                 if(StaticUser.IsLoggedIn == false)
                 {
