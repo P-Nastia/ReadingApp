@@ -9,11 +9,11 @@
       Title="LoginPage">
     <Page.Resources>
         <Style TargetType="TextBlock">
-            <Setter Property="FontSize" Value="40"></Setter>
-            <Setter Property="Padding" Value="20"></Setter>
+            <Setter Property="FontSize" Value="30"></Setter>
+            <Setter Property="Padding" Value="0"></Setter>
             <Setter Property="Foreground" Value="WhiteSmoke"></Setter>
             <Setter Property="FontFamily" Value="Cooper Black"></Setter>
-            <Setter Property="TextAlignment" Value="Right"></Setter>
+            <Setter Property="TextAlignment" Value="Center"></Setter>
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
         </Style>
         <Style TargetType="TextBox">
@@ -39,24 +39,35 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height="2.*"></RowDefinition>
+            <RowDefinition Height="0.5*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.6*"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="1" Grid.Column="0">Nickname:</TextBlock>
-        <TextBox Text="{Binding Path=Nickname}" x:Name="NickName_TextInput" Grid.Row="1" Grid.Column="1">
-            <TextBox.ToolTip>
-                <ToolTip x:Name="NicknameLoginToolTip" Content="Nickame is empty" IsOpen="False" Placement="Bottom" FontSize="12" HorizontalOffset="840" VerticalOffset="348"/>
-            </TextBox.ToolTip>
-        </TextBox>
-        <TextBlock Grid.Row="2" Grid.Column="0">Password:</TextBlock>
-        <PasswordBox x:Name="passwordPB" TextInput="PasswordBox_TextInput"  Grid.Row="2" Grid.Column="1">
-            <PasswordBox.ToolTip>
-                <ToolTip x:Name="PasswordLoginToolTip" Content="Password is empty" IsOpen="False" Placement="Bottom" FontSize="12" HorizontalOffset="840" VerticalOffset="448"/>
-            </PasswordBox.ToolTip>
-        </PasswordBox>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" FlowDirection="RightToLeft" HorizontalAlignment="Center">
+            <Image Source="pack://application:,,,/Images/Logotype-WithoutPhone.png" Height="150" Width="150" Margin="0,0,20,0"></Image>
+            <TextBlock VerticalAlignment="Center" Foreground="Gainsboro" FontWeight="Bold" FontSize="50" FontFamily="Segoe Print">EBookly</TextBlock>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+            <TextBox Text="{Binding Path=Nickname}" x:Name="NickName_TextInput" Width="400">
+                <TextBox.ToolTip>
+                    <ToolTip x:Name="NicknameLoginToolTip" Content="Nickame is empty" IsOpen="False" Placement="Bottom" FontSize="12" HorizontalOffset="858" VerticalOffset="400"/>
+                </TextBox.ToolTip>
+            </TextBox>
+            <TextBlock>Nickname</TextBlock>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+            <PasswordBox x:Name="passwordPB" TextInput="PasswordBox_TextInput"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="400" HorizontalContentAlignment="Center">
+                <PasswordBox.ToolTip>
+                    <ToolTip x:Name="PasswordLoginToolTip" Content="Password is empty" IsOpen="False" Placement="Bottom" FontSize="12" HorizontalOffset="858" VerticalOffset="530"/>
+                </PasswordBox.ToolTip>
+            </PasswordBox>
+            <TextBlock>Password</TextBlock>
+        </StackPanel>
         <Image Grid.Row="3" Grid.Column="0" Width="250" Height="200" VerticalAlignment="Center" Cursor="Hand" Source="pack://application:,,,/Images/login.png"  MouseLeftButtonUp="logInClick"></Image>
         <Image Grid.Row="3" Grid.Column="1" Width="500" Height="200" VerticalAlignment="Center" Cursor="Hand" Source="pack://application:,,,/Images/signUp.png" MouseLeftButtonUp="signUpClick"></Image>
     </Grid>

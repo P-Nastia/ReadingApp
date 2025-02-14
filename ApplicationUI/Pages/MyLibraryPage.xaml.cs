@@ -5,6 +5,7 @@ using ApplicationUI.Windows;
 using BLL.ModelsDTO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace ApplicationUI.Pages
 {
@@ -38,6 +39,8 @@ namespace ApplicationUI.Pages
 
         private void StackPanelRemove_Click(object sender, RoutedEventArgs e)
         {
+
+            if (sender is StackPanel panel && panel.Tag is BookDTO selectedBook)
             MenuItem MI = (MenuItem)sender;
             if ((MI.Parent as ContextMenu).Parent is StackPanel panel && panel.Tag is BookDTO selectedBook)
             {

@@ -5,16 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApplicationUI.Windows"
         mc:Ignorable="d"
-        Title="Verification Window" Height="470" Width="480"  WindowStartupLocation="CenterScreen">
-    <Viewbox>
-        <Border Style="{StaticResource BorderStyle}">
-            <StackPanel Margin="10">
-                <TextBlock Text="Verification" Style="{StaticResource MainTextBlock}"/>
-                <TextBlock Style="{StaticResource DefaultTextBlock}">Enter your code:</TextBlock>
-                <TextBox x:Name="codeTB" BorderBrush="#DDDDDD" BorderThickness="5" FontSize="14" Padding="10" />
+        Title="Verification Window" Height="470" Width="480" WindowStartupLocation="CenterScreen" WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="Transparent">
+    <Window.Resources>
+        <Style x:Key="btn" TargetType="Button">
+            <Setter Property="FontSize" Value="25"></Setter>
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="FontFamily" Value="Cooper Black"></Setter>
+            <Setter Property="Margin" Value="10, 20, 10, 20"></Setter>
+            <Setter Property="Padding" Value="50, 0, 50, 0"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
 
-                <Button Style="{StaticResource ButtonStyle}" Click="Confirm_Click">Confirm</Button>
-            </StackPanel>
+        </Style>
+    </Window.Resources>
+    <Viewbox>
+        <Border Style="{StaticResource BorderStyle}" Background="#FF3C2F2F" Padding="10" Grid.Column="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="10, 10, -10, 10" Grid.Column="0">
+                    <TextBlock Text="Verification" Style="{StaticResource MainTextBlock}"/>
+                    <TextBlock Style="{StaticResource DefaultTextBlock}">Enter your code:</TextBlock>
+                    <TextBox x:Name="codeTB" BorderBrush="#DDDDDD" BorderThickness="5" FontSize="14" Padding="10" />
+
+                    <Button Style="{StaticResource btn}" Click="Confirm_Click">Confirm</Button>
+                </StackPanel>
+                <Viewbox Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center">
+                    <Button Width="20" Height="20" FontSize="10" Click="Close_Click">X</Button>
+                </Viewbox>
+            </Grid>
         </Border>
     </Viewbox>
 </Window>
