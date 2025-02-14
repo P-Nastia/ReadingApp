@@ -15,7 +15,6 @@ namespace ApplicationUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const double SidebarTriggerX = 100;
       
         public const int SideBarOpenWidth = 270;
         public const int SideBarClosedWidth = 100;

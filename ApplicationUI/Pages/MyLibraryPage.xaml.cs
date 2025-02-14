@@ -5,6 +5,8 @@ using ApplicationUI.Windows;
 using BLL.ModelsDTO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace ApplicationUI.Pages
@@ -28,21 +30,39 @@ namespace ApplicationUI.Pages
             readBookWindow.ShowDialog();
         }
 
-        private void StackPanelRead_Click(object sender, RoutedEventArgs e)
+        private void StackPanel_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            MenuItem MI = (MenuItem)sender;
-            if ((MI.Parent as ContextMenu).Parent is StackPanel panel && panel.Tag is BookDTO selectedBook)
+
+            if (sender is StackPanel panel && panel.Tag is BookDTO selectedBook)
             {
                 _myLibraryPageVM.SelectedBook = selectedBook;
             }
         }
 
-        private void StackPanelRemove_Click(object sender, RoutedEventArgs e)
+        private async void StackPanelRead_Click(object sender, RoutedEventArgs e)
         {
             MenuItem MI = (MenuItem)sender;
-            if ((MI.Parent as ContextMenu).Parent is StackPanel panel && panel.Tag is BookDTO selectedBook)
+
+            object SP = ((ContextMenu)MI.Parent).PlacementTarget;
+
+            if (SP is StackPanel panel && panel.Tag is BookDTO selectedBook)
             {
-                _myLibraryPageVM.SelectedBook = selectedBook;
+                await SoundPlayer.PlayButtonSoundAsync();
+                ReadBookWindow readBookWindow = new ReadBookWindow(selectedBook, _myLibraryPageVM._bookService, _myLibraryPageVM._userService);
+                readBookWindow.ShowDialog();
+            }
+        }
+
+        private async void StackPanelRemove_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem MI = (MenuItem)sender;
+
+            object SP = ((ContextMenu)MI.Parent).PlacementTarget;
+
+            if (SP is StackPanel panel && panel.Tag is BookDTO selectedBook)
+            {
+                await _myLibraryPageVM._userService.RemoveBook(StaticUser.User, selectedBook);
+                _myLibraryPageVM.ShowReadBookPage();
             }
         }
     }
