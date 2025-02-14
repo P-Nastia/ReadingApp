@@ -34,6 +34,12 @@
                     <DataTemplate>
                         <Border BorderBrush="Black" BorderThickness="1" Margin="10" CornerRadius="10">
                             <StackPanel Width="300"  Tag="{Binding}" MouseDown="StackPanel_MouseDown" Height="300"  HorizontalAlignment="Center">
+                                <StackPanel.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Read" Click="StackPanelRead_Click"></MenuItem>
+                                        <MenuItem Header="Remove" Click="StackPanelRemove_Click"></MenuItem>
+                                    </ContextMenu>
+                                </StackPanel.ContextMenu>
                                 <StackPanel.Style>
                                     <Style TargetType="StackPanel">
                                         <Setter Property="Opacity" Value="1"/>

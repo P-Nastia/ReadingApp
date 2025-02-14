@@ -49,5 +49,19 @@ namespace ApplicationUI.Windows
                 });
             }
         }
+
+        private void HideChapterList_Click(object sender, RoutedEventArgs e)
+        {
+            if (ChapterColumn.Width.Value != 0.0)
+            {
+                ChapterColumn.Width = new GridLength(0.0, GridUnitType.Star);
+                (sender as Button).Content = ">";
+            }
+            else
+            {
+                ChapterColumn.Width = new GridLength(0.2, GridUnitType.Star);
+                (sender as Button).Content = "<";
+            }
+        }
     }
 }

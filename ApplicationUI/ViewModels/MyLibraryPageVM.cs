@@ -43,7 +43,7 @@ namespace ApplicationUI.ViewModels
             _bookService = bookService;
             UserBooks = new List<BookDTO>();
         }
-        private async void ShowReadBookPage()
+        public async void ShowReadBookPage()
         {
             await Task.Run(() =>
             {

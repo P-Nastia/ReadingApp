@@ -17,13 +17,15 @@
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.22*"></ColumnDefinition>
+            <ColumnDefinition Width="0.2*" x:Name="ChapterColumn"></ColumnDefinition>
+            <ColumnDefinition Width="0.02*"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <ListBox Background="#FF443434" Grid.Column="0" Padding="5" x:Name="chaptersLB" FontSize="14" ScrollViewer.VerticalScrollBarVisibility="Visible"
          ItemsSource="{Binding Book.Chapters}" DisplayMemberPath="Name" SelectionChanged="chaptersLB_SelectionChanged">
         </ListBox>
-        <Frame x:Name="chapterFrame" Grid.Column="1" Margin="5">
+        <Button Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Content="&lt;" FontWeight="Bold" Padding="5" BorderThickness="0,1,1,1" FontSize="15" Click="HideChapterList_Click"></Button>
+        <Frame x:Name="chapterFrame" Grid.Column="2" Margin="5">
         </Frame>
     </Grid>
 </Window>
