@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApplicationUI.Windows"
         mc:Ignorable="d"
-        Title="Comments" MinHeight="450" MinWidth="450"  MaxHeight="450" MaxWidth="450" WindowStartupLocation="CenterScreen">
+        Title="EBookly - Comments" MinHeight="450" MinWidth="450"  MaxHeight="450" MaxWidth="450" WindowStartupLocation="CenterScreen" Icon="pack://application:,,,/Images/Logotype-WithoutPhone.png">
 
     <Grid>
         <Grid.RowDefinitions>

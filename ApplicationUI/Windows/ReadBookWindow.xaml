@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApplicationUI.Windows"
         mc:Ignorable="d"
-        Title="Read Book"  MinHeight="800" MinWidth="1300"  MaxHeight="800" MaxWidth="1300" WindowStartupLocation="CenterScreen">
+        Title="Ebookly - Read Book"  MinHeight="800" MinWidth="1300"  MaxHeight="800" MaxWidth="1300" WindowStartupLocation="CenterScreen" Icon="pack://application:,,,/Images/Logotype-WithoutPhone.png">
     <Window.Resources>
         <Style TargetType="ListBoxItem">
             <Setter Property="FontSize" Value="18"></Setter>

@@ -50,7 +50,6 @@ namespace ApplicationUI.Pages
                 var clickedItem = (ParagraphDTO)paragraphsLB.SelectedItem;
                 CommentsWindow commentsWindow = new CommentsWindow(clickedItem, _bookService, _userService);
                 commentsWindow.ShowDialog();
-                Chapter = _userService.LoadParagraphs(Chapter); // Updating Comment count.
             });
         }
 
