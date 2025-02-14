@@ -1,4 +1,5 @@
-﻿using ApplicationUI.ViewModels;
+﻿using ApplicationUI.TempModels;
+using ApplicationUI.ViewModels;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -24,5 +25,16 @@ namespace ApplicationUI.Pages
         {
             _allBooksPageVM.Download(_allBooksPageVM.SelectedBook);
         }
+
+        private void StackPanel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is StackPanel panel && panel.Tag is LibraryBook selectedBook)
+            {
+                _allBooksPageVM.SelectedBook = selectedBook;
+            }
+
+        }
+
+
     }
 }

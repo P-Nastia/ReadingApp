@@ -36,22 +36,44 @@
         </Grid.ColumnDefinitions>
         <TextBox Grid.Column="0" Grid.Row="0" Margin="20" FontSize="30" VerticalAlignment="Center" Text="{Binding SearchString}"></TextBox>
         <Button Grid.Column="1" Grid.Row="0" Background="Transparent" IsEnabled="True" Command="{Binding SearchCommand}">
-            <Image Source="pack://application:,,,/Images/searchButton.png" Cursor="Hand"></Image>
+            <Image Source="pack://application:,,,/Images/searchButton.png" Width="65"  Cursor="Hand"></Image>
         </Button>
         <Button Grid.Column="1" Grid.Row="1" Background="Transparent" IsEnabled="True" Command="{Binding DownloadCommand}">
             <Image Source="pack://application:,,,/Images/downloadImage.png" Cursor="Hand" Height="50" Width="50"></Image>
         </Button>
         
-        <ListBox Margin="20" Grid.Row="2" Grid.Column="0" Background="Transparent" ItemsSource="{Binding AvailableBooks}" MouseLeftButtonUp="booksLB_MouseLeftButtonUp" Name="booksLB" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectedItem="{Binding SelectedBook}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Width="200" HorizontalAlignment="Center">
-                        <Image HorizontalAlignment="Center" Margin="10" Height="150" Width="150" Source="{Binding CoverURL}"></Image>
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding Name}" FontSize="18" FontWeight="Bold"></TextBlock>
-                        <TextBlock HorizontalAlignment="Center" Text="{Binding Author}" FontSize="14"></TextBlock>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+       
+        <ScrollViewer VerticalScrollBarVisibility="Visible"  HorizontalScrollBarVisibility="Disabled" Margin="100,60,0,0" Grid.RowSpan="2" Grid.Row="2" Grid.ColumnSpan="2">
+            <ItemsControl ItemsSource="{Binding AvailableBooks}"  Name="booksIC" MouseLeftButtonUp="booksLB_MouseLeftButtonUp">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Black" BorderThickness="1" Margin="10">
+                            <StackPanel Width="300"  Tag="{Binding}" MouseDown="StackPanel_MouseDown" Height="300"  HorizontalAlignment="Center">
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Setter Property="Opacity" Value="1"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="LightBlue"/>
+                                                <Setter Property="Opacity" Value="0.8"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+
+                                <Image HorizontalAlignment="Center" Height="220" Width="250" Margin="0,10,0,0" Source="{Binding CoverURL}"/>
+                                <TextBlock HorizontalAlignment="Center" Text="{Binding Name}"  TextWrapping="Wrap" FontSize="17" Foreground="Black" FontWeight="Bold"/>
+                                <TextBlock HorizontalAlignment="Center" Text="{Binding Author}" FontFamily="Malgun Gothic" TextWrapping="Wrap" FontSize="15"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </Page>
