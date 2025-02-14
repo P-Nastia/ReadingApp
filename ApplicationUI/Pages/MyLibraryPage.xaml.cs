@@ -27,9 +27,19 @@ namespace ApplicationUI.Pages
             readBookWindow.ShowDialog();
         }
 
-        private void StackPanel_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void StackPanelRead_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is StackPanel panel && panel.Tag is BookDTO selectedBook)
+            MenuItem MI = (MenuItem)sender;
+            if ((MI.Parent as ContextMenu).Parent is StackPanel panel && panel.Tag is BookDTO selectedBook)
+            {
+                _myLibraryPageVM.SelectedBook = selectedBook;
+            }
+        }
+
+        private void StackPanelRemove_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem MI = (MenuItem)sender;
+            if ((MI.Parent as ContextMenu).Parent is StackPanel panel && panel.Tag is BookDTO selectedBook)
             {
                 _myLibraryPageVM.SelectedBook = selectedBook;
             }
