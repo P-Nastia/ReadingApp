@@ -21,9 +21,9 @@ namespace ApplicationUI.Pages
             this.DataContext = _allBooksPageVM;
         }
 
-        private void booksLB_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private async void booksLB_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            _allBooksPageVM.Download(_allBooksPageVM.SelectedBook);
+            await _allBooksPageVM.Download(_allBooksPageVM.SelectedBook);
         }
 
         private void StackPanel_MouseDown(object sender, MouseButtonEventArgs e)

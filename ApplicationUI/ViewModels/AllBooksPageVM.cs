@@ -142,57 +142,65 @@ namespace ApplicationUI.ViewModels
         }
 
         EpubBook bookFile;
-        public async void Download(LibraryBook libraryBook)
+        public async Task Download(LibraryBook libraryBook)
         {
-            await SoundPlayer.PlayButtonSoundAsync();
-            if (libraryBook != null)
+            MessageBoxResult res = MessageBox.Show("Do you want to add this book?", "info", MessageBoxButton.YesNo,MessageBoxImage.Information);
+            if (res == MessageBoxResult.Yes)
             {
-                var bookFromDB = _bookService.GetByNameAndAuthor(libraryBook.Name, libraryBook.Author);
-                if (bookFromDB == null)
+                await SoundPlayer.PlayButtonSoundAsync();
+                if (libraryBook != null)
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
+                    var bookFromDB = _bookService.GetByNameAndAuthor(libraryBook.Name, libraryBook.Author);
+                    if (bookFromDB == null)
                     {
-                        var driverService = ChromeDriverService.CreateDefaultService();
-                        driverService.HideCommandPromptWindow = true;
-                        ChromeOptions options = new ChromeOptions();
-                        string downloadDirectory = Directory.GetCurrentDirectory() + $"\\Files";
-                        Directory.CreateDirectory(downloadDirectory);
-                        foreach (var f in Directory.GetFiles(downloadDirectory))
+                        Application.Current.Dispatcher.Invoke(() =>
                         {
-                            File.Delete(f);
-                        }
-                        options.AddArgument("--headless");
-                        options.AddUserProfilePreference("download.default_directory", downloadDirectory);
-                        options.AddUserProfilePreference("plugins.always_open_pdf_externally", true);
-                        options.AddUserProfilePreference("download.prompt_for_download", false);
-
-                        using (IWebDriver driver = new ChromeDriver(driverService, options))
-                        {
-                            try
+                            var driverService = ChromeDriverService.CreateDefaultService();
+                            driverService.HideCommandPromptWindow = true;
+                            ChromeOptions options = new ChromeOptions();
+                            string downloadDirectory = Directory.GetCurrentDirectory() + $"\\Files";
+                            Directory.CreateDirectory(downloadDirectory);
+                            foreach (var f in Directory.GetFiles(downloadDirectory))
                             {
-                                driver.Navigate().GoToUrl(libraryBook.BookPageLink);
-                                Thread.Sleep(5000);
-                                var elements = driver.FindElements(By.CssSelector(".lib_book_download_container a"));
-                                elements.Where(e => e.GetAttribute("innerText") == "epub").FirstOrDefault().Click();
-                                Thread.Sleep(3000);
-                                libraryBook.FilePath = $"{Directory.GetFiles(downloadDirectory)[0]}";
-                                Thread.Sleep(2000);
-
-                                ParseBook(libraryBook);
+                                File.Delete(f);
                             }
-                            catch (Exception ex) { MessageBox.Show("Unable to download file"); }
-                            driver.Quit();
-                        }
-                        AvailableBooks = new List<LibraryBook>();
-                        OnNotifyPropertyChanged(nameof(AvailableBooks));
+                            options.AddArgument("--headless");
+                            options.AddUserProfilePreference("download.default_directory", downloadDirectory);
+                            options.AddUserProfilePreference("plugins.always_open_pdf_externally", true);
+                            options.AddUserProfilePreference("download.prompt_for_download", false);
 
-                    });
-                }
-                else
-                {
-                    _userService.AddBook(StaticUser.User, bookFromDB);
-                    MessageBox.Show("Book added to library");
-                }
+                            using (IWebDriver driver = new ChromeDriver(driverService, options))
+                            {
+                                try
+                                {
+                                    driver.Navigate().GoToUrl(libraryBook.BookPageLink);
+                                    Thread.Sleep(5000);
+                                    var elements = driver.FindElements(By.CssSelector(".lib_book_download_container a"));
+                                    elements.Where(e => e.GetAttribute("innerText") == "epub").FirstOrDefault().Click();
+                                    Thread.Sleep(3000);
+                                    libraryBook.FilePath = $"{Directory.GetFiles(downloadDirectory)[0]}";
+                                    Thread.Sleep(2000);
+
+                                    ParseBook(libraryBook);
+                                }
+                                catch (Exception ex) { MessageBox.Show("Unable to download file"); }
+                                driver.Quit();
+                            }
+                            AvailableBooks = new List<LibraryBook>();
+                            OnNotifyPropertyChanged(nameof(AvailableBooks));
+
+                        });
+                    }
+                    else
+                    {
+                        _userService.AddBook(StaticUser.User, bookFromDB);
+                        MessageBox.Show("Book added to library");
+                    }
+                }           
+            }
+            else
+            {
+
             }
         }
         private void ParseBook(LibraryBook libraryBook)

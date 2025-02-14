@@ -1,5 +1,6 @@
 ﻿using ApplicationUI.Commands;
 using ApplicationUI.Statics;
+using ApplicationUI.TempModels;
 using BLL.Interfaces;
 using BLL.ModelsDTO;
 using System;
@@ -95,13 +96,21 @@ namespace ApplicationUI.ViewModels
                 Visibility = Visibility.Visible;
             }
         }
-        private async void Download()
+        public async Task Download()
         {
-            await Statics.SoundPlayer.PlayButtonSoundAsync();
-            if (SelectedBook != null)
+            MessageBoxResult res = MessageBox.Show("Do you want to add this book?","info",MessageBoxButton.YesNo,MessageBoxImage.Information);
+            if (res == MessageBoxResult.Yes)
             {
-                _userService.AddBook(StaticUser.User, _bookService.GetByNameAndAuthor(SelectedBook.Name, SelectedBook.Author));
-                MessageBox.Show("Book added to your library");
+                await Statics.SoundPlayer.PlayButtonSoundAsync();
+                if (SelectedBook != null)
+                {
+                    _userService.AddBook(StaticUser.User, _bookService.GetByNameAndAuthor(SelectedBook.Name, SelectedBook.Author));
+                    MessageBox.Show("Book added to your library");
+                }
+            }
+            else
+            {
+
             }
         }
     }

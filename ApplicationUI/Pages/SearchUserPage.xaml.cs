@@ -1,4 +1,6 @@
-﻿using ApplicationUI.ViewModels;
+﻿using ApplicationUI.TempModels;
+using ApplicationUI.ViewModels;
+using BLL.ModelsDTO;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,5 +31,19 @@ namespace ApplicationUI.Pages
             _searchUserPageVM = searchUserPageVM;
             this.DataContext = _searchUserPageVM;
         }
+
+        private async void StackPanel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is StackPanel panel && panel.Tag is BookDTO selectedBook)
+            {
+                _searchUserPageVM.SelectedBook = selectedBook;
+                await _searchUserPageVM.Download();
+
+            }
+
+        }
+
+    
+
     }
 }
