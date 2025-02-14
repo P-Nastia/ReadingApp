@@ -24,20 +24,45 @@
             <Image Height="65" Width="50" Stretch="Uniform" Source="pack://application:,,,/Images/SearchUser.png" Cursor="Hand"></Image>
         </Button>
         <StackPanel Margin="20,10" Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Visibility="{Binding Visibility}">
-            <Image Stretch="UniformToFill" Width="80" Height="80" Margin="350,0,20,0" Source="{Binding Icon}"></Image>
-            <TextBlock VerticalAlignment="Center" Text="{Binding User.Nickname}" FontFamily="Cooper Black" FontWeight="Bold" FontSize="30"></TextBlock>
+            <Image Stretch="UniformToFill" Width="80" Height="80" Margin="50,0,20,0" Source="{Binding Icon}"></Image>
+            <TextBlock VerticalAlignment="Center" Text="{Binding User.Nickname,StringFormat='@{0}  library'}" FontFamily="Cooper Black" FontWeight="Bold" FontSize="30"></TextBlock>
         </StackPanel>
-        <ListBox Grid.Row="2" Grid.Column="0" Background="Transparent" ItemsSource="{Binding User.Books}" Name="booksLB" ScrollViewer.VerticalScrollBarVisibility="Auto" SelectedItem="{Binding SelectedBook}" Height="400" Margin="40,20">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <Image Height="130" Width="130" Source="{Binding CoverURL}"></Image>
-                        <TextBlock Text="{Binding Name}" FontSize="18" FontWeight="Bold"></TextBlock>
-                        <TextBlock Text="{Binding Author}" FontSize="14"></TextBlock>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <Button Grid.Row="3" Background="Transparent" Margin="250,0,250,15" Command="{Binding DownloadCommand}" FontSize="30" FontWeight="Bold" FontFamily="Cooper Black">Download book</Button>
+        
+        
+
+        <ScrollViewer VerticalScrollBarVisibility="Visible"  HorizontalScrollBarVisibility="Disabled" Margin="100,60,0,0"  Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <ItemsControl ItemsSource="{Binding User.Books}" Name="UserBooks">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Black" BorderThickness="1" Margin="10" CornerRadius="10">
+                            <StackPanel Width="300"  Tag="{Binding}" MouseDown="StackPanel_MouseDown" Height="300"  HorizontalAlignment="Center">
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Setter Property="Opacity" Value="1"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="LightBlue"/>
+                                                <Setter Property="Opacity" Value="0.8"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+
+                                <Image HorizontalAlignment="Center" Height="220" Width="250" Margin="0,10,0,0" Source="{Binding CoverURL}"/>
+                                <TextBlock HorizontalAlignment="Center" Text="{Binding Name}"  TextWrapping="Wrap" FontSize="17" Foreground="Black" FontWeight="Bold"/>
+                                <TextBlock HorizontalAlignment="Center" Text="{Binding Author}" FontFamily="Malgun Gothic" TextWrapping="Wrap" FontSize="15"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+
     </Grid>
 </Page>
