@@ -82,9 +82,13 @@ namespace DAL.Repositories
         {
             AppDBContext tempDB = new AppDBContext();
             var userFromDB = await tempDB.Users.Include(n=>n.Notifications).Include(u => u.Books).ThenInclude(b => b.Chapters).ThenInclude(b => b.Paragraphs).ThenInclude(p => p.UserComments).FirstOrDefaultAsync(i => i.Id == user.Id);
+            
             if (userFromDB != null)
             {
-                userFromDB.Password = user.Password;
+                if (user.Password != "...")
+                {
+                    userFromDB.Password = user.Password;
+                }
                 userFromDB.Phone = user.Phone;
                 userFromDB.Email = user.Email;
                 userFromDB.Nickname = user.Nickname;

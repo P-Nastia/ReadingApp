@@ -68,8 +68,6 @@ namespace ApplicationUI.Pages
                 commentsWindow.ShowDialog();
                 
             });
-            Chapter.Paragraphs = _userService.LoadParagraphs(Chapter).Paragraphs;
-            OnNotifyPropertyChanged(nameof(Chapter.Paragraphs));
         }
 
         // Загрузка нових абзаців, якщо scroll досяг низу
