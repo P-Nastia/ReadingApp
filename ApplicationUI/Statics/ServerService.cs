@@ -7,7 +7,8 @@ namespace ApplicationUI.Statics;
 
 public class ServerService
 {
-    private const string BaseUrl = "https://kukumber.itstep.click";
+    //private const string BaseUrl = "https://kukumber.itstep.click";
+    private const string BaseUrl = "http://localhost:5281";
     public class ImageResult
     {
         public bool IsSuccess { get; set; }
