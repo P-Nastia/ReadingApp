@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2.FileServer", "2.FileServer\2.FileServer.csproj", "{8D498174-DDF0-412C-857A-8EC73EF10C97}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationUI", "ApplicationUI\ApplicationUI.csproj", "{4B18C7F2-B451-46E7-BCAD-2EB7CCB30664}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{3E8A9128-BFD2-4CB6-8577-FC91D793FD7A}"
@@ -17,6 +19,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D498174-DDF0-412C-857A-8EC73EF10C97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D498174-DDF0-412C-857A-8EC73EF10C97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D498174-DDF0-412C-857A-8EC73EF10C97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D498174-DDF0-412C-857A-8EC73EF10C97}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4B18C7F2-B451-46E7-BCAD-2EB7CCB30664}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4B18C7F2-B451-46E7-BCAD-2EB7CCB30664}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B18C7F2-B451-46E7-BCAD-2EB7CCB30664}.Release|Any CPU.ActiveCfg = Release|Any CPU
