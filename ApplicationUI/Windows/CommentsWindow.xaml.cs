@@ -178,7 +178,7 @@ namespace ApplicationUI.Windows
                 }
                 if(CommentDescription.Length > 25)// Shortening a long message
                 {
-                    CommentDescription = CommentDescription.Substring(0, 30) + "...";
+                    CommentDescription = CommentDescription.Substring(0, 25) + "...";
                 }
 
                 string ReplyDescription = $"{clickedItem.User.Nickname}: {CommentDescription}↵";
